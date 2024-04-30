@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
+using MyPlayMarket.Core.Entities.Game
 namespace MyPlayMarket.Models
 {
     public class ApplicationDbContext: DbContext

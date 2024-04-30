@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Models;
+using MyPlayMarket.Web
 
 namespace MyPlayMarket
 {
@@ -25,6 +25,7 @@ namespace MyPlayMarket
                 (option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
                 Console.WriteLine("Система определила, что вы используете компьютер.");
             }
+
             var app = builder.Build();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
