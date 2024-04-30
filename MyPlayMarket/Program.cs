@@ -35,6 +35,7 @@ namespace MyPlayMarket
             app.MapControllers();
             app.MapRazorPages();
             app.Run();
+
         }
     }
 }

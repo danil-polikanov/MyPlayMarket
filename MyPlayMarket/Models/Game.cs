@@ -11,6 +11,6 @@ namespace MyPlayMarket.Models
         public string Description { get; set; }
         public string Cost { get; set; }
         public string Company { get; set; }
-
+        public string urlImage { get; set; }   
     }
 }
