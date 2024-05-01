@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Web
+using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Infrastructure;
+using MyPlayMarket.Infrastructure.Data;
+using MyPlayMarket.Core.Services;
+
 
 namespace MyPlayMarket
 {
@@ -10,7 +14,11 @@ namespace MyPlayMarket
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddRazorPages();
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-            builder.Services.AddControllersWithViews();          
+            builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IGameRepository, GameRepository>();
+            builder.Services.AddScoped<IGameService, GameService>();
+
             string computerName = Environment.MachineName;
 
             if (computerName.ToLower() == "gregor")

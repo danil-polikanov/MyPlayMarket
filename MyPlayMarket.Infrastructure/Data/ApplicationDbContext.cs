@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Core.Entities.Game
-namespace MyPlayMarket.Models
+using MyPlayMarket.Infrastructure.Entities;
+
+namespace MyPlayMarket.Infrastructure.Data
 {
     public class ApplicationDbContext: DbContext
 
@@ -9,7 +10,6 @@ namespace MyPlayMarket.Models
         {
 
         }
-
         public DbSet<Game> Games { get; set; }
         public DbSet<LocalUser> LocalUsers { get; set; }
     }

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
@@ -25,5 +21,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyPlayMarket.Infrastructure\MyPlayMarket.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>

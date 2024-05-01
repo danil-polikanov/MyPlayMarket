@@ -1,5 +1,5 @@
-﻿@model MyPlayMarket.Models.Game
-
+﻿@using MyPlayMarket.Infrastructure.Entities;
+@model List<Game>
 @{
     ViewData["Title"] = "Details";
 }
@@ -10,39 +10,8 @@
     <h4>Game</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Company)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.urlImage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.urlImage)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
 </div>

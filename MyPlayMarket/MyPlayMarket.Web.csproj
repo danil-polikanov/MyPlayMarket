@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
@@ -24,9 +31,15 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyPlayMarket.Core\MyPlayMarket.Core.csproj" />
+    <ProjectReference Include="..\MyPlayMarket.Infrastructure\MyPlayMarket.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

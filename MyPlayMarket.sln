@@ -5,12 +5,12 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPlayMarket.Web", "MyPlayMarket\MyPlayMarket.Web.csproj", "{AF51B22F-8D15-42B1-833A-EB555CD47D5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPlayMarket.Core", "MyPlayMarket.Core\MyPlayMarket.Core.csproj", "{C9327D83-D3E1-41E6-90F3-24CBF7A0D752}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPlayMarket.Infrastructure", "MyPlayMarket.Infrastructure\MyPlayMarket.Infrastructure.csproj", "{D91C2164-4F5A-4C62-A695-10FED6D22BB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPlayMarket.Core", "MyPlayMarket.Core\MyPlayMarket.Core.csproj", "{C9327D83-D3E1-41E6-90F3-24CBF7A0D752}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C9327D83-D3E1-41E6-90F3-24CBF7A0D752} = {C9327D83-D3E1-41E6-90F3-24CBF7A0D752}
+		{D91C2164-4F5A-4C62-A695-10FED6D22BB3} = {D91C2164-4F5A-4C62-A695-10FED6D22BB3}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyPlayMarket.Infrastructure", "MyPlayMarket.Infrastructure\MyPlayMarket.Infrastructure.csproj", "{D91C2164-4F5A-4C62-A695-10FED6D22BB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyPlayMarket.Models
+namespace MyPlayMarket.Infrastructure.Entities
 {
     public class Game
     {

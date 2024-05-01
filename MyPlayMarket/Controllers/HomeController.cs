@@ -1,25 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Models;
+using MyPlayMarket.Core.Services;
+using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Infrastructure;
 using static System.Reflection.Metadata.BlobBuilder;
+using System.Collections;
 
 namespace MyPlayMarket.Controllers
 {
     [Route("/")]
     public class HomeController : Controller
     {
-
-        private readonly ApplicationDbContext _db;
+        private readonly IGameService _gameService;
         public IEnumerable<Game> Games { get; set; }
-
-        public HomeController(ApplicationDbContext db)
+        public HomeController(IGameService gameService)
         {
-            _db = db;
+            _gameService = gameService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Game> games = await _db.Games.ToListAsync();
+            IEnumerable games = await _gameService.GetGamesAsync();
             return View(games);
         }
 
