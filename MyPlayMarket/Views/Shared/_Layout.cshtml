@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PlayMarket</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+
     <header class="_layout-header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
             <div class="container">
@@ -24,6 +26,9 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="nav-link text-white" asp-action="Index" asp-controller="GamesController/Games"></a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" asp-action="Index" asp-controller="GamesController/Games">Home</a>
                         </li>
                         <li class="nav-item">
@@ -32,32 +37,47 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="/Games">Games</a>
                         </li>
+                        <li style="margin: auto 50px;">
+                            <form class="d-flex" role="search">
+                                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                <button class="btn btn-outline-light" type="submit">Поиск</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
     <div class="_layout-menu">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow">
+        <nav class="navbar bg-body-tertiary">
             <div class="container">
-                <a class="navbar-brand text-white" asp-area="" asp-page="/Index">PlayMarket</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="btn navbar-toggler navbar-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                    <span class="navbar-toggler-icon ">                    
+                    </span>
+                    Others
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Index">Games</a>
-                        </li>
-                    </ul>
+                <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptions">
+                    <div class="offcanvas-header">                     
+                        <h5 class="offcanvas-title" id="offcanvasWithBothOptions">Offcanvas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Ссылка</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </nav>       
     </div>
+
+
+
     <div class="main-context" style="background-color:#8164e8;" >
             <main role="main">
             @RenderBody()
