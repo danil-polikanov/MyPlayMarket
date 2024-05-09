@@ -3,17 +3,18 @@
 @{
     Layout = "_Layout";
 }
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 @if (Model.Count() > 0)
 {
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            @for (int i = 0; i < Model.Count(); i++)
+            @for (int i = 0; i < 8; i++)
             {
                 <li data-target="#carouselExampleIndicators" data-slide-to="@i" @(i == 0 ? "class=active" : "")></li>
             }
         </ol>
         <div class="carousel-inner">
-            @for (int i = 0; i < Model.Count(); i++)
+            @for (int i = 0; i < 8; i++)
             {
                 <div class="carousel-item @(i == 0 ? "active" : "")">
                     <img class="d-block w-100" style="height:500px;" src="@Model[i].UrlImage" alt="Слайд @(i + 1)">
@@ -35,23 +36,20 @@
         </a>
     </div>
     <div>
-        <div class="container mx-5 mt-5">
-            <div class="d-flex justify-content-around">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-around main-game">
                 @for (int i = 0; i < 5; i++)
                 {
                     <a>
-                        <div style="width:200px; height:300px; background:#412996; color:white;">
+                        <div class="main-game-cards">
 
-                            <img src="@Model[i].UrlImage" style="width:200px; height:150px;">
-                            <div style="padding:1em 1em;">
+                            <img src="@Model[i].UrlImage" class="main-games-cards-img">
+                            <div class="main-game-cards-item">
                                 <p>
                                     @Model[i].Name
                                 </p>
                                 <p>
                                     @Model[i].Company
-                                </p>
-                                <p>
-                                    @Model[i].Description
                                 </p>
                                 <p>
                                     @Model[i].Release.ToShortDateString();
