@@ -16,7 +16,7 @@
             @for (int i = 0; i < Model.Count(); i++)
             {
                 <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" style="height:500px;" src="@Model[i].urlImage" alt="Слайд @(i + 1)">
+                    <img class="d-block w-100" style="height:500px;" src="@Model[i].UrlImage" alt="Слайд @(i + 1)">
                     <div class="carousel-caption d-none d-md-block">
                         <h3>@Model[i].Name</h3>
                         <p>@Model[i].Cost</p>
@@ -40,17 +40,23 @@
                 @for (int i = 0; i < 5; i++)
                 {
                     <a>
-                        <div style="width:200px; height:400px; background:#412996; color:white;">
+                        <div style="width:200px; height:300px; background:#412996; color:white;">
 
-                            <img src="@Model[i].urlImage" style="width:200px; height:150px;">
-
-                            </img>
-                            <p>
-                                @Model[i].Name
-                            </p>
-                            <p>
-                                @Model[i].Company
-                            </p>
+                            <img src="@Model[i].UrlImage" style="width:200px; height:150px;">
+                            <div style="padding:1em 1em;">
+                                <p>
+                                    @Model[i].Name
+                                </p>
+                                <p>
+                                    @Model[i].Company
+                                </p>
+                                <p>
+                                    @Model[i].Description
+                                </p>
+                                <p>
+                                    @Model[i].Release.ToShortDateString();
+                                </p>
+                            </div>
                         </div>
                     </a>
                 }

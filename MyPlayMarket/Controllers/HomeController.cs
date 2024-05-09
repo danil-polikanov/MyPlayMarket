@@ -5,6 +5,9 @@ using MyPlayMarket.Infrastructure.Entities;
 using MyPlayMarket.Infrastructure;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Collections;
+using RestSharp;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MyPlayMarket.Controllers
 {
@@ -21,7 +24,7 @@ namespace MyPlayMarket.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable games = await _gameService.GetGamesAsync();
+            IEnumerable games = await _gameService.GetGamesAsync();        
             return View(games);
         }
 

@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MyPlayMarket.Infrastructure.Entities
 {
@@ -11,6 +16,7 @@ namespace MyPlayMarket.Infrastructure.Entities
         public string Description { get; set; }
         public string Cost { get; set; }
         public string Company { get; set; }
-        public string urlImage { get; set; }   
+        public string UrlImage { get; set; }
+        public DateTime Release { get; set; }
     }
 }
