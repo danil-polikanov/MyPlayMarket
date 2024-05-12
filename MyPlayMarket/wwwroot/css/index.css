@@ -20,6 +20,7 @@
     background: #412996;
     color: white;
     margin: 2em auto;
+    transition:0.5s;
 }
 .main-game-cards:hover {
     opacity: 0.8;

@@ -4,57 +4,58 @@
     Layout = "_Layout";
     ViewData["Title"] = "Edit";
 }
-
-<h1>Edit</h1>
-
-<h4>Game</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Company" class="control-label"></label>
-                <input asp-for="Company" class="form-control" />
-                <span asp-validation-for="Company" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UrlImage" class="control-label"></label>
-                <input asp-for="UrlImage" class="form-control" />
-                <span asp-validation-for="UrlImage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Release" class="control-label"></label>
-                <input asp-for="Release" type="datetime" class="form-control" />
-                <span asp-validation-for="Release" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<link rel="stylesheet" href="~/css/gameEdit.css" asp-append-version="true"/>
+<div class="container">
+    <h1>Edit</h1>
+    <hr />
+    <div class="form-row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" type="text"  class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" type="text" placeholder="@Model.Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cost" class="control-label"></label>
+                    <input asp-for="Cost" type="number" placeholder="@Model.Cost+"$" class="form-control" />
+                    <span asp-validation-for="Cost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Company" class="control-label"></label>
+                    <input asp-for="Company" type="text" placeholder="@Model.Company" class="form-control" />
+                    <span asp-validation-for="Company" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UrlImage" class="control-label"></label>
+                    <input asp-for="UrlImage" type="text" placeholder="@Model.UrlImage" class="form-control" />
+                    <span asp-validation-for="UrlImage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Release" class="control-label"></label>
+                    <input asp-for="Release" type="datetime" type="date" placeholder="@Model.Release" min="1900-01-01" class="form-control" />
+                    <span asp-validation-for="Release" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary" asp-action="Edit"/>
+                    <input type="reset" value="Reset" class="btn btn-danger" />
+                </div>
+                <div>
+                    <a class="btn btn-light" asp-action="Index" role="button">Back to list</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -53,14 +53,16 @@ namespace MyPlayMarket.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            Game game = await _gameService.GetGameAsync(id);
+            return View(game);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, Game updatedGame)
         {
+
             try
             {
                 var GameFromDb = await _gameService.GetGameAsync(id);

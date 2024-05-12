@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
 
 <div class="container">
-    <h1>Index</h1>
+    <h1>All Games</h1>
     <p>
         <a class="btn btn-info" asp-action="Create" role="button">Create</a>
     </p>
@@ -17,7 +17,7 @@
             <a asp-action="Details" asp-route-id="@item.Id">
                 <div class="main-game-cards">
 
-                    <img src="@item.UrlImage" class="main-games-cards-img">
+                    <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
                     <div class="main-game-cards-item">
                         <p>
                             @item.Name

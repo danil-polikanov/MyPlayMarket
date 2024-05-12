@@ -4,24 +4,26 @@
     Layout = "_Layout";
     ViewData["Title"] = "Details";
 }
-
+<link rel="stylesheet" href="~/css/gameDetails.css" asp-append-version="true"/>
 <div class="container">
     <h1>Details</h1>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Delete">Delete</a>
-    </form>
-    <div class="d-flex flex-wrap justify-content-around main-game">
-
-        <a>
-            <div class="main-game-cards">
-
-                <img src="UrlImage" class="main-games-cards-img">
-                <div class="main-game-cards-item">
-                    <p>
-                        @Model.UrlImage
-                    </p>
+    <div class="form-row">
+        <form method="get" class="form-group details-button" asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </form>
+        <form method="get" class="form-group details-button" asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Edit" class="btn btn-success" />
+        </form>
+    </div>
+    <div class="d-flex flex-wrap gap-5">
+        <div>
+            <img src="@Model.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="update-game-img">
+        </div>
+        <div>
+            <div class="text-white" style="max-width:500px;">
+                <div>
                     <p>
                         @Model.Name
                     </p>
@@ -39,6 +41,6 @@
                     </p>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
 </div>

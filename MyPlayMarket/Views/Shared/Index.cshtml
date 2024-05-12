@@ -16,14 +16,16 @@
         <div class="carousel-inner">
             @for (int i = 0; i < 8; i++)
             {
-                <div class="carousel-item @(i == 0 ? "active" : "")">
-                    <img class="d-block w-100" style="height:500px;" src="@Model[i].UrlImage" alt="Слайд @(i + 1)">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h3>@Model[i].Name</h3>
-                        <p>@Model[i].Cost</p>
-                        <p>@Model[i].Description</p>
+                <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id">
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <img class="d-block w-100" style="height:500px;" src="@Model[i].UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" alt="Слайд @(i + 1)">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h3>@Model[i].Name</h3>
+                            <p>@Model[i].Cost</p>
+                            <p>@Model[i].Description</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             }
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -38,12 +40,12 @@
     <div>
         <div class="container">
             <div class="d-flex flex-wrap justify-content-around main-game">
-                @for (int i = 0; i < 5; i++)
+                @for (int i = 0; i < 10; i++)
                 {
                     <a>
                         <div class="main-game-cards">
 
-                            <img src="@Model[i].UrlImage" class="main-games-cards-img">
+                            <img src="@Model[i].UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
                             <div class="main-game-cards-item">
                                 <p>
                                     @Model[i].Name
