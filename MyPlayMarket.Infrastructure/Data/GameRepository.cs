@@ -43,10 +43,16 @@ namespace MyPlayMarket.Infrastructure.Data
         public async Task<bool> CreateGameAsync(Game entity)
         {
             try
-            {
-                await _db.AddAsync(entity);
-                await _db.SaveChangesAsync();
-                return true;
+            {   if (await _db.Games.FirstOrDefaultAsync(x => x.Name == entity.Name) != null)
+                {
+                    await _db.Games.AddAsync(entity);
+                    await _db.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch (Exception ex)
             {
@@ -58,7 +64,7 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
-                _db.Update(entity);
+                _db.Games.Update(entity);
                 await _db.SaveChangesAsync();
                 return true;
             }

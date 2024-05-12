@@ -1,0 +1,17 @@
+﻿.html {
+    font-size: 14px;
+}
+
+@media (maxn-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+
+    .main-game {
+      flex-basis:40%;
+    }
+}
+div label {
+    font-weight:700;
+    font-size:20px;
+}

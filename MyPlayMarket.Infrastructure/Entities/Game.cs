@@ -18,5 +18,6 @@ namespace MyPlayMarket.Infrastructure.Entities
         public string Company { get; set; }
         public string UrlImage { get; set; }
         public DateTime Release { get; set; }
+        //[Range(typeof(DateTime), "1-Jan-1910", "1-Jan-2017")]
     }
 }

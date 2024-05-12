@@ -1,6 +1,7 @@
 ﻿@using MyPlayMarket.Infrastructure.Entities;
-@model List<Game>
+@model Game
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Edit";
 }
 
@@ -34,9 +35,14 @@
                 <span asp-validation-for="Company" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="urlImage" class="control-label"></label>
-                <input asp-for="urlImage" class="form-control" />
-                <span asp-validation-for="urlImage" class="text-danger"></span>
+                <label asp-for="UrlImage" class="control-label"></label>
+                <input asp-for="UrlImage" class="form-control" />
+                <span asp-validation-for="UrlImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Release" class="control-label"></label>
+                <input asp-for="Release" type="datetime" class="form-control" />
+                <span asp-validation-for="Release" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

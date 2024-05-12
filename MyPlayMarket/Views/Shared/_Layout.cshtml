@@ -18,7 +18,7 @@
     <header class="_layout-header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
             <div class="container">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Index">PlayMarket</a>
+                <a class="navbar-brand text-break text-white" asp-area="" asp-controller="Home">JaKuZo</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -26,24 +26,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-action="Index" asp-controller="GamesController/Games"></a>
+                            <a class="nav-link text-white" asp-controller="Games" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-action="Index" asp-controller="GamesController/Games">Home</a>
+                            <a class="nav-link text-white" asp-controller="Games" asp-action="Index">Games</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-action="Index" asp-controller="Games">Games</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="/Games">Games</a>
-                        </li>
-                        <li style="margin: auto 50px;">
+                        <li class="nav-item" style="margin: auto 50px;">
                             <form class="d-flex" role="search">
-                                <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+                                <input class="form-control" type="search" placeholder="Поиск" aria-label="Поиск">
                                 <button class="btn btn-outline-light" type="submit">Поиск</button>
                             </form>
-                        </li>
-                    </ul>
+                        </li>                    
+                    </ul> 
+                    <div class="nav-item float-end">
+                        <a class="btn text-white" href="#" role="button">Sign up</a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="btn text-white" href="#" role="button">Register</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -51,7 +51,7 @@
     <div class="_layout-menu">
         <nav class="navbar bg-body-tertiary">
             <div class="container">
-                <button class="btn navbar-toggler navbar-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                <button class="btn navbar-toggler navbar-light pl-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
                     <span class="navbar-toggler-icon ">                    
                     </span>
                     Others
@@ -82,6 +82,8 @@
             <main role="main">
             @RenderBody()
             </main>
+        <div style="height:300px;">
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

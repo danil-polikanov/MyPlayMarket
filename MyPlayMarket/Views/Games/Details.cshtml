@@ -1,17 +1,44 @@
 ﻿@using MyPlayMarket.Infrastructure.Entities;
-@model List<Game>
+@model Game
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="container">
+    <h1>Details</h1>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Delete">Delete</a>
+    </form>
+    <div class="d-flex flex-wrap justify-content-around main-game">
 
-<div>
-    <h4>Game</h4>
-    <hr />
-    <dl class="row">
-    </dl>
-</div>
-<div>
+        <a>
+            <div class="main-game-cards">
 
+                <img src="UrlImage" class="main-games-cards-img">
+                <div class="main-game-cards-item">
+                    <p>
+                        @Model.UrlImage
+                    </p>
+                    <p>
+                        @Model.Name
+                    </p>
+                    <p>
+                        @Model.Description
+                    </p>
+                    <p>
+                        @Model.Company
+                    </p>
+                    <p>
+                        @Model.Cost
+                    </p>
+                    <p>
+                        @Model.Release
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>
