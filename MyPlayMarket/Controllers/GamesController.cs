@@ -12,15 +12,16 @@ namespace MyPlayMarket.Web.Controllers
     {
         private readonly IGameService _gameService;
         public IEnumerable<Game> Games { get; set; }
+        public PageViewModel ViewModel { get; set; }
         public GamesController(IGameService gameService)
         {
             _gameService = gameService;
         }
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25)
         {
-            IEnumerable games = await _gameService.GetGamesAsync();
-            return View(games);
+            var indexPagging = await _gameService.GetFiltredGamesAsync(currentPage,pageSize);
+            return View(indexPagging);
         }
 
         [HttpGet]

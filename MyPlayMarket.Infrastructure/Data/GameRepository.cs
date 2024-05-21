@@ -16,11 +16,23 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             _db = db;
         }
+        public async Task<IEnumerable> GetFiltredGamesAsync()
+        {
+            try
+            {
+                return await _db.Games.AsNoTracking().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+            }
+
+        }
         public async Task<IEnumerable> GetAllGamesAsync()
         {
             try
             {
-                return await _db.Games.ToListAsync();
+                return await _db.Games.AsNoTracking().ToListAsync();
             }
             catch (Exception ex)
             {
@@ -32,7 +44,7 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
-                return await _db.Games.FirstOrDefaultAsync(x => x.Id == id);
+                return await _db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception ex)
             {

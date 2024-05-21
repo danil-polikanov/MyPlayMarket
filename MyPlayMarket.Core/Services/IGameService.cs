@@ -10,6 +10,7 @@ namespace MyPlayMarket.Core.Services
 {
     public interface IGameService
     {
+        public Task<IndexPaggingModel> GetFiltredGamesAsync(int currentPage, int pageSize);
         public Task<IEnumerable> GetGamesAsync();
         public Task<Game> GetGameAsync(int id);
         public Task<bool> CreateGameAsync(Game entity);

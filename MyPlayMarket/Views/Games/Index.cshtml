@@ -1,9 +1,11 @@
 ﻿@using MyPlayMarket.Infrastructure.Entities;
-@model List<Game>
+@model IndexPaggingModel;
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Index";
+    
 }
+<link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
 
 <div class="container">
@@ -11,26 +13,31 @@
     <p>
         <a class="btn btn-info" asp-action="Create" role="button">Create</a>
     </p>
-    <div class="d-flex flex-wrap justify-content-around main-game">
-        @foreach(var item in Model)
-        {
-            <a asp-action="Details" asp-route-id="@item.Id">
-                <div class="main-game-cards">
+    <div>
+        <div class="d-flex flex-wrap justify-content-around main-game">
+            @foreach (var item in Model.Games)
+            {
+                <a asp-action="Details" asp-route-id="@item.Id">
+                    <div class="main-game-cards">
 
-                    <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
-                    <div class="main-game-cards-item">
-                        <p>
-                            @item.Name
-                        </p>
-                        <p>
-                            @item.Company
-                        </p>
-                        <p>
-                            @item.Release.ToShortDateString();
-                        </p>
+                        <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
+                        <div class="main-game-cards-item">
+                            <p>
+                                @item.Name
+                            </p>
+                            <p>
+                                @item.Company
+                            </p>
+                            <p>
+                                @item.Release.ToShortDateString();
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        }
+                </a>
+            }
+        </div>     
     </div>
+    <pagging page-model="@Model.PageViewModel" page-action="Index">
+    </pagging>
+
 </div>
