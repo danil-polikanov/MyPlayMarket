@@ -3,7 +3,7 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Index";
-    
+
 }
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
@@ -17,9 +17,8 @@
         <div class="d-flex flex-wrap justify-content-around main-game">
             @foreach (var item in Model.Games)
             {
-                <a asp-action="Details" asp-route-id="@item.Id">
-                    <div class="main-game-cards">
-
+                <div class="main-game-cards">
+                    <a class="text-decoration-none text-white" asp-action="Details" asp-route-id="@item.Id">
                         <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
                         <div class="main-game-cards-item">
                             <p>
@@ -32,10 +31,11 @@
                                 @item.Release.ToShortDateString();
                             </p>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
             }
-        </div>     
+        </div>
     </div>
     <pagging page-model="@Model.PageViewModel" page-action="Index">
     </pagging>

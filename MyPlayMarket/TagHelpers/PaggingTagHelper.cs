@@ -29,54 +29,54 @@ namespace MyPlayMarket.Web.TagHelpers
 
             TagBuilder tag = new TagBuilder("ul");
             tag.AddCssClass("pagination");
+            tag.AddCssClass("pagination-lg");
             tag.AddCssClass("justify-content-center");
 
 
             TagBuilder previous = CreateTag(PageModel.CurrentPage - 1, urlHelper, ["Previous", "«"]);
             TagBuilder next = CreateTag(PageModel.CurrentPage + 1, urlHelper, ["Next", "»"]);
             tag.InnerHtml.AppendHtml(previous);
-            
+            TagBuilder first = CreateTag(1, urlHelper, null);
+            tag.InnerHtml.AppendHtml(first);
+            TagBuilder last = CreateTag(PageModel.TotalPages, urlHelper, null);
 
-            for (int i = PageModel.CurrentPage-3; i < PageModel.CurrentPage+3 ; i++)
+
+
+            for (int i = PageModel.CurrentPage - 3; i <= PageModel.CurrentPage + 3; i++)
             {
-                if (PageModel.CurrentPage != 1&&i!=1)
+                if (i > 0 && i < PageModel.TotalPages && i != 1 && i != PageModel.TotalPages)
                 {
                     TagBuilder temp = CreateTag(i, urlHelper, null);
                     tag.InnerHtml.AppendHtml(temp);
                 }
-                else if (i > 0&&i<PageModel.TotalPages)
-                {
-                    TagBuilder temp = CreateTag(i, urlHelper,null);
-                    tag.InnerHtml.AppendHtml(temp);
-                }
-
             }
 
+            tag.InnerHtml.AppendHtml(last);
             tag.InnerHtml.AppendHtml(next);
             output.Content.AppendHtml(tag);
         }
 
-        TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper,string[] paramButton)
+        TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper, string[] paramButton)
         {
             TagBuilder item = new TagBuilder("li");
             TagBuilder link = new TagBuilder("a");
             if (pageNumber == this.PageModel.CurrentPage)
             {
                 item.AddCssClass("active");
-            }   
-            
-            if (pageNumber > 4||PageModel.TotalPages<pageNumber+3)
+            }
+
+            if (PageModel.CurrentPage > 4 && PageModel.CurrentPage - 3 == pageNumber || PageModel.CurrentPage + 3 == pageNumber)
             {
-                
+
                 item.AddCssClass("page-item");
                 link.AddCssClass("page-link");
                 link.InnerHtml.Append("...");
+                item.InnerHtml.AppendHtml(link);
             }
             else
             {
 
-                link.Attributes["asp-for"] = "@page"+pageNumber.ToString();
-                link.Attributes["asp-action"] = PageAction;
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { currentpage = pageNumber });
                 item.AddCssClass("page-item");
                 link.AddCssClass("page-link");
                 if (pageNumber <= 0 || pageNumber > PageModel.TotalPages)
@@ -106,7 +106,7 @@ namespace MyPlayMarket.Web.TagHelpers
                     item.InnerHtml.AppendHtml(link);
                 }
             }
-            
+
             return item;
         }
     }

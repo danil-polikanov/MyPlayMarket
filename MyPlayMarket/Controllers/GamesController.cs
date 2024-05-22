@@ -17,7 +17,7 @@ namespace MyPlayMarket.Web.Controllers
         {
             _gameService = gameService;
         }
-        [HttpGet]
+        
         public async Task<ActionResult> Index(int currentPage=1,int pageSize=25)
         {
             var indexPagging = await _gameService.GetFiltredGamesAsync(currentPage,pageSize);
