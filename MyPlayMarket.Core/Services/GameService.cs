@@ -13,6 +13,7 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
+
         public async Task<IndexPaggingModel> GetFiltredGamesAsync(int currentPage,int pageSize)
         {
             var games=await _repository.GetFiltredGamesAsync();

@@ -17,10 +17,14 @@ namespace MyPlayMarket.Web.Controllers
         {
             _gameService = gameService;
         }
-        
-        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25)
+        [HttpGet]
+        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="Name")
         {
             var indexPagging = await _gameService.GetFiltredGamesAsync(currentPage,pageSize);
+            if (SortBy == "Company")
+            {
+                indexPagging.Games = indexPagging.Games.OrderBy(item => item.Company);
+            }
             return View(indexPagging);
         }
 

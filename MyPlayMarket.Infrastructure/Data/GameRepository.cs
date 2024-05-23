@@ -19,7 +19,7 @@ namespace MyPlayMarket.Infrastructure.Data
         public async Task<IEnumerable> GetFiltredGamesAsync()
         {
             try
-            {
+            {              
                 return await _db.Games.AsNoTracking().ToListAsync();
             }
             catch (Exception ex)
