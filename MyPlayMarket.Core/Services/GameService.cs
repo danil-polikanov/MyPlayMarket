@@ -13,13 +13,22 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-
-        public async Task<IndexPaggingModel> GetFiltredGamesAsync(int currentPage,int pageSize)
+        public async Task<IEnumerable> GetGamesOrderBy(string property,List<Game> games)
         {
-            var games=await _repository.GetFiltredGamesAsync();
-            List<Game> result = (List<Game>)games;
-            PageViewModel viewModel = new PageViewModel(currentPage, result.Count(), pageSize);
-            List<Game> pageGames = result.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            var sortingProperties = new Dictionary<string, Func<Game,object>>
+            {
+                { "Name",item => item.Name },
+                { "Company",item => item.Company },
+               { "Release", item => item.Release },
+               { "Cost", item => item.Cost },
+                {"",item=>item.Id }
+            };
+            return property.EndsWith("Desc") ? games.OrderByDescending(sortingProperties[property.Substring(0, property.Length - 4)]).ToList():games.OrderBy(sortingProperties[property]).ToList();
+        }
+        public async Task<IndexPaggingModel> GetGamesByPagging(int currentPage, int pageSize,List<Game> games)
+        {
+            PageViewModel viewModel = new PageViewModel(currentPage, games.Count(), pageSize);
+            List<Game> pageGames = games.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             IndexPaggingModel indexPagging = new IndexPaggingModel { Games = pageGames, PageViewModel = viewModel };
             return indexPagging;
         }

@@ -18,13 +18,11 @@ namespace MyPlayMarket.Web.Controllers
             _gameService = gameService;
         }
         [HttpGet]
-        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="Name")
+        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="")
         {
-            var indexPagging = await _gameService.GetFiltredGamesAsync(currentPage,pageSize);
-            if (SortBy == "Company")
-            {
-                indexPagging.Games = indexPagging.Games.OrderBy(item => item.Company);
-            }
+            var GamesDb = await _gameService.GetGamesAsync();
+            var SortedGames = await _gameService.GetGamesOrderBy(SortBy, (List<Game>)GamesDb);
+            var indexPagging = await _gameService.GetGamesByPagging(currentPage,pageSize, (List<Game>)SortedGames);
             return View(indexPagging);
         }
 
@@ -53,7 +51,7 @@ namespace MyPlayMarket.Web.Controllers
             {
                 ViewBag.Message = "Data Insert Error";
             }
-            return View();
+            return RedirectToAction(nameof(Index));
 
         }
 

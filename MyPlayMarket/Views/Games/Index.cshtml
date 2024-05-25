@@ -3,7 +3,7 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Index";
-
+    ViewData["CurrentSort"] = "Sort by";
 }
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
@@ -19,39 +19,61 @@
     <div class="row">
         <div class="col-3">
             <div class="filter">
-                some
+                <form method="get">
+                    <div class="form form-group">
+                        <label class="control-label">Name: </label>
+                        <input name="name" class="form-control" />
+
+                        <label class="control-label">Company: </label>
+                        <input name="company" class="form-control" />
+
+                        <label class="control-label">Release: </label>
+                        <input name="release" type="month" class="form-control" />
+
+                        <label class="control-label">Cost: </label>
+                        <input name="company" type="month" class="form-control" />
+
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </form>
             </div>
         </div>
         <div class="col-9">
             <form method="get" asp-action="Index">
-                <select name="sortby" onchange="onsubmit" class="custom-select w-25">
-                    <option selected disabled>Sort by</option>
+                <select name="sortby" onchange="this.form.submit()" class="custom-select w-25">
+                    <option selected disabled>@ViewData["CurrentSort"]</option>
                     <option value="Name">Name</option>
                     <option value="Company">Company</option>
-                    <option value="Cost">Price</option>
-                    <option value="Release">Date</option>
+                    <option value="Cost">Price - highest first</option>
+                    <option value="CostDesc">                    
+                        Price - lowest first
+                    </option>
+                    <option value="ReleaseDesc">
+                        Newest
+                    </option>
+                    <option value="Release">Oldest</option>
                 </select>
             </form>
             <div class="d-flex flex-wrap justify-content-around main-game">
-                    @foreach (var item in Model.Games)
-                    {
-                <div class="main-game-cards">
-                    <a class="text-decoration-none text-white" asp-action="Details" asp-route-id="@item.Id">
-                        <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
-                        <div class="main-game-cards-item">
-                            <p>
+                @foreach (var item in Model.Games)
+                {
+                    <div class="main-game-cards">
+                        <a class="text-decoration-none text-white" asp-action="Details" asp-route-id="@item.Id">
+                            <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
+                            <div class="main-game-cards-item">
+                                <p>
                                     @item.Name
-                            </p>
-                            <p>
+                                </p>
+                                <p>
                                     @item.Company
-                            </p>
-                            <p>
+                                </p>
+                                <p>
                                     @item.Release.ToShortDateString();
-                            </p>
-                        </div>
-                    </a>
-                </div>
-                    }
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                }
             </div>
             <pagging page-model="@Model.PageViewModel" page-action="Index">
             </pagging>
