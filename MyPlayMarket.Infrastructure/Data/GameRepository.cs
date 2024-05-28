@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,16 +17,19 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             _db = db;
         }
-        public async Task<IEnumerable> GetFiltredGamesAsync()
+        public async Task<IEnumerable> GetFiltredGamesAsync(string property, Dictionary<string, Func<Game, object>> properties)
         {
             try
-            {              
-                return await _db.Games.AsNoTracking().ToListAsync();
+            {
+                List<Game> games;
+                return property.EndsWith("Desc") ? games = _db.Games.OrderByDescending(properties[property.Substring(0, property.Length - 4)]).ToList() : games=_db.Games.OrderBy(properties[property]).ToList();
             }
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
+
+
 
         }
         public async Task<IEnumerable> GetAllGamesAsync()

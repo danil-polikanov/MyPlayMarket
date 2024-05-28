@@ -13,7 +13,7 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-        public async Task<IEnumerable> GetGamesOrderBy(string property,List<Game> games)
+        public async Task<IEnumerable> GetGamesOrderBy(string property)
         {
             var sortingProperties = new Dictionary<string, Func<Game,object>>
             {
@@ -23,7 +23,7 @@ namespace MyPlayMarket.Core.Services
                { "Cost", item => item.Cost },
                 {"",item=>item.Id }
             };
-            return property.EndsWith("Desc") ? games.OrderByDescending(sortingProperties[property.Substring(0, property.Length - 4)]).ToList():games.OrderBy(sortingProperties[property]).ToList();
+            return await _repository.GetFiltredGamesAsync(property,sortingProperties);
         }
         public async Task<IndexPaggingModel> GetGamesByPagging(int currentPage, int pageSize,List<Game> games)
         {

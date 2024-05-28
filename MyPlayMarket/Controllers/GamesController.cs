@@ -20,8 +20,7 @@ namespace MyPlayMarket.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="")
         {
-            var GamesDb = await _gameService.GetGamesAsync();
-            var SortedGames = await _gameService.GetGamesOrderBy(SortBy, (List<Game>)GamesDb);
+            var SortedGames = await _gameService.GetGamesOrderBy(SortBy);
             var indexPagging = await _gameService.GetGamesByPagging(currentPage,pageSize, (List<Game>)SortedGames);
             return View(indexPagging);
         }

@@ -24,13 +24,15 @@ namespace MyPlayMarket
             if (computerName.ToLower() == "gregor")
             {
                 builder.Services.AddDbContext<ApplicationDbContext>
-                (option => option.UseSqlServer(builder.Configuration.GetConnectionString("LaptopConnection")));
+                (option => option.UseSqlServer(builder.Configuration.GetConnectionString("LaptopConnection")).LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+        .EnableSensitiveDataLogging());
                 Console.WriteLine("Система определила, что вы используете ноутбук.");
             }
             else
             {
                 builder.Services.AddDbContext<ApplicationDbContext>
-                (option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                (option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+        .EnableSensitiveDataLogging());
                 Console.WriteLine("Система определила, что вы используете компьютер.");
             }
 
