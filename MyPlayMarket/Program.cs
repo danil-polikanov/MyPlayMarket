@@ -3,6 +3,7 @@ using MyPlayMarket.Infrastructure.Entities;
 using MyPlayMarket.Infrastructure;
 using MyPlayMarket.Infrastructure.Data;
 using MyPlayMarket.Core.Services;
+using MyPlayMarket.Core.IServices;
 
 
 namespace MyPlayMarket
@@ -18,6 +19,10 @@ namespace MyPlayMarket
 
             builder.Services.AddScoped<IGameRepository, GameRepository>();
             builder.Services.AddScoped<IGameService, GameService>();
+            builder.Services.AddScoped<ISortingService,SortingService>();
+            builder.Services.AddScoped<IFilteringService, FilteringService>();
+            builder.Services.AddScoped<IPaginationService, PaginationService>();
+            builder.Services.AddScoped<IDataService, DataService>();
 
             string computerName = Environment.MachineName;
 

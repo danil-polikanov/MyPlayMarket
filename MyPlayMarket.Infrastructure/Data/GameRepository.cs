@@ -17,18 +17,16 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             _db = db;
         }
-        public async Task<IEnumerable> GetFiltredGamesAsync(string property, Dictionary<string, Func<Game, object>> properties)
+        public Task<IQueryable> GetFiltredGamesAsync(string property, Dictionary<string, Func<Game, object>> properties)
         {
             try
             {
-                List<Game> games;
-                return property.EndsWith("Desc") ? games = _db.Games.OrderByDescending(properties[property.Substring(0, property.Length - 4)]).ToList() : games=_db.Games.OrderBy(properties[property]).ToList();
+                var pageGames=......
             }
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
-
 
 
         }

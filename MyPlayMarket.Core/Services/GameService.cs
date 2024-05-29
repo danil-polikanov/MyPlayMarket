@@ -2,6 +2,8 @@
 using MyPlayMarket.Infrastructure.Data;
 using System.Collections;
 using System.Drawing.Printing;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MyPlayMarket.Core.IServices;
 
 namespace MyPlayMarket.Core.Services
 {
@@ -13,25 +15,7 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-        public async Task<IEnumerable> GetGamesOrderBy(string property)
-        {
-            var sortingProperties = new Dictionary<string, Func<Game,object>>
-            {
-                { "Name",item => item.Name },
-                { "Company",item => item.Company },
-               { "Release", item => item.Release },
-               { "Cost", item => item.Cost },
-                {"",item=>item.Id }
-            };
-            return await _repository.GetFiltredGamesAsync(property,sortingProperties);
-        }
-        public async Task<IndexPaggingModel> GetGamesByPagging(int currentPage, int pageSize,List<Game> games)
-        {
-            PageViewModel viewModel = new PageViewModel(currentPage, games.Count(), pageSize);
-            List<Game> pageGames = games.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-            IndexPaggingModel indexPagging = new IndexPaggingModel { Games = pageGames, PageViewModel = viewModel };
-            return indexPagging;
-        }
+
         public async Task<IEnumerable> GetGamesAsync()
         {
             return await _repository.GetAllGamesAsync();

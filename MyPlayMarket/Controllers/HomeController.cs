@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Core.Services;
 using MyPlayMarket.Infrastructure.Entities;
 using MyPlayMarket.Infrastructure;
 using static System.Reflection.Metadata.BlobBuilder;
@@ -8,6 +7,7 @@ using System.Collections;
 using RestSharp;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using MyPlayMarket.Core.IServices;
 
 namespace MyPlayMarket.Controllers
 {

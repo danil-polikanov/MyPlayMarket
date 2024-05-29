@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
 using MyPlayMarket.Infrastructure.Entities;
 using System.Collections;
@@ -11,16 +12,22 @@ namespace MyPlayMarket.Web.Controllers
     public class GamesController : Controller
     {
         private readonly IGameService _gameService;
+        private readonly ISortingService _sortingService;
+        private readonly IFilteringService _filteringService;
+        private readonly IPaginationService _paginationService;
         public IEnumerable<Game> Games { get; set; }
         public PageViewModel ViewModel { get; set; }
-        public GamesController(IGameService gameService)
+        public GamesController(IGameService gameService,ISortingService sortingService,IFilteringService filteringService,IPaginationService paginationService)
         {
             _gameService = gameService;
+            _sortingService = sortingService;
+            _filteringService = filteringService;
+            _paginationService = paginationService;
         }
         [HttpGet]
         public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="")
         {
-            var SortedGames = await _gameService.GetGamesOrderBy(SortBy);
+            var SortedGames = await _sortingService.GetSortProperty(SortBy);
             var indexPagging = await _gameService.GetGamesByPagging(currentPage,pageSize, (List<Game>)SortedGames);
             return View(indexPagging);
         }
