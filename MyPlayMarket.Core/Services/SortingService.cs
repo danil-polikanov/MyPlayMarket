@@ -18,7 +18,7 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-        public async Task<Func<IQueryable<Game>, IQueryable<Game>>> GetSortExpression<T>(string property)
+        public async Task<Func<IQueryable<T>, IQueryable<T>>> GetSortExpression<T>(string property)
         {
             if (typeof(T) == typeof(Game))
             {
@@ -35,7 +35,7 @@ namespace MyPlayMarket.Core.Services
                     { "Id", q => q.OrderBy(g => g.Id) },
                     { "IdDesc", q => q.OrderByDescending(g => g.Id) }
                 };
-                return sortingProperties[property];
+                return (Func<IQueryable<T>, IQueryable<T>>)sortingProperties[property];
             }
             else return default;
         }

@@ -18,15 +18,18 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-        public async Task<IndexPaggingModel> GetGamesByPagging<T>(int currentPage, int pageSize, List<T> games, Func<IQueryable<T>, IQueryable<T>> sortExpression)
+        public async Task<Func<IQueryable<T>, IQueryable<T>>> GetGamesByPagging<T>(Func<IQueryable<T>, IQueryable<T>> sortExpression, int currentPage, int pageSize)
         {
             if (typeof(T) == typeof(Game))
             {
-                sortExpression = sortExpression.BeginInvoke().Skip((currentPage - 1) * pageSize).Take(pageSize);
-                IndexPaggingModel indexPagging = new IndexPaggingModel { Games = pageGames, PageViewModel = viewModel };
-                return indexPagging;
+                Func<IQueryable<T>, IQueryable<T>> pagingExpression = q =>
+                {
+                    var sortedQuery = sortExpression(q);
+                    return sortedQuery.Skip((currentPage - 1) * pageSize).Take(pageSize);
+                };
+                return pagingExpression;
             }
-            return default;
+            return null;
         }
     }
 }

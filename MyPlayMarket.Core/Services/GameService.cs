@@ -15,7 +15,6 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-
         public async Task<IEnumerable> GetGamesAsync()
         {
             return await _repository.GetAllGamesAsync();

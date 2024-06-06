@@ -10,6 +10,6 @@ namespace MyPlayMarket.Core.IServices
 {
     public interface ISortingService
     {
-        public Task<Func<IQueryable<Game>, IQueryable<Game>>> GetSortExpression<T>(string property);
+        public Task<Func<IQueryable<T>, IQueryable<T>>> GetSortExpression<T>(string property);
     }
 }

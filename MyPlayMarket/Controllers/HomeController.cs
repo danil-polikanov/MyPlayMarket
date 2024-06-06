@@ -24,11 +24,8 @@ namespace MyPlayMarket.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            IEnumerable games = await _gameService.GetGamesAsync();        
+            IEnumerable games = await _gameService.GetGamesAsync();
             return View(games);
         }
-
-
-
     }
 }

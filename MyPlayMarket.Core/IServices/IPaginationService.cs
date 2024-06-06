@@ -9,6 +9,6 @@ namespace MyPlayMarket.Core.IServices
 {
     public interface IPaginationService
     {
-        public Task<IndexPaggingModel> GetGamesByPagging<T>(int currentPage, int pageSize, List<T> games, Func<IQueryable<T>, IQueryable<T>> sortExpression);
+        public Task<Func<IQueryable<T>, IQueryable<T>>> GetGamesByPagging<T>(Func<IQueryable<T>, IQueryable<T>> sortExpression,int currentPage, int pageSize);
     }
 }

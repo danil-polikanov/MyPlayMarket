@@ -9,6 +9,6 @@ namespace MyPlayMarket.Infrastructure.Entities
     public class IndexPaggingModel
     {
         public IEnumerable<Game> Games { get; set; }
-        public PageViewModel PageViewModel { get; set; }
+        public PageViewModel pageViewModel { get; set; }
     }
 }

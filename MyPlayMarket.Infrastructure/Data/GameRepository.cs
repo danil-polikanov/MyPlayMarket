@@ -3,6 +3,7 @@ using MyPlayMarket.Infrastructure.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -17,18 +18,19 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             _db = db;
         }
-        public Task<IQueryable> GetFiltredGamesAsync(string property, Dictionary<string, Func<Game, object>> properties)
+        public async Task<(List<Game> Games, int TotalCount)> GetFiltredGamesAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression)
         {
             try
             {
-                var pageGames=......
+                int totalCount = await _db.Games.CountAsync();
+                var query=sortPageExpression(_db.Games);
+                return (await query.ToListAsync(),totalCount);
+
             }
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
-
-
         }
         public async Task<IEnumerable> GetAllGamesAsync()
         {

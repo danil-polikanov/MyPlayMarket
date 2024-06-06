@@ -17,7 +17,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3">
+        <div class="col-3 position-sticky top-0">
             <div class="filter">
                 <form method="get">
                     <div class="form form-group">
@@ -75,7 +75,7 @@
                     </div>
                 }
             </div>
-            <pagging page-model="@Model.PageViewModel" page-action="Index">
+            <pagging page-model="@Model.pageViewModel" page-action="Index">
             </pagging>
         </div>
     </div>

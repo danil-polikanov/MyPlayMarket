@@ -15,21 +15,22 @@ namespace MyPlayMarket.Web.Controllers
         private readonly ISortingService _sortingService;
         private readonly IFilteringService _filteringService;
         private readonly IPaginationService _paginationService;
+        private readonly IDataService _dataService;
         public IEnumerable<Game> Games { get; set; }
         public PageViewModel ViewModel { get; set; }
-        public GamesController(IGameService gameService,ISortingService sortingService,IFilteringService filteringService,IPaginationService paginationService)
+        public GamesController(IGameService gameService,ISortingService sortingService,IFilteringService filteringService,IPaginationService paginationService, IDataService dataService)
         {
             _gameService = gameService;
             _sortingService = sortingService;
             _filteringService = filteringService;
             _paginationService = paginationService;
+            _dataService= dataService;
         }
         [HttpGet]
-        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="")
+        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="Id")
         {
-            var SortedGames = await _sortingService.GetSortProperty(SortBy);
-            var indexPagging = await _gameService.GetGamesByPagging(currentPage,pageSize, (List<Game>)SortedGames);
-            return View(indexPagging);
+            var SortedGames = await _dataService.GetGamesAsync<Game>(SortBy, currentPage, pageSize);          
+            return View(SortedGames);
         }
 
         [HttpGet]
