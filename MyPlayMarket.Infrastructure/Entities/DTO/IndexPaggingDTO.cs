@@ -17,7 +17,7 @@ namespace MyPlayMarket.Infrastructure.Entities.DTO
         {
             pageViewDTO = new PageViewDTO(1, 0, 25);
             sortDTO = new SortDTO { SortBy = "SortBy" };
-            filterDTO = new FilterDTO { Name = "", Company = ""};
+            filterDTO = new FilterDTO { Name = "", Company = "",Release=1961};
         }
 
     }

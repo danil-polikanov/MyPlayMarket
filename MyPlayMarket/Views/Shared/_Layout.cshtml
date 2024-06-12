@@ -32,9 +32,9 @@
                             <a class="nav-link text-white" asp-controller="Games" asp-action="Index">Games</a>
                         </li>
                         <li class="nav-item" style="margin: auto 50px;">
-                            <form class="d-flex" role="search">
-                                <input class="form-control" type="search" placeholder="Поиск" aria-label="Поиск">
-                                <button class="btn btn-outline-light" type="submit">Поиск</button>
+                            <form method="get" asp-action="Index" asp-controller="Games" class="d-flex" role="search">
+                                <input class="form-control mr-1" name="filterDTO.Name" type="search" placeholder="Search" aria-label="Поиск">
+                                <button class="btn btn-info" type="submit">Search</button>
                             </form>
                         </li>                    
                     </ul> 

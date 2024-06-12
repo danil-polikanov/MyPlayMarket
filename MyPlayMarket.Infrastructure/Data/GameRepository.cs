@@ -43,7 +43,7 @@ namespace MyPlayMarket.Infrastructure.Data
             }
 
         }
-        public async Task<IEnumerable> GetAllGamesAsync()
+        public async Task<IEnumerable<Game>> GetAllGamesAsync()
         {
             try
             {

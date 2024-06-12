@@ -20,27 +20,35 @@ namespace MyPlayMarket.Web.Controllers
         private readonly IDataService _dataService;
         public IEnumerable<Game> Games { get; set; }
         public PageViewDTO ViewModel { get; set; }
-        public GamesController(IGameService gameService,ISortingService sortingService,IFilteringService filteringService,IPaginationService paginationService, IDataService dataService)
+        public GamesController(IGameService gameService, ISortingService sortingService, IFilteringService filteringService, IPaginationService paginationService, IDataService dataService)
         {
             _gameService = gameService;
             _sortingService = sortingService;
             _filteringService = filteringService;
             _paginationService = paginationService;
-            _dataService= dataService;
+            _dataService = dataService;
         }
         [HttpGet]
         public async Task<ActionResult> Index(IndexPaggingDTO indexPagging)
         {
 
             var SortedGames = await _dataService.GetGamesAsync<Game>(indexPagging);
-            return View(SortedGames);
+            if (ModelState.IsValid||indexPagging.Games == null)
+            {
+                return View(SortedGames);
+            }
+            else { return BadRequest(); }
         }
 
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            Game game=await _gameService.GetGameAsync(id);
-            return View(game);
+            Game game = await _gameService.GetGameAsync(id);
+            if (game!=null)
+            {
+                return View(game);
+            }
+            else return NotFound();
         }
         [HttpGet]
         public ActionResult Create()
@@ -52,7 +60,7 @@ namespace MyPlayMarket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Game game)
         {
-            if (game != null)
+            if (game != null && ModelState.IsValid)
             {
                 await _gameService.CreateGameAsync(game);
                 ViewBag.Message = "Data Insert Successfully";
@@ -75,20 +83,16 @@ namespace MyPlayMarket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, Game updatedGame)
         {
-
-            try
+            if (ModelState.IsValid)
             {
                 var GameFromDb = await _gameService.GetGameAsync(id);
                 GameFromDb = updatedGame;
                 await _gameService.UpdateGameAsync(GameFromDb);
                 ViewBag.Message = "Data update Successfully";
-                return RedirectToAction(nameof(Index));              
+                return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                ViewBag.Message = "Data update Failed";
-                return View();
-            }
+            ViewBag.Message = "Data update Failed";
+            return View();
         }
 
         [HttpGet]
@@ -101,17 +105,15 @@ namespace MyPlayMarket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, Game game)
         {
-            try
+            if (ModelState.IsValid)
             {
                 await _gameService.DeleteGameAsync(id);
                 ViewBag.Message = "Data delete Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                ViewBag.Message = "Data delete Successfully";
-                return View();
-            }
+            else ViewBag.Message = "Data delete Successfully";
+            return View();
+
         }
     }
 }
