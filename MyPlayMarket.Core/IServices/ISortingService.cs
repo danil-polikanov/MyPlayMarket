@@ -1,4 +1,5 @@
-﻿using MyPlayMarket.Infrastructure.Entities;
+﻿using MyPlayMarket.Core.Services;
+using MyPlayMarket.Infrastructure.Entities.DTO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace MyPlayMarket.Core.IServices
 {
     public interface ISortingService
     {
-        public Task<Func<IQueryable<T>, IQueryable<T>>> GetSortExpression<T>(string property);
+        public Task<Func<IQueryable<T>, IQueryable<T>>> GetSortExpression<T>(Func<IQueryable<T>, IQueryable<T>> FiltredExpression, SortDTO sortModel);
     }
 }

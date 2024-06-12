@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
 using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Infrastructure.Entities.DTO;
 using System.Collections;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace MyPlayMarket.Web.Controllers
@@ -17,7 +19,7 @@ namespace MyPlayMarket.Web.Controllers
         private readonly IPaginationService _paginationService;
         private readonly IDataService _dataService;
         public IEnumerable<Game> Games { get; set; }
-        public PageViewModel ViewModel { get; set; }
+        public PageViewDTO ViewModel { get; set; }
         public GamesController(IGameService gameService,ISortingService sortingService,IFilteringService filteringService,IPaginationService paginationService, IDataService dataService)
         {
             _gameService = gameService;
@@ -27,9 +29,10 @@ namespace MyPlayMarket.Web.Controllers
             _dataService= dataService;
         }
         [HttpGet]
-        public async Task<ActionResult> Index(int currentPage=1,int pageSize=25,string SortBy="Id")
+        public async Task<ActionResult> Index(IndexPaggingDTO indexPagging)
         {
-            var SortedGames = await _dataService.GetGamesAsync<Game>(SortBy, currentPage, pageSize);          
+
+            var SortedGames = await _dataService.GetGamesAsync<Game>(indexPagging);
             return View(SortedGames);
         }
 

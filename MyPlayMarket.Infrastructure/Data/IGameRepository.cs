@@ -11,7 +11,8 @@ namespace MyPlayMarket.Infrastructure.Data
     public interface IGameRepository
     {
         public Task<IEnumerable> GetAllGamesAsync();
-        public Task<(List<Game> Games, int TotalCount)> GetFiltredGamesAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression);
+        public Task<List<Game>> GetFiltredGamesAsync(Func<IQueryable<Game>, IQueryable<Game>> expression);
+        public Task<int> GetGamesCountAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression);
         public Task<Game> GetGameAsync(int id);
         public Task<bool> CreateGameAsync(Game entity);
         public Task<bool> UpdateGameAsync(Game entity);

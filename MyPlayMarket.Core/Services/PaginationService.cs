@@ -1,6 +1,7 @@
 ﻿using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Infrastructure.Data;
 using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Infrastructure.Entities.DTO;
 using NuGet.Protocol.Core.Types;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,14 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-        public async Task<Func<IQueryable<T>, IQueryable<T>>> GetGamesByPagging<T>(Func<IQueryable<T>, IQueryable<T>> sortExpression, int currentPage, int pageSize)
+        public async Task<Func<IQueryable<T>, IQueryable<T>>> GetGamesByPagging<T>(Func<IQueryable<T>, IQueryable<T>> sortExpression,PageViewDTO pageViewModel)
         {
             if (typeof(T) == typeof(Game))
             {
                 Func<IQueryable<T>, IQueryable<T>> pagingExpression = q =>
                 {
                     var sortedQuery = sortExpression(q);
-                    return sortedQuery.Skip((currentPage - 1) * pageSize).Take(pageSize);
+                    return sortedQuery.Skip((pageViewModel.CurrentPage - 1) * pageViewModel.PageItems).Take(pageViewModel.PageItems);
                 };
                 return pagingExpression;
             }

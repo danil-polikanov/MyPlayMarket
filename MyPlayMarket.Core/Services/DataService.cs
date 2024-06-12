@@ -1,6 +1,7 @@
 ﻿using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Infrastructure.Data;
 using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Infrastructure.Entities.DTO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,12 +24,13 @@ namespace MyPlayMarket.Core.Services
             _filteringService = filteringService;
             _paginationService = paginationService;
         }
-        public async Task<IndexPaggingModel> GetGamesAsync<T>(string property,int currentPage,int pageSize)
+        public async Task<IndexPaggingDTO> GetGamesAsync<T>(IndexPaggingDTO pageIndexPagging)
         {
-            var sortExpression=await _sortingService.GetSortExpression<Game>(property);
-            var pageGamesExpression = await _paginationService.GetGamesByPagging(sortExpression, currentPage, pageSize);
+            var FiltredExpression = await _filteringService.GetFilterExpression<Game>(pageIndexPagging.filterDTO);
+            var sortExpression=await _sortingService.GetSortExpression(FiltredExpression, pageIndexPagging.sortDTO);
+            var pageGamesExpression = await _paginationService.GetGamesByPagging(sortExpression, pageIndexPagging.pageViewDTO);
             var sortedGames = await _repository.GetFiltredGamesAsync(pageGamesExpression);
-            IndexPaggingModel indexPagging = new IndexPaggingModel { Games = sortedGames.Games,pageViewModel=new PageViewModel(currentPage,sortedGames.TotalCount, pageSize)};
+            IndexPaggingDTO indexPagging = new IndexPaggingDTO { Games = sortedGames, sortDTO=pageIndexPagging.sortDTO, filterDTO= pageIndexPagging.filterDTO, pageViewDTO = new PageViewDTO(pageIndexPagging.pageViewDTO.CurrentPage, await _repository.GetGamesCountAsync(sortExpression), pageIndexPagging.pageViewDTO.PageItems) };
             return indexPagging;
         }
     }

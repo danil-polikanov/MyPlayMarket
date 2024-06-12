@@ -18,19 +18,30 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             _db = db;
         }
-        public async Task<(List<Game> Games, int TotalCount)> GetFiltredGamesAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression)
-        {
+        public async Task<List<Game>> GetFiltredGamesAsync(Func<IQueryable<Game>, IQueryable<Game>> expression)
+       {
             try
             {
-                int totalCount = await _db.Games.CountAsync();
-                var query=sortPageExpression(_db.Games);
-                return (await query.ToListAsync(),totalCount);
+                var query = expression(_db.Games);
+                return (await query.ToListAsync());
 
             }
             catch (Exception ex)
             {
                 throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
+        }
+        public async Task<int> GetGamesCountAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression)
+        {
+            try
+            {
+                return await sortPageExpression(_db.Games).CountAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+            }
+
         }
         public async Task<IEnumerable> GetAllGamesAsync()
         {
@@ -59,7 +70,8 @@ namespace MyPlayMarket.Infrastructure.Data
         public async Task<bool> CreateGameAsync(Game entity)
         {
             try
-            {   if (await _db.Games.FirstOrDefaultAsync(x => x.Name == entity.Name) != null)
+            {
+                if (await _db.Games.FirstOrDefaultAsync(x => x.Name == entity.Name) != null)
                 {
                     await _db.Games.AddAsync(entity);
                     await _db.SaveChangesAsync();
@@ -93,7 +105,7 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
-                var game = await _db.Games.FirstOrDefaultAsync(x=>x.Id==id);
+                var game = await _db.Games.FirstOrDefaultAsync(x => x.Id == id);
                 if (game == null)
                 {
                     throw new Exception($"{id} is not exist");

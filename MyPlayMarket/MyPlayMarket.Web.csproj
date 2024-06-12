@@ -34,11 +34,6 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <ProjectReference Include="..\MyPlayMarket.Core\MyPlayMarket.Core.csproj" />
     <ProjectReference Include="..\MyPlayMarket.Infrastructure\MyPlayMarket.Infrastructure.csproj" />
   </ItemGroup>

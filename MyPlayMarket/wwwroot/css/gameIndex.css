@@ -14,6 +14,11 @@
 .main.main-game {
 
 }
+.filter {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0;
+}
 .main-game-cards {
     width: 200px;
     height: 300px;

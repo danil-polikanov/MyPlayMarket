@@ -1,9 +1,11 @@
 ﻿@using MyPlayMarket.Infrastructure.Entities;
-@model IndexPaggingModel;
+@using MyPlayMarket.Infrastructure.Entities.DTO;
+
+@model IndexPaggingDTO;
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Index";
-    ViewData["CurrentSort"] = "Sort by";
+    ViewData["CurrentSort"] = Model.sortDTO.SortBy;
 }
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
@@ -17,35 +19,30 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3 position-sticky top-0">
+        <div class="col-3">
             <div class="filter">
-                <form method="get">
+                <form method="get" asp-action="Index" id="filterForm">
                     <div class="form form-group">
                         <label class="control-label">Name: </label>
-                        <input name="name" class="form-control" />
-
+                        <input asp-for="filterDTO.Name" class="form-control" />
                         <label class="control-label">Company: </label>
-                        <input name="company" class="form-control" />
-
+                        <input asp-for="filterDTO.Company" class="form-control" />
                         <label class="control-label">Release: </label>
-                        <input name="release" type="month" class="form-control" />
-
-                        <label class="control-label">Cost: </label>
-                        <input name="company" type="month" class="form-control" />
-
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input asp-for="filterDTO.Release" type="number" step="1" class="form-control" />
+                        <br />
+                        <input name="Submit" type="submit" class="btn btn-secondary" value="Accept" />
                     </div>
                 </form>
             </div>
         </div>
         <div class="col-9">
-            <form method="get" asp-action="Index">
-                <select name="sortby" onchange="this.form.submit()" class="custom-select w-25">
+            <form method="get" asp-action="Index" id="sortForm">
+                <select asp-for="sortDTO.SortBy" onchange="syncFormsAndSubmit()" class="custom-select w-25">
                     <option selected disabled>@ViewData["CurrentSort"]</option>
                     <option value="Name">Name</option>
                     <option value="Company">Company</option>
                     <option value="Cost">Price - highest first</option>
-                    <option value="CostDesc">                    
+                    <option value="CostDesc">
                         Price - lowest first
                     </option>
                     <option value="ReleaseDesc">
@@ -53,6 +50,9 @@
                     </option>
                     <option value="Release">Oldest</option>
                 </select>
+                <input type="hidden" name="filterDTO.Name" value="@Model.filterDTO.Name" />
+                <input type="hidden" name="filterDTO.Company" value="@Model.filterDTO.Company" />
+                <input type="hidden" name="filterDTO.Release" value="@Model.filterDTO.Release" />
             </form>
             <div class="d-flex flex-wrap justify-content-around main-game">
                 @foreach (var item in Model.Games)
@@ -75,10 +75,11 @@
                     </div>
                 }
             </div>
-            <pagging page-model="@Model.pageViewModel" page-action="Index">
+            <pagging index-pagging="@Model" page-action="Index">
             </pagging>
         </div>
     </div>
 </div>
 
 
+<script src="~/js/syncFormsAndSubmit.js"></script>

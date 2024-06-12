@@ -1,4 +1,4 @@
-﻿using MyPlayMarket.Infrastructure.Entities;
+﻿using MyPlayMarket.Infrastructure.Entities.DTO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +10,6 @@ namespace MyPlayMarket.Core.IServices
 {
     public interface IDataService
     {
-        public Task<IndexPaggingModel> GetGamesAsync<T>(string property, int currentPage, int pageSize);
+        public Task<IndexPaggingDTO> GetGamesAsync<T>(IndexPaggingDTO pageIndexPagging);
     }
 }
