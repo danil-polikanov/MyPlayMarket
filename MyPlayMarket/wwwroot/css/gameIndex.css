@@ -19,6 +19,9 @@
     position: sticky;
     top: 0;
 }
+.control-label{
+    color:whitesmoke    ;
+}
 .main-game-cards {
     width: 200px;
     height: 300px;

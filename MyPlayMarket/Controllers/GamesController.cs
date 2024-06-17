@@ -18,15 +18,17 @@ namespace MyPlayMarket.Web.Controllers
         private readonly IFilteringService _filteringService;
         private readonly IPaginationService _paginationService;
         private readonly IDataService _dataService;
+        private readonly ILogger<GamesController> _logger;
         public IEnumerable<Game> Games { get; set; }
         public PageViewDTO ViewModel { get; set; }
-        public GamesController(IGameService gameService, ISortingService sortingService, IFilteringService filteringService, IPaginationService paginationService, IDataService dataService)
+        public GamesController(IGameService gameService, ISortingService sortingService, IFilteringService filteringService, IPaginationService paginationService, IDataService dataService, ILogger<GamesController> logger)
         {
             _gameService = gameService;
             _sortingService = sortingService;
             _filteringService = filteringService;
             _paginationService = paginationService;
             _dataService = dataService;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<ActionResult> Index(IndexPaggingDTO indexPagging)

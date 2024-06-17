@@ -15,16 +15,18 @@ namespace MyPlayMarket.Controllers
     public class HomeController : Controller
     {
         private readonly IGameService _gameService;
+        private readonly ILogger<HomeController> _logger;
         public IEnumerable<Game> Games { get; set; }
-        public HomeController(IGameService gameService)
+        public HomeController(IGameService gameService, ILogger<HomeController> logger)
         {
             _gameService = gameService;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            var games = await _gameService.GetGamesAsync();
+            var games = await _gameService.GetGamesByQueryAsync();
             return View(games);
         }
     }
