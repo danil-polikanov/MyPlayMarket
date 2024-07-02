@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Infrastructure.Data;
+using MyPlayMarket.Infrastructure.Data.IRepository;
 using MyPlayMarket.Infrastructure.Entities;
 using MyPlayMarket.Infrastructure.Entities.DTO;
 using NuGet.Protocol.Core.Types;

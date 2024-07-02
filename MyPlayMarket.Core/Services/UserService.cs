@@ -15,16 +15,17 @@ namespace MyPlayMarket.Core.Services
 {
     public class UserService : IUserService
     {
-        public UserService() {
+        public UserService()
+        {
         }
 
         public async Task Register(UserRegisterDTO userDTO)
         {
-            var hashedPassord = Generate(user.Password);
+            var hashedPassord = Generate(userDTO.Password);
             var user = new User(Guid.NewGuid(), userDTO.Name, userDTO.Surname, userDTO.UserName, hashedPassord, userDTO.Email, "User");
-            await _userRepository.Add(user);
+            //await _userRepository.Add(user);
         }
-        public bool Verify(string password, string hashedPassword)=>BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
+        public bool Verify(string password, string hashedPassword) => BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
         public string Generate(string password) => BCrypt.Net.BCrypt.EnhancedHashPassword(password);
     }
 }

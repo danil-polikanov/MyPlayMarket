@@ -9,6 +9,8 @@ using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
 using NLog.Web;
 using NLog;
+using MyPlayMarket.Infrastructure.Data.IRepository;
+using MyPlayMarket.Infrastructure.Data.Repository;
 
 namespace MyPlayMarket
 {
@@ -34,13 +36,16 @@ namespace MyPlayMarket
                 builder.Services.AddControllersWithViews();
 
                 // Dependency Injection
+                builder.Services.AddScoped<IUserRepository,UserRepository>();
                 builder.Services.AddScoped<IGameRepository, GameRepository>();
                 builder.Services.AddScoped<IGameService, GameService>();
                 builder.Services.AddScoped<ISortingService, SortingService>();
                 builder.Services.AddScoped<IFilteringService, FilteringService>();
                 builder.Services.AddScoped<IPaginationService, PaginationService>();
                 builder.Services.AddScoped<IDataService, DataService>();
-                
+                builder.Services.AddScoped<IApiService, ApiService>();
+                builder.Services.AddHttpClient();
+
 
                 // Строка подключения SQL
                 string computerName = Environment.MachineName;

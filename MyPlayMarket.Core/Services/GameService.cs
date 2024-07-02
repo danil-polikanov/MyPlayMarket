@@ -4,6 +4,7 @@ using System.Collections;
 using System.Drawing.Printing;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyPlayMarket.Core.IServices;
+using MyPlayMarket.Infrastructure.Data.IRepository;
 
 namespace MyPlayMarket.Core.Services
 {

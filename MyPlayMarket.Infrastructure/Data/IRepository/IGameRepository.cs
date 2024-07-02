@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyPlayMarket.Infrastructure.Data
+namespace MyPlayMarket.Infrastructure.Data.IRepository
 {
     public interface IGameRepository
     {

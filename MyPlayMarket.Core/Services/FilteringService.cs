@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.Hosting;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Infrastructure.Data;
+using MyPlayMarket.Infrastructure.Data.IRepository;
 using MyPlayMarket.Infrastructure.Entities;
 using MyPlayMarket.Infrastructure.Entities.DTO;
 using System;
