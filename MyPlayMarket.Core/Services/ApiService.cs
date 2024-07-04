@@ -18,13 +18,14 @@ using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MyPlayMarket.Core.Services
 {
     public class ApiService : IApiService
     {
         const string apiKey = "cf0d983c9d624cbd989ded847b1429f9";
-        int count = 200;
+        int count = 626;
         private readonly HttpClient _httpClient;
         private readonly IGameRepository _gameRepository;
         private readonly IGenericRepository<Tag> _tagRepository;
@@ -46,7 +47,8 @@ namespace MyPlayMarket.Core.Services
         {
             try
             {
-                while (count <= 700)
+                //List of Best Games List<int> ints = new List<int> { 3498, 3328, 58175, 4200, 28, 4291, 802, 4062, 12020, 3439, 5679, 13537, 1030, 5286, 32, 3070, 13536, 3939, 2454, 4286 };
+                while (1000 > count)
                 {
                     var response = await _httpClient.GetAsync($"https://api.rawg.io/api/games/{count}?key={apiKey}");
                     if (response.IsSuccessStatusCode == true)
@@ -55,22 +57,27 @@ namespace MyPlayMarket.Core.Services
                         JsonDocument jsonData = JsonDocument.Parse(json);
                         JsonElement root = jsonData.RootElement;
                         Random random = new Random();
+                        var description = root.GetProperty("description").ToString();
+                        var url = root.GetProperty("background_image").ToString();
+                        var company = "Unknown Developer";
+                        if (root.TryGetProperty("developers", out JsonElement developersElement) && developersElement.GetArrayLength() > 0)
+                        {
+                            company = developersElement[0].GetProperty("name").GetString();
+                        }
                         Game game = new Game
                         {
                             Name = root.GetProperty("name").ToString(),
-                            Description = root.GetProperty("description").ToString(),
+                            Description = string.IsNullOrEmpty(description) ? "no info" : description,
                             Cost = Math.Round(random.NextDouble() * 100, 2),
-                            Company = root.GetProperty("developers").EnumerateArray().ElementAt(0).GetProperty("name").ToString(),
-                            UrlImage = root.GetProperty("background_image").GetString(),
+                            Company = company,
+                            UrlImage = string.IsNullOrEmpty(url) ? "no info" : url,
                             Release = root.GetProperty("released").GetDateTime(),
                             GameGenres = new List<GameGenre>(),
                             GamePlatforms = new List<GamePlatform>(),
                             GameTags = new List<GameTag>(),
                             Screenshots = new List<GameScreenshot>()
                         };
-                        if (count == 248) {
-                            int s = 1;
-                        }
+
                         game.Screenshots = await GetGameScreenshotsAsync(count);
                         game.GameGenres = await GetGenresAsync(root);
                         game.GamePlatforms = await GetPlatfromsAsync(root);
@@ -84,32 +91,36 @@ namespace MyPlayMarket.Core.Services
                     count += 1;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                _logger.LogError(ex, ex.Message);
             }
         }
         private async Task<ICollection<GameScreenshot>> GetGameScreenshotsAsync(int id)
         {
 
             var response = await _httpClient.GetAsync($"https://api.rawg.io/api/games/{count}/screenshots?key={apiKey}");
-            if (response.IsSuccessStatusCode== true)
+            List<GameScreenshot> listScreenshots = new List<GameScreenshot>();
+            if (response.IsSuccessStatusCode == true)
             {
                 string json = await response.Content.ReadAsStringAsync();
                 JsonDocument jsonData = JsonDocument.Parse(json);
                 JsonElement root = jsonData.RootElement;
-                List<GameScreenshot> listScreenshots = new List<GameScreenshot>();
+                
 
                 foreach (JsonElement screenshot in root.GetProperty("results").EnumerateArray())
                 {
                     var url = screenshot.GetProperty("image").GetString();
-                    var dataScreenshots = await _screenshotRepository.GetEntity(q => q.Where(t => t.Url == url));
-                    GameScreenshot gameScreenshot = dataScreenshots ?? new GameScreenshot { Url = screenshot.GetProperty("image").GetString() };
-                    listScreenshots.Add(gameScreenshot);
-                }
-                return listScreenshots;
+
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        var dataScreenshot = await _screenshotRepository.GetEntity(q => q.Where(t => t.Url == url));
+                        GameScreenshot gameScreenshot = dataScreenshot ?? new GameScreenshot { Url = url };
+                        listScreenshots.Add(gameScreenshot);
+                    }
+                }             
             }
-            return null;
+            return listScreenshots;
         }
         private async Task<ICollection<GameGenre>> GetGenresAsync(JsonElement root)
         {
@@ -117,13 +128,17 @@ namespace MyPlayMarket.Core.Services
             foreach (JsonElement genre in root.GetProperty("genres").EnumerateArray())
             {
                 var currentGenre = genre.GetProperty("name").GetString();
-                var dataGenre = await _genreRepository.GetEntity(q => q.Where(t => t.Name == currentGenre));
-                if (dataGenre == null)
+                if (!string.IsNullOrEmpty(currentGenre))
                 {
-                    dataGenre = new Genre { Name = genre.GetProperty("name").GetString() };
-                    await _genreRepository.AddAsync(dataGenre);
+                    var dataGenre = await _genreRepository.GetEntity(q => q.Where(t => t.Name == currentGenre));
+
+                    if (dataGenre == null)
+                    {
+                        dataGenre = new Genre { Name = currentGenre };
+                        await _genreRepository.AddAsync(dataGenre);
+                    }
+                    genres.Add(new GameGenre { Genre = dataGenre });
                 }
-                genres.Add(new GameGenre { Genre = dataGenre });
             }
             return genres;
         }
@@ -134,13 +149,16 @@ namespace MyPlayMarket.Core.Services
             {
                 JsonElement platformDetails = platform.GetProperty("platform");
                 var currentPlatform = platformDetails.GetProperty("name").GetString();
-                var dataPlatform = await _platformRepository.GetEntity(q => q.Where(t => t.Name == currentPlatform));
-                if (dataPlatform == null)
+                if (!string.IsNullOrEmpty(currentPlatform))
                 {
-                    dataPlatform = new Platform { Name = platformDetails.GetProperty("name").GetString() };
-                    await _platformRepository.AddAsync(dataPlatform);
+                    var dataPlatform = await _platformRepository.GetEntity(q => q.Where(t => t.Name == currentPlatform));
+                    if (dataPlatform == null)
+                    {
+                        dataPlatform = new Platform { Name = currentPlatform };
+                        await _platformRepository.AddAsync(dataPlatform);
+                    }
+                    platforms.Add(new GamePlatform { Platform = dataPlatform });
                 }
-                platforms.Add(new GamePlatform { Platform = dataPlatform });
             }
             return platforms;
         }
@@ -150,37 +168,20 @@ namespace MyPlayMarket.Core.Services
             foreach (JsonElement tag in root.GetProperty("tags").EnumerateArray())
             {
                 var currentTag = tag.GetProperty("name").GetString();
-                var dataTag = await _tagRepository.GetEntity(q => q.Where(t => t.Name == currentTag));
-                if (dataTag == null)
+                if (!string.IsNullOrEmpty(currentTag))
                 {
-                    dataTag = new Tag { Name = tag.GetProperty("name").GetString() };
-                    await _tagRepository.AddAsync(dataTag);
+                    var dataTag = await _tagRepository.GetEntity(q => q.Where(t => t.Name == currentTag));
+                    if (dataTag == null)
+                    {
+                        dataTag = new Tag { Name = currentTag };
+                        await _tagRepository.AddAsync(dataTag);
+                    }
+                    tags.Add(new GameTag { Tag = dataTag });
                 }
-                tags.Add(new GameTag { Tag = dataTag });
             }
+
             return tags;
         }
 
-        //public async Task ImportGenresFromApiAsync()
-        //{
-        //    var response = await _httpClient.GetAsync($"https://api.rawg.io/api/games?key={apiKey}");
-        //    response.EnsureSuccessStatusCode();
-
-        //    string json = await response.Content.ReadAsStringAsync();
-        //    Dictionary<string, object> jsonData = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-        //    var results = jsonData["results"] as JsonElement?;
-        //    foreach (var game in results.Value.EnumerateArray())
-        //    {
-        //        await
-        //    }
-        //}
-        //public async Task ImportGenreFromApiAsync()
-        //{
-
-        //}
-        //public async Task ImportPlatformFromApiAsync()
-        //{
-
-        //}
     }
 }

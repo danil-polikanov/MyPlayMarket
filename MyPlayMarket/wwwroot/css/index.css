@@ -11,6 +11,9 @@
       flex-basis:40%;
     }
 }
+a:hover{
+    text-decoration:none !important;
+}
 .main.main-game {
 
 }
@@ -20,11 +23,12 @@
     background: #412996;
     color: white;
     margin: 2em auto;
-    transition:0.5s;
+    transition: 0.5s;
 }
 .main-game-cards:hover {
     opacity: 0.8;
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
+    text-decoration:none;
 }
 
 .main-game-cards p {

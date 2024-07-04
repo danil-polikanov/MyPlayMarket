@@ -4,7 +4,7 @@
     Layout = "_Layout";
     ViewData["Title"] = "Details";
 }
-<link rel="stylesheet" href="~/css/gameDetails.css" asp-append-version="true"/>
+<link rel="stylesheet" href="~/css/gameDetails.css" asp-append-version="true" />
 <div class="container">
     <h1>Details</h1>
     <div class="form-row">
@@ -17,24 +17,30 @@
             <input type="submit" value="Edit" class="btn btn-success" />
         </form>
     </div>
-    <div class="d-flex flex-wrap gap-5">
-        <div>
-            <img src="@Model.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="update-game-img">
+    <div class="container row">
+        <div class="col-5">
+            <div>
+                <img src="@Model.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="update-game-img">
+            </div>
         </div>
-        <div>
-            <div class="text-white" style="max-width:500px;">
+        <div class="col-7">
+            <div class="text-white">
                 <div>
-                    <p>
-                        @Model.Name
+                    <p>                     
+                        Name: @Model.Name
                     </p>
                     <p>
-                        @Model.Company
+                        Description: @Html.Raw(Model.Description)
                     </p>
                     <p>
-                        @Model.Cost
+                        Developers: @Model.Company
                     </p>
                     <p>
-                        @Model.Release.ToShortDateString()
+                        Price: @Model.Cost.ToString("C",
+                        new System.Globalization.CultureInfo("en-US"));
+                    </p>
+                    <p>
+                        Release: @Model.Release.ToShortDateString()
                     </p>
                 </div>
             </div>
