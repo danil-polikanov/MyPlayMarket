@@ -21,7 +21,7 @@
         <div class="col-5">
             <div>
                 <img src="@Model.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="update-game-img">
-            </div>
+            </div>           
         </div>
         <div class="col-7">
             <div class="text-white">
@@ -29,20 +29,26 @@
                     <p>                     
                         Name: @Model.Name
                     </p>
-                    <p>
-                        Description: @Html.Raw(Model.Description)
-                    </p>
+                    
                     <p>
                         Developers: @Model.Company
                     </p>
                     <p>
                         Price: @Model.Cost.ToString("C",
-                        new System.Globalization.CultureInfo("en-US"));
+                        new System.Globalization.CultureInfo("en-US"))
                     </p>
                     <p>
                         Release: @Model.Release.ToShortDateString()
                     </p>
+                    <p>
+                    </p>
                 </div>
+            </div>
+        </div>
+        <div>
+            <br />
+            <div class="text-white">
+                Description: @Html.Raw(Model.Description)
             </div>
         </div>
     </div>
