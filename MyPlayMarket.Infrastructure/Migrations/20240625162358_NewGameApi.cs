@@ -53,10 +53,6 @@ namespace MyPlayMarket.Infrastructure.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.DropColumn(
-                 name: "Description",
-                 table: "Games");
-
             migrationBuilder.RenameColumn(
                 name: "Password",
                 table: "LocalUsers",
@@ -246,9 +242,7 @@ namespace MyPlayMarket.Infrastructure.Migrations
 
             migrationBuilder.DropColumn(
                 name: "PasswordHash",
-                table: "LocalUsers");
-
-            
+                table: "LocalUsers");         
 
             migrationBuilder.AddColumn<int>(
                 name: "TempId",

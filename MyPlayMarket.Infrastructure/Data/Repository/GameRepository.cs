@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MyPlayMarket.Infrastructure.Data.IRepository;
 using MyPlayMarket.Infrastructure.Entities;
 using System;
@@ -15,12 +16,14 @@ namespace MyPlayMarket.Infrastructure.Data
     public class GameRepository : IGameRepository
     {
         private readonly ApplicationDbContext _db;
-        public GameRepository(ApplicationDbContext db)
+        private readonly ILogger<GameRepository> _logger;
+        public GameRepository(ApplicationDbContext db,ILogger<GameRepository> logger)
         {
             _db = db;
+            _logger = logger;
         }
         public async Task<List<Game>> GetFiltredGamesAsync(Func<IQueryable<Game>, IQueryable<Game>> expression)
-       {
+        {
             try
             {
                 var query = expression(_db.Games);
@@ -72,16 +75,14 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
-                if (await _db.Games.FirstOrDefaultAsync(x => x.Name == entity.Name) != null)
+                if (await _db.Games.FirstOrDefaultAsync(x => x.Name == entity.Name) == null)
                 {
                     await _db.Games.AddAsync(entity);
                     await _db.SaveChangesAsync();
                     return true;
                 }
-                else
-                {
-                    throw new Exception();
-                }
+                else return false;
+                throw new Exception();
             }
             catch (Exception ex)
             {

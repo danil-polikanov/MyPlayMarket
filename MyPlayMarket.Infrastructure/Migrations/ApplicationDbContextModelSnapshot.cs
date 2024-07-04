@@ -37,6 +37,10 @@ namespace MyPlayMarket.Infrastructure.Migrations
                     b.Property<double>("Cost")
                         .HasColumnType("float");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

@@ -10,11 +10,13 @@ namespace MyPlayMarket.Web.Controllers
     {
         private readonly IGameService _gameService;
         private readonly IApiService _apiService;
+        private readonly ILogger<GameApiController> _logger;
 
-        public GameApiController(IGameService gameService, IApiService apiService)
+        public GameApiController(IGameService gameService, IApiService apiService, ILogger<GameApiController> logger)
         {
             _gameService = gameService;
             _apiService = apiService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -24,7 +26,7 @@ namespace MyPlayMarket.Web.Controllers
             return Ok(games);
         }
 
-        public async Task<IActionResult> ImportGames()
+        public async Task<IActionResult> Import()
         {
             await _apiService.ImportGamesFromApiAsync();
             return Ok();

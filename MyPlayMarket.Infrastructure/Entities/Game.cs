@@ -13,6 +13,8 @@ namespace MyPlayMarket.Infrastructure.Entities
         public int Id { get; set; }
         [Required(ErrorMessage ="Incorrect name")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Incorrect description")]
+        public string Description { get; set; }
         [Required(ErrorMessage = "Incorrect price")]
         [Range(0,double.MaxValue)]
         public double Cost { get; set; }

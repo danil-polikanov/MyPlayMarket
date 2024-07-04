@@ -18,6 +18,7 @@ namespace MyPlayMarket
     {
         public static void Main(string[] args)
         {
+
             // Настройка NLog
             var logger = LogManager.Setup().LoadConfigurationFromXml("nlog.config").GetCurrentClassLogger();
             logger.Debug("Start Program");
@@ -36,7 +37,7 @@ namespace MyPlayMarket
                 builder.Services.AddControllersWithViews();
 
                 // Dependency Injection
-                builder.Services.AddScoped<IUserRepository,UserRepository>();
+                builder.Services.AddScoped<IUserRepository, UserRepository>();
                 builder.Services.AddScoped<IGameRepository, GameRepository>();
                 builder.Services.AddScoped<IGameService, GameService>();
                 builder.Services.AddScoped<ISortingService, SortingService>();
@@ -44,10 +45,12 @@ namespace MyPlayMarket
                 builder.Services.AddScoped<IPaginationService, PaginationService>();
                 builder.Services.AddScoped<IDataService, DataService>();
                 builder.Services.AddScoped<IApiService, ApiService>();
+                builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
                 builder.Services.AddHttpClient();
 
 
                 // Строка подключения SQL
+
                 string computerName = Environment.MachineName;
                 if (computerName.ToLower() == "gregor")
                 {

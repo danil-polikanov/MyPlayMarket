@@ -10,7 +10,6 @@ namespace MyPlayMarket.Infrastructure.Entities
 {
     public class GameGenre
     {
-
         public int GameId { get; set; }
         public Game Game { get; set; }
 
