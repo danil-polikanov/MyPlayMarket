@@ -11,8 +11,11 @@ namespace MyPlayMarket.Infrastructure.Entities.DTO
     {
         public string Name { get; set; }
         public string Company { get; set; }
-        [Range(1900, 2100,ErrorMessage = "Invalid year")]
-        public int Release { get; set; }
+        
+        public List<Tag> Tags { get; set; }
+        public List<Platform> Platforms { get; set; }
+        public List<Genre> Genres { get; set; }
+
         
     }
 }

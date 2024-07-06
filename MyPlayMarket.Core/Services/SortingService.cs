@@ -15,12 +15,6 @@ namespace MyPlayMarket.Core.Services
 {
     public class SortingService : ISortingService
     {
-        private readonly IGameRepository _repository;
-
-        public SortingService(IGameRepository repository)
-        {
-            _repository = repository;
-        }
         public async Task<Func<IQueryable<T>, IQueryable<T>>> GetSortExpression<T>(Func<IQueryable<T>, IQueryable<T>> filtredExpression, SortDTO sortModel)
         {
             if (typeof(T) == typeof(Game))

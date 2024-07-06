@@ -45,6 +45,7 @@ namespace MyPlayMarket
                 builder.Services.AddScoped<IPaginationService, PaginationService>();
                 builder.Services.AddScoped<IDataService, DataService>();
                 builder.Services.AddScoped<IApiService, ApiService>();
+                builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
                 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
                 builder.Services.AddHttpClient();
 

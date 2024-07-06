@@ -26,8 +26,8 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
-                var query = expression(_db.Games);
-                return (await query.ToListAsync());
+                var query = expression(_db.Games.IncludeDependencies());
+                return await query.ToListAsync();
 
             }
             catch (Exception ex)
@@ -120,6 +120,19 @@ namespace MyPlayMarket.Infrastructure.Data
             {
                 throw new Exception($"{id} could not be saved: {ex.Message}");
             }
+        }
+    }
+    public static class GameQueryExtensions
+    {
+        public static IQueryable<Game> IncludeDependencies(this IQueryable<Game> query)
+        {
+            return query.Include(q => q.GameGenres)
+                .ThenInclude(qq=>qq.Genre)
+                .Include(r => r.Screenshots)
+                .Include(t=>t.GamePlatforms)
+                .ThenInclude(tt=>tt.Platform)
+                .Include(f=>f.GameTags)
+                .ThenInclude(ff=>ff.Tag);
         }
     }
 }

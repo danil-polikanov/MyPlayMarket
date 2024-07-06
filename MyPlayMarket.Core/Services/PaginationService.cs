@@ -14,12 +14,6 @@ namespace MyPlayMarket.Core.Services
 {
     public class PaginationService: IPaginationService
     {
-        private readonly IGameRepository _repository;
-
-        public PaginationService(IGameRepository repository)
-        {
-            _repository = repository;
-        }
         public async Task<Func<IQueryable<T>, IQueryable<T>>> GetGamesByPagging<T>(Func<IQueryable<T>, IQueryable<T>> sortExpression,PageViewDTO pageViewModel)
         {
             if (typeof(T) == typeof(Game))
@@ -29,7 +23,7 @@ namespace MyPlayMarket.Core.Services
                     var sortedQuery = sortExpression(q);
                     return sortedQuery.Skip((pageViewModel.CurrentPage - 1) * pageViewModel.PageItems).Take(pageViewModel.PageItems);
                 };
-                return pagingExpression;
+                return pagingExpression ;
             }
             return null;
         }

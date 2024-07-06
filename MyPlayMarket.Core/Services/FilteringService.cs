@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Infrastructure.Data;
@@ -15,14 +16,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MyPlayMarket.Core.Services
 {
-    public class FilteringService:IFilteringService
+    public class FilteringService : IFilteringService
     {
-        private readonly IGameRepository _repository;
-
-        public FilteringService(IGameRepository repository)
-        {
-            _repository = repository;
-        }
         public async Task<Func<IQueryable<T>, IQueryable<T>>> GetFilterExpression<T>(FilterDTO filterModel)
         {
             if (typeof(T) == typeof(Game))
@@ -44,9 +39,6 @@ namespace MyPlayMarket.Core.Services
 
                 if (!string.IsNullOrEmpty(filterModel.Company))
                     query = query.Where(g => g.Company.Contains(filterModel.Company));
-
-                if (filterModel.Release>0)
-                    query = query.Where(g => g.Release.Year >= filterModel.Release);
 
                 return query;
             };
