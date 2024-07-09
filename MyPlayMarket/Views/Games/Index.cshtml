@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
 
+
 <div class="container">
     <h1>All Games</h1>
     <p>
@@ -33,11 +34,25 @@
                             <input asp-for="filterDTO.Company" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Company</label>
-                            <input asp-for="filterDTO.Company" class="form-control" />
+                            <label class="control-label">Genres</label>
+                            <select class="form-select" asp-for="filterDTO.SelectedGenres" multiple asp-items="@(new SelectList(Model.AllGenres, "Id", "Name"))">
+                                <option disabled>Choice genre</option>
+                            </select>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">Tags</label>
+                            <select class="form-select" asp-for="filterDTO.SelectedTags" multiple asp-items="@(new SelectList(Model.AllTags, "Id", "Name"))">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Platforms</label>
+                            <select class="form-select" asp-for="filterDTO.SelectedPlatforms" multiple asp-items="@(new SelectList(Model.AllPlatforms,"Id", "Name"))">
+                            </select>
+                        </div>
+
                         <br />
-                        <input name="Submit" type="submit" class="btn btn-secondary" value="Accept" />
+                        <input name="Submit" type="submit" class="btn btn-primary" value="Accept" />
+                        <input name="Reser" type="reset" class="btn btn-danger" value="Reset" />
                     </div>
                 </form>
             </div>
@@ -92,6 +107,5 @@
         </div>
     </div>
 </div>
-
 
 <script src="~/js/syncFormsAndSubmit.js"></script>

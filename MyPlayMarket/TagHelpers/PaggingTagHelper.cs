@@ -84,8 +84,11 @@ namespace MyPlayMarket.Web.TagHelpers
                     { "sortDTO.SortBy", indexPagging.sortDTO.SortBy },
                     { "filterDTO.Name", indexPagging.filterDTO.Name },
                     { "filterDTO.Company", indexPagging.filterDTO.Company },
+                    { "filterDTO.SelectedTags", indexPagging.filterDTO.SelectedTags },
+                    { "filterDTO.SelectedPlatforms", indexPagging.filterDTO.SelectedPlatforms },
+                    { "filterDTO.SelectedGenres", indexPagging.filterDTO.SelectedGenres },
                 };
-                link.Attributes["href"] = urlHelper.Action(PageAction, routeValues);
+        link.Attributes["href"] = urlHelper.Action(PageAction, routeValues);
                 if (pageNumber <= 0 || pageNumber > indexPagging.pageViewDTO.TotalPages)
                 {
                     item.AddCssClass("disabled");

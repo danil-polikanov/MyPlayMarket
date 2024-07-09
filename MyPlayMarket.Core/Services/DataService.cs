@@ -31,12 +31,21 @@ namespace MyPlayMarket.Core.Services
         public DataService(IGameRepository repository,
             ISortingService sortingService,
             IFilteringService filteringService,
-            IPaginationService paginationService, ILogger<DataService> logger)
+            IPaginationService paginationService,
+            IGenericService<Platform> platformService,
+            IGenericService<Tag> tagService,
+            IGenericService<Genre> genreService,
+            IGenericService<GameScreenshot> screenService,
+            ILogger<DataService> logger)
         {
             _repository = repository;
             _sortingService = sortingService;
             _filteringService = filteringService;
             _paginationService = paginationService;
+            _tagService = tagService;
+            _platformService = platformService;
+            _genreService = genreService;
+            _screenService = screenService;
             _logger = logger;
         }
         public async Task<IndexPaggingDTO> GetGamesAsync<T>(IndexPaggingDTO pageIndexPagging)
@@ -52,19 +61,17 @@ namespace MyPlayMarket.Core.Services
                 filterDTO = pageIndexPagging.filterDTO,
                 pageViewDTO = new PageViewDTO(pageIndexPagging.pageViewDTO.CurrentPage, await _repository.GetGamesCountAsync(sortExpression), pageIndexPagging.pageViewDTO.PageItems)
             };
+
+            await UpdateDtoAsync(indexPagging);
+
             return indexPagging;
         }
-        private async Task<FilterDTO> UpdateDtoAsync(FilterDTO filterDTO,
-            IGenericService<Genre> genreService,
-            IGenericService<Tag> tagService,
-            IGenericService<Platform> platformService
-            )
+        private async Task<IndexPaggingDTO> UpdateDtoAsync(IndexPaggingDTO pageIndexPagging)
         {
-
-            filterDTO.Genres = (List<Genre>)await genreService.GetAllAsync();
-            filterDTO.Platforms = (List<Platform>)await platformService.GetAllAsync();
-            filterDTO.Tags = (List<Tag>)await tagService.GetAllAsync();
-            return filterDTO;
+            pageIndexPagging.AllGenres = (List<Genre>)await _genreService.GetAllAsync();
+            pageIndexPagging.AllPlatforms = (List<Platform>)await _platformService.GetAllAsync();
+            pageIndexPagging.AllTags = (List<Tag>)await _tagService.GetAllAsync();
+            return pageIndexPagging;
         }
     }
 }

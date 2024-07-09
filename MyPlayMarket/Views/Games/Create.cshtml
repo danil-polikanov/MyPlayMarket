@@ -13,7 +13,7 @@
     <hr />
     <div class="form-row">
         <div class="col-md-4">
-            <form asp-action="Create">
+            <form asp-action="Create" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label"></label>
@@ -36,13 +36,51 @@
                     <span asp-validation-for="UrlImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" type="text" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <label asp-for="Release" class="control-label"></label>
                     <input asp-for="Release" type="datetime" type="date" min="1900-01-01" class="form-control" />
                     <span asp-validation-for="Release" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" asp-action="Index" />
-                    <input type="reset" value="Reset" class="btn btn-danger"/>
+                    <label asp-for="GamePlatforms" class="control-label">Platforms</label>
+                    <div id="platformsContainer">
+                        <input asp-for="GamePlatforms" type="text" class="form-control" />
+                    </div>
+                    <button type="button" id="addPlatformButton" class="btn btn-primary">Add Platform</button>
+                    <button type="button" id="removePlatformButton" class="btn btn-warning">Remove Last Platform</button>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="GameTags" class="control-label">Tags</label>
+                    <div id="tagsContainer">
+                        <input asp-for="GameTags" type="text" class="form-control" />
+                    </div>
+                    <button type="button" id="addTagButton" class="btn btn-primary">Add Tag</button>
+                    <button type="button" id="removeTagButton" class="btn btn-warning">Remove Last Tag</button>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GameGenres" class="control-label">Genres</label>
+                    <div id="genresContainer">
+                        <input asp-for="GameGenres" type="text" class="form-control" />
+                    </div>
+                    <button type="button" id="addGenreButton" class="btn btn-primary">Add Genre</button>
+                    <button type="button" id="removeGenreButton" class="btn btn-warning">Remove Last Genre</button>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Screenshots" class="control-label">Screenshots</label>
+                    <div id="screenshotContainer">
+                        <input asp-for="Screenshots" type="text" class="form-control" />
+                    </div>
+                    <button type="button" id="addScreenshotButton" class="btn btn-primary">Add Screenshot</button>
+                    <button type="button" id="removeScreenshotButton" class="btn btn-warning">Remove Last Screenshot</button>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="reset" value="Reset" class="btn btn-danger" />
                 </div>
                 <div>
                     <a class="btn btn-light" asp-action="Index" role="button">Back to list</a>
@@ -52,9 +90,9 @@
     </div>
 
 
-  
-</div>
 
+</div>
+<script src="~/js/createForm.js"></script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

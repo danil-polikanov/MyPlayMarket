@@ -4,6 +4,7 @@ using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
 using MyPlayMarket.Infrastructure.Entities;
 using MyPlayMarket.Infrastructure.Entities.DTO;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Globalization;
 using System.Xml.Linq;
@@ -36,7 +37,6 @@ namespace MyPlayMarket.Web.Controllers
         public async Task<ActionResult> Index(IndexPaggingDTO indexPagging)
         {
             _logger.LogInformation("Index action called with parameters: {@IndexPagging}", indexPagging);
-
             var sortedGames = await _dataService.GetGamesAsync<Game>(indexPagging);
             if (ModelState.IsValid || indexPagging.Games == null)
             {

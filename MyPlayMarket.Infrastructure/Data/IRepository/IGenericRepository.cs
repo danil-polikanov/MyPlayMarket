@@ -10,7 +10,7 @@ namespace MyPlayMarket.Infrastructure.Data.IRepository
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<List<T>> GetEntities(Func<IQueryable<T>, IQueryable<T>> expression);
-        Task<T> GetEntity(Func<IQueryable<T>, IQueryable<T>> expression);
+        Task<T> GetEntityAsync(Func<IQueryable<T>, IQueryable<T>> expression);
         Task<T> GetByIdAsync(int id);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);

@@ -18,7 +18,7 @@
             {
                 <div class="carousel-item @(i == 0 ? "active" : "")">
                     <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id">
-                        <img class="d-block w-100" style="height:500px;" src="@Model[i].UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" alt="Слайд @(i + 1)">
+                        <img class="d-block w-100" style="height:600px;" src="@Model[i].UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" alt="Слайд @(i + 1)">
                         <div class="carousel-caption d-none d-md-block">
                             <h3>@Model[i].Name</h3>
                             <p>@Model[i].Cost</p>

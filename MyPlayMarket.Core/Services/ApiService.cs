@@ -115,7 +115,7 @@ namespace MyPlayMarket.Core.Services
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        var dataScreenshot = await _screenshotRepository.GetEntity(q => q.Where(t => t.Url == url));
+                        var dataScreenshot = await _screenshotRepository.GetEntityAsync(q => q.Where(t => t.Url == url));
                         GameScreenshot gameScreenshot = dataScreenshot ?? new GameScreenshot { Url = url };
                         listScreenshots.Add(gameScreenshot);
                     }
@@ -131,7 +131,7 @@ namespace MyPlayMarket.Core.Services
                 var currentGenre = genre.GetProperty("name").GetString();
                 if (!string.IsNullOrEmpty(currentGenre))
                 {
-                    var dataGenre = await _genreRepository.GetEntity(q => q.Where(t => t.Name == currentGenre));
+                    var dataGenre = await _genreRepository.GetEntityAsync(q => q.Where(t => t.Name == currentGenre));
 
                     if (dataGenre == null)
                     {
@@ -152,7 +152,7 @@ namespace MyPlayMarket.Core.Services
                 var currentPlatform = platformDetails.GetProperty("name").GetString();
                 if (!string.IsNullOrEmpty(currentPlatform))
                 {
-                    var dataPlatform = await _platformRepository.GetEntity(q => q.Where(t => t.Name == currentPlatform));
+                    var dataPlatform = await _platformRepository.GetEntityAsync(q => q.Where(t => t.Name == currentPlatform));
                     if (dataPlatform == null)
                     {
                         dataPlatform = new Platform { Name = currentPlatform };
@@ -171,7 +171,7 @@ namespace MyPlayMarket.Core.Services
                 var currentTag = tag.GetProperty("name").GetString();
                 if (!string.IsNullOrEmpty(currentTag))
                 {
-                    var dataTag = await _tagRepository.GetEntity(q => q.Where(t => t.Name == currentTag));
+                    var dataTag = await _tagRepository.GetEntityAsync(q => q.Where(t => t.Name == currentTag));
                     if (dataTag == null)
                     {
                         dataTag = new Tag { Name = currentTag };

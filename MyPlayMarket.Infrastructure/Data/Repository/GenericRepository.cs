@@ -40,7 +40,7 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
                 throw new Exception($"Couldn't retrieve entities: {ex.Message}");
             }
         }
-        public async Task<T> GetEntity(Func<IQueryable<T>, IQueryable<T>> expression)
+        public async Task<T> GetEntityAsync(Func<IQueryable<T>, IQueryable<T>> expression)
         {
             try
             {
