@@ -77,14 +77,14 @@ namespace MyPlayMarket.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Game game)
+        public async Task<ActionResult> Create(CreateGameDTO createdGame)
         {
-            _logger.LogInformation("Create POST action called with game: {@Game}", game);
+            _logger.LogInformation("Create POST action called with game: {@Game}", createdGame);
 
-            if (game != null && ModelState.IsValid)
+            if (createdGame != null && ModelState.IsValid)
             {
-                await _gameService.CreateGameAsync(game);
-                _logger.LogInformation("Create action succeeded. Game created: {@Game}", game);
+                await _gameService.CreateGameAsync(createdGame);
+                _logger.LogInformation("Create action succeeded. Game created: {@Game}", createdGame);
                 ViewBag.Message = "Data Insert Successfully";
             }
             else

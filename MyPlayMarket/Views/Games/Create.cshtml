@@ -1,5 +1,6 @@
 ﻿@using MyPlayMarket.Infrastructure.Entities;
-@model Game
+@using MyPlayMarket.Infrastructure.Entities.DTO
+@model CreateGameDTO
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Create";
@@ -16,67 +17,66 @@
             <form asp-action="Create" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" type="text" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="Game.Name" class="control-label"></label>
+                    <input asp-for="Game.Name" type="text" class="form-control" />
+                    <span asp-validation-for="Game.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Cost" class="control-label"></label>
-                    <input asp-for="Cost" type="number" class="form-control" />
-                    <span asp-validation-for="Cost" class="text-danger"></span>
+                    <label asp-for="Game.Cost" class="control-label"></label>
+                    <input asp-for="Game.Cost" type="number" class="form-control" />
+                    <span asp-validation-for="Game.Cost" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Company" class="control-label"></label>
-                    <input asp-for="Company" type="text" class="form-control" />
-                    <span asp-validation-for="Company" class="text-danger"></span>
+                    <label asp-for="Game.Company" class="control-label"></label>
+                    <input asp-for="Game.Company" type="text" class="form-control" />
+                    <span asp-validation-for="Game.Company" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="UrlImage" class="control-label"></label>
-                    <input asp-for="UrlImage" type="text" class="form-control" />
-                    <span asp-validation-for="UrlImage" class="text-danger"></span>
+                    <label asp-for="Game.UrlImage" class="control-label"></label>
+                    <input asp-for="Game.UrlImage" type="text" class="form-control" />
+                    <span asp-validation-for="Game.UrlImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" type="text" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <label asp-for="Game.Description" class="control-label"></label>
+                    <input asp-for="Game.Description" type="text" class="form-control" />
+                    <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Release" class="control-label"></label>
-                    <input asp-for="Release" type="datetime" type="date" min="1900-01-01" class="form-control" />
-                    <span asp-validation-for="Release" class="text-danger"></span>
+                    <label asp-for="Game.Release" class="control-label"></label>
+                    <input asp-for="Game.Release" type="datetime" type="date" min="1900-01-01" class="form-control" />
+                    <span asp-validation-for="Game.Release" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="GamePlatforms" class="control-label">Platforms</label>
+                    <label asp-for="PlatformsDTO" class="control-label">platforms</label>
                     <div id="platformsContainer">
-                        <input asp-for="GamePlatforms" type="text" class="form-control" />
+                        <input asp-for="PlatformsDTO" type="text" class="form-control" />
                     </div>
-                    <button type="button" id="addPlatformButton" class="btn btn-primary">Add Platform</button>
-                    <button type="button" id="removePlatformButton" class="btn btn-warning">Remove Last Platform</button>
+                    <button type="button" id="addPlatformButton" class="btn btn-primary">add platform</button>
+                    <button type="button" id="removePlatformButton" class="btn btn-danger">remove last platform</button>
                 </div>
-
                 <div class="form-group">
-                    <label asp-for="GameTags" class="control-label">Tags</label>
+                    <label asp-for="TagsDTO" class="control-label">tags</label>
                     <div id="tagsContainer">
-                        <input asp-for="GameTags" type="text" class="form-control" />
+                        <input asp-for="TagsDTO" type="text" class="form-control" />
                     </div>
-                    <button type="button" id="addTagButton" class="btn btn-primary">Add Tag</button>
-                    <button type="button" id="removeTagButton" class="btn btn-warning">Remove Last Tag</button>
+                    <button type="button" id="addTagButton" class="btn btn-primary">add tag</button>
+                    <button type="button" id="removeTagButton" class="btn btn-danger">remove last tag</button>
                 </div>
                 <div class="form-group">
-                    <label asp-for="GameGenres" class="control-label">Genres</label>
+                    <label asp-for="GenresDTO" class="control-label">genres</label>
                     <div id="genresContainer">
-                        <input asp-for="GameGenres" type="text" class="form-control" />
+                        <input asp-for="GenresDTO" type="text" class="form-control" />
                     </div>
-                    <button type="button" id="addGenreButton" class="btn btn-primary">Add Genre</button>
-                    <button type="button" id="removeGenreButton" class="btn btn-warning">Remove Last Genre</button>
+                    <button type="button" id="addGenreButton" class="btn btn-primary">add genre</button>
+                    <button type="button" id="removeGenreButton" class="btn btn-danger">remove last genre</button>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Screenshots" class="control-label">Screenshots</label>
+                    <label asp-for="ScreenshotsDTO" class="control-label">screenshots</label>
                     <div id="screenshotContainer">
-                        <input asp-for="Screenshots" type="text" class="form-control" />
+                        <input asp-for="ScreenshotsDTO" type="text" class="form-control" />
                     </div>
-                    <button type="button" id="addScreenshotButton" class="btn btn-primary">Add Screenshot</button>
-                    <button type="button" id="removeScreenshotButton" class="btn btn-warning">Remove Last Screenshot</button>
+                    <button type="button" id="addScreenshotButton" class="btn btn-primary">add screenshot</button>
+                    <button type="button" id="removeScreenshotButton" class="btn btn-danger">remove last screenshot</button>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-primary" />

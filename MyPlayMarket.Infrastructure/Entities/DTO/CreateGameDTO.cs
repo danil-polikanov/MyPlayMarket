@@ -11,26 +11,17 @@ namespace MyPlayMarket.Infrastructure.Entities.DTO
     {
         public CreateGameDTO()
         {
+            Game=new Game();
+            GenresDTO = new List<string>();
+            ScreenshotsDTO = new List<string>();
+            TagsDTO = new List<string>();
+            PlatformsDTO = new List<string>();
         }
-        [Key]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Incorrect name")]
-        public string Name { get; set; }
-        [Required(ErrorMessage = "Incorrect description")]
-        public string Description { get; set; }
-        [Required(ErrorMessage = "Incorrect price")]
-        [Range(0, double.MaxValue)]
-        public double Cost { get; set; }
-        [Required(ErrorMessage = "Incorrect company name")]
-        public string Company { get; set; }
-        [Required(ErrorMessage = "Incorrect image url")]
-        public string UrlImage { get; set; }
-        [Required(ErrorMessage = "Incorrect date")]
-        public DateTime Release { get; set; }
-        public List<GameGenre> GameGenres { get; set; }
-        public List<GameScreenshot> Screenshots { get; set; }
-        public List<GameTag> GameTags { get; set; }
-        public List<GamePlatform> GamePlatforms { get; set; }
+        public Game Game { get; set; }
+        public List<string> GenresDTO { get; set; }
+        public List<string> ScreenshotsDTO { get; set; }
+        public List<string> TagsDTO { get; set; }
+        public List<string> PlatformsDTO { get; set; }
 
     }
 }

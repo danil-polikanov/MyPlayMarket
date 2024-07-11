@@ -27,7 +27,7 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
         {
             return await _dbSet.ToListAsync();
         }
-        public async Task<List<T>> GetEntities(Func<IQueryable<T>, IQueryable<T>> expression)
+        public async Task<List<T>> GetEntitiesAsync(Func<IQueryable<T>, IQueryable<T>> expression)
         {
             try
             {

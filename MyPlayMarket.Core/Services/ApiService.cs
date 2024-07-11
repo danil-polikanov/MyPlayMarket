@@ -28,19 +28,25 @@ namespace MyPlayMarket.Core.Services
         int count = 300;
         private readonly HttpClient _httpClient;
         private readonly IGameRepository _gameRepository;
-        private readonly IGenericRepository<Tag> _tagRepository;
-        private readonly IGenericRepository<Platform> _platformRepository;
-        private readonly IGenericRepository<Genre> _genreRepository;
-        private readonly IGenericRepository<GameScreenshot> _screenshotRepository;
+        private readonly IGenericService<Tag> _tagService;
+        private readonly IGenericService<Platform> _platformService;
+        private readonly IGenericService<Genre> _genreService;
+        private readonly IGenericService<GameScreenshot> _screenshotService;
         private readonly ILogger<ApiService> _logger;
-        public ApiService(IGameRepository gameRepository, HttpClient httpClient, IGenericRepository<Tag> tagRepository, IGenericRepository<Platform> platformRepository, IGenericRepository<Genre> genreRepository, IGenericRepository<GameScreenshot> screenshotRepository, ILogger<ApiService> logger)
+        public ApiService(IGameRepository gameRepository, 
+            HttpClient httpClient,
+            IGenericService<Tag> tagService,
+            IGenericService<Platform> platformService,
+            IGenericService<Genre> genreService,
+            IGenericService<GameScreenshot> _screenshotService, 
+            ILogger<ApiService> logger)
         {
             _gameRepository = gameRepository;
             _httpClient = httpClient;
-            _tagRepository = tagRepository;
-            _platformRepository = platformRepository;
-            _genreRepository = genreRepository;
-            _screenshotRepository = screenshotRepository;
+            _tagService = tagService;
+            _platformService = platformService;
+            _genreService = genreService;
+            _screenshotService = _screenshotService;
             _logger = logger;
         }
         public async Task ImportGamesFromApiAsync()
@@ -115,7 +121,7 @@ namespace MyPlayMarket.Core.Services
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        var dataScreenshot = await _screenshotRepository.GetEntityAsync(q => q.Where(t => t.Url == url));
+                        var dataScreenshot = await _screenshotService.GetEntityAsync(q => q.Where(t => t.Url == url));
                         GameScreenshot gameScreenshot = dataScreenshot ?? new GameScreenshot { Url = url };
                         listScreenshots.Add(gameScreenshot);
                     }
@@ -131,13 +137,14 @@ namespace MyPlayMarket.Core.Services
                 var currentGenre = genre.GetProperty("name").GetString();
                 if (!string.IsNullOrEmpty(currentGenre))
                 {
-                    var dataGenre = await _genreRepository.GetEntityAsync(q => q.Where(t => t.Name == currentGenre));
+                    var dataGenre = await _genreService.GetEntityAsync(q => q.Where(t => t.Name == currentGenre));
 
                     if (dataGenre == null)
                     {
                         dataGenre = new Genre { Name = currentGenre };
-                        await _genreRepository.AddAsync(dataGenre);
+                        await _genreService.AddAsync(dataGenre);
                     }
+
                     genres.Add(new GameGenre { Genre = dataGenre });
                 }
             }
@@ -152,11 +159,11 @@ namespace MyPlayMarket.Core.Services
                 var currentPlatform = platformDetails.GetProperty("name").GetString();
                 if (!string.IsNullOrEmpty(currentPlatform))
                 {
-                    var dataPlatform = await _platformRepository.GetEntityAsync(q => q.Where(t => t.Name == currentPlatform));
+                    var dataPlatform = await _platformService.GetEntityAsync(q => q.Where(t => t.Name == currentPlatform));
                     if (dataPlatform == null)
                     {
                         dataPlatform = new Platform { Name = currentPlatform };
-                        await _platformRepository.AddAsync(dataPlatform);
+                        await _platformService.AddAsync(dataPlatform);
                     }
                     platforms.Add(new GamePlatform { Platform = dataPlatform });
                 }
@@ -171,11 +178,11 @@ namespace MyPlayMarket.Core.Services
                 var currentTag = tag.GetProperty("name").GetString();
                 if (!string.IsNullOrEmpty(currentTag))
                 {
-                    var dataTag = await _tagRepository.GetEntityAsync(q => q.Where(t => t.Name == currentTag));
+                    var dataTag = await _tagService.GetEntityAsync(q => q.Where(t => t.Name == currentTag));
                     if (dataTag == null)
                     {
                         dataTag = new Tag { Name = currentTag };
-                        await _tagRepository.AddAsync(dataTag);
+                        await _tagService.AddAsync(dataTag);
                     }
                     tags.Add(new GameTag { Tag = dataTag });
                 }

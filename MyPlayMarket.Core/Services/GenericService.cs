@@ -1,4 +1,5 @@
-﻿using MyPlayMarket.Core.IServices;
+﻿using Microsoft.EntityFrameworkCore;
+using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Infrastructure.Data.IRepository;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,18 @@ namespace MyPlayMarket.Core.Services
         {
             _repository = repository;
         }
-
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
-
+        public async Task<List<T>> GetEntitiesAsync(Func<IQueryable<T>, IQueryable<T>> expression)
+        {
+            return await _repository.GetEntitiesAsync(expression);
+        }
+        public async Task<T> GetEntityAsync(Func<IQueryable<T>, IQueryable<T>> expression)
+        {
+            return await _repository.GetEntityAsync(expression);
+        }
         public async Task<T> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
