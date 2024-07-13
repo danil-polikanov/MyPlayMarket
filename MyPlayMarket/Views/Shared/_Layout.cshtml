@@ -16,7 +16,7 @@
 <body>
 
     <header class="_layout-header">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
+        <nav class="navbar navbar-expand navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
             <div class="container">
                 <a class="navbar-brand text-break text-white" asp-area="" asp-action="Index" asp-controller="Home">JaKuZo</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,7 +31,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-controller="Games" asp-action="Index">Games</a>
                         </li>
-                        <li class="nav-item" style="margin: auto 50px;">
+                        <li class="nav-item search-item">
                             <form method="get" asp-action="Index" asp-controller="Games" class="d-flex" role="search">
                                 <input class="form-control mr-1" name="filterDTO.Name" type="search" placeholder="Search" aria-label="Поиск">
                                 <button class="btn btn-info" type="submit">Search</button>
