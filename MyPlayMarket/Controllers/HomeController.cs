@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Core.IRepository;
 using MyPlayMarket.Infrastructure;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Collections;
@@ -8,7 +8,7 @@ using RestSharp;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using MyPlayMarket.Core.IServices;
-
+using MyPlayMarket.Core;
 namespace MyPlayMarket.Controllers
 {
     [Route("/")]
@@ -26,6 +26,7 @@ namespace MyPlayMarket.Controllers
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            _logger.LogInformation("Main view called");
             var games = await _gameService.GetGamesByQueryAsync();
             return View(games);
         }

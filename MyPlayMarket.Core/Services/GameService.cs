@@ -1,9 +1,8 @@
-﻿using MyPlayMarket.Infrastructure.Entities;
-using MyPlayMarket.Infrastructure.Data;
-using System.Collections;
-using System.Drawing.Printing;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using System.Collections;
 using MyPlayMarket.Core.IServices;
+using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core.DTO;
+using Microsoft.Extensions.Logging;
 
 namespace MyPlayMarket.Core.Services
 {

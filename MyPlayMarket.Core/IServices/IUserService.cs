@@ -1,4 +1,5 @@
-﻿using MyPlayMarket.Infrastructure.Entities;
+﻿using MyPlayMarket.Core;
+using MyPlayMarket.Core.DTO;
 
 namespace MyPlayMarket.Core.IServices
 {

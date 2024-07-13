@@ -24,9 +24,5 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MyPlayMarket.Infrastructure\MyPlayMarket.Infrastructure.csproj" />
-  </ItemGroup>
-
 
 </Project>

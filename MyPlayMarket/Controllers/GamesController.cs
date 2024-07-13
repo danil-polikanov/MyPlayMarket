@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
-using MyPlayMarket.Infrastructure.Entities;
-using MyPlayMarket.Infrastructure.Entities.DTO;
+using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core.DTO;
+using MyPlayMarket.Core;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Globalization;
 using System.Xml.Linq;

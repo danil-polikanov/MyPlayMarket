@@ -1,6 +1,7 @@
 ﻿using MyPlayMarket.Core.IServices;
-using MyPlayMarket.Infrastructure.Data;
-using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core;
+using MyPlayMarket.Core.DTO;
 using MyPlayMarket.Infrastructure.Entities.DTO;
 using System;
 using System.Collections;

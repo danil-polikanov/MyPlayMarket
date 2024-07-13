@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using MyPlayMarket.Core.IServices;
-using MyPlayMarket.Infrastructure.Data;
-using MyPlayMarket.Infrastructure.Entities;
-using MyPlayMarket.Infrastructure.Entities.DTO;
+using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core;
+using MyPlayMarket.Core.DTO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,16 +16,28 @@ namespace MyPlayMarket.Core.Services
 {
     public class UserService : IUserService
     {
-        public UserService() {
+        private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository repository,ILogger logger)
+        {
+            _userRepository = repository;
+            _logger = logger;
         }
 
         public async Task Register(UserRegisterDTO userDTO)
         {
-            var hashedPassord = Generate(user.Password);
-            var user = new User(Guid.NewGuid(), userDTO.Name, userDTO.Surname, userDTO.UserName, hashedPassord, userDTO.Email, "User");
-            await _userRepository.Add(user);
+            try
+            {
+                var hashedPassord = Generate(userDTO.Password);
+                var user = new User(Guid.NewGuid(), userDTO.Name, userDTO.Surname, userDTO.UserName, hashedPassord, userDTO.Email, "User");
+                //await _userRepository.Add(user);
+            }
+            catch(Exception ex) 
+            {
+
+            }
         }
-        public bool Verify(string password, string hashedPassword)=>BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
+        public bool Verify(string password, string hashedPassword) => BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
         public string Generate(string password) => BCrypt.Net.BCrypt.EnhancedHashPassword(password);
     }
 }

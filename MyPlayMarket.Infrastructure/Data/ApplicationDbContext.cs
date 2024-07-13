@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Infrastructure.Entities;
+using MyPlayMarket.Infrastructure;
+using MyPlayMarket.Core;
+using MyPlayMarket.Core.IRepository;
 
-namespace MyPlayMarket.Infrastructure.Data
+namespace MyPlayMarket.Core
 {
     public class ApplicationDbContext: DbContext
 

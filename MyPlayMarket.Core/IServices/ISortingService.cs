@@ -1,5 +1,5 @@
 ﻿using MyPlayMarket.Core.Services;
-using MyPlayMarket.Infrastructure.Entities.DTO;
+using MyPlayMarket.Core.DTO;
 using System;
 using System.Collections;
 using System.Collections.Generic;

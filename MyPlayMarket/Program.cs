@@ -9,6 +9,9 @@ using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
 using NLog.Web;
 using NLog;
+using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Infrastructure.Data.Repository;
+using MyPlayMarket.Core;
 
 namespace MyPlayMarket
 {

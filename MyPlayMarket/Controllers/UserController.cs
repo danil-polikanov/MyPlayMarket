@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
-using MyPlayMarket.Infrastructure.Entities;
-using MyPlayMarket.Infrastructure.Entities.DTO;
+using MyPlayMarket.Core.DTO;
+using MyPlayMarket.Core;
 using System.Collections;
 using System.Globalization;
 using System.Xml.Linq;
@@ -33,11 +33,15 @@ namespace MyPlayMarket.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Login(UserRegisterDTO user)
         {
+            _logger.LogInformation($"User with {user.UserName} tried login called");
             if (ModelState.IsValid)
             {
+                _logger.LogInformation($"User with {user.UserName} successfully loginned");
                 return View();
             }
-            else { return BadRequest(); }
+            else {
+                _logger.LogError($"User with {user.UserName} was failing to log in");
+                return BadRequest(); }
         }
         [HttpGet]
         public async Task<ActionResult> Register(UserRegisterDTO user)

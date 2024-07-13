@@ -2,9 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.Hosting;
 using MyPlayMarket.Core.IServices;
-using MyPlayMarket.Infrastructure.Data;
-using MyPlayMarket.Infrastructure.Entities;
-using MyPlayMarket.Infrastructure.Entities.DTO;
+using MyPlayMarket.Core;
+using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
