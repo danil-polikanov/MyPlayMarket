@@ -1,6 +1,6 @@
 ﻿@using MyPlayMarket.Infrastructure.Entities;
 @using MyPlayMarket.Infrastructure.Entities.DTO
-@model CreateGameDTO
+@model CreateUpdateGameDTO
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Create";
@@ -38,12 +38,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Description" class="control-label"></label>
-                    <input asp-for="Game.Description" type="text" class="form-control" />
+                    <textarea asp-for="Game.Description" type="time" class="form-control"></textarea>
                     <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Release" class="control-label"></label>
-                    <input asp-for="Game.Release" type="datetime" type="date" min="1900-01-01" class="form-control" />
+                    <input asp-for="Game.Release" type="date" min="1900-01-01" class="form-control" />
                     <span asp-validation-for="Game.Release" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -88,11 +88,9 @@
             </form>
         </div>
     </div>
-
-
-
 </div>
-<script src="~/js/createForm.js"></script>
+<script src="~/js/createUpdateForm.js"></script>
+<script src="~/js/infoMessage.js"></script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

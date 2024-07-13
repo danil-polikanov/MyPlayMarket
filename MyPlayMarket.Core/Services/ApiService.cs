@@ -25,7 +25,7 @@ namespace MyPlayMarket.Core.Services
     public class ApiService : IApiService
     {
         const string apiKey = "cf0d983c9d624cbd989ded847b1429f9";
-        int count = 300;
+        int count = 500;
         private readonly HttpClient _httpClient;
         private readonly IGameRepository _gameRepository;
         private readonly IGenericService<Tag> _tagService;
@@ -55,7 +55,7 @@ namespace MyPlayMarket.Core.Services
             {
                 //List of Best Games
                 //List<int> ints = new List<int> { 3498, 3328, 58175, 4200, 28, 4291, 802, 4062, 12020, 3439, 5679, 13537, 1030, 5286, 32, 3070, 13536, 3939, 2454, 4286 };
-                while (1000 > count)
+                while (1200 > count)
                 {
                     var response = await _httpClient.GetAsync($"https://api.rawg.io/api/games/{count}?key={apiKey}");
                     if (response.IsSuccessStatusCode == true)
@@ -106,7 +106,7 @@ namespace MyPlayMarket.Core.Services
         private async Task<ICollection<GameScreenshot>> GetGameScreenshotsAsync(int id)
         {
 
-            var response = await _httpClient.GetAsync($"https://api.rawg.io/api/games/{count}/screenshots?key={apiKey}");
+            var response = await _httpClient.GetAsync($"https://api.rawg.io/api/games/{id}/screenshots?key={apiKey}");
             List<GameScreenshot> listScreenshots = new List<GameScreenshot>();
             if (response.IsSuccessStatusCode == true)
             {
@@ -121,8 +121,7 @@ namespace MyPlayMarket.Core.Services
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        var dataScreenshot = await _screenshotService.GetEntityAsync(q => q.Where(t => t.Url == url));
-                        GameScreenshot gameScreenshot = dataScreenshot ?? new GameScreenshot { Url = url };
+                        GameScreenshot gameScreenshot =  new GameScreenshot { Url = url };
                         listScreenshots.Add(gameScreenshot);
                     }
                 }             

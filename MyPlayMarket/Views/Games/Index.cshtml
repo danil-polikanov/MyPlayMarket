@@ -20,7 +20,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3">
+        <div class="col-2 col-sm-3">
             <div class="filter">
                 <form method="get" asp-action="Index" id="filterForm">
                     <div class="form form-group">
@@ -57,7 +57,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-10 col-sm-9">
             <form method="get" asp-action="Index" id="sortForm">
                 <select asp-for="sortDTO.SortBy" onchange="syncFormsAndSubmit()" class="custom-select w-25">
                     <option selected disabled>@ViewData["CurrentSort"]</option>
@@ -86,7 +86,7 @@
                 {
                     <div class="main-game-cards">
                         <a class="text-decoration-none text-white" asp-action="Details" asp-route-id="@item.Id">
-                            <img src="@item.UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" class="main-games-cards-img">
+                            <img src="@item.UrlImage" onerror="this.onerror=null; this.src='https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png';" class="main-games-cards-img">
                             <div class="main-game-cards-item">
                                 <p>
                                     @item.Name
@@ -107,5 +107,8 @@
         </div>
     </div>
 </div>
-
-<script src="~/js/syncFormsAndSubmit.js"></script>
+<script src="~/js/infoMessage.js"></script>
+<script>
+    var message = "@Html.Raw(TempData["Message"])";
+    var messageType = "@Html.Raw(TempData["MessageType"])";
+</script>

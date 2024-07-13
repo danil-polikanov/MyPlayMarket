@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MyPlayMarket.Infrastructure.Entities.DTO
 {
-    public class CreateGameDTO
+    public class CreateUpdateGameDTO
     {
-        public CreateGameDTO()
+        public CreateUpdateGameDTO()
         {
             Game=new Game();
             GenresDTO = new List<string>();

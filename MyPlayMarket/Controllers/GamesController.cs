@@ -77,7 +77,7 @@ namespace MyPlayMarket.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateGameDTO createdGame)
+        public async Task<ActionResult> Create(CreateUpdateGameDTO createdGame)
         {
             _logger.LogInformation("Create POST action called with game: {@Game}", createdGame);
 
@@ -85,14 +85,18 @@ namespace MyPlayMarket.Web.Controllers
             {
                 await _gameService.CreateGameAsync(createdGame);
                 _logger.LogInformation("Create action succeeded. Game created: {@Game}", createdGame);
-                ViewBag.Message = "Data Insert Successfully";
+                TempData["Message"] = "Game created succesfully!";
+                TempData["MessageType"] = "success";
+                return RedirectToAction(nameof(Index));
             }
             else
             {
                 _logger.LogWarning("Create action failed. Model state invalid or game is null.");
-                ViewBag.Message = "Data Insert Error";
+                TempData["Message"] = $"Game is already exist with this name or invalid data!";
+                TempData["MessageType"] = "error";
+                return View(createdGame);
             }
-            return RedirectToAction(nameof(Index));
+            
         }
 
         [HttpGet]
@@ -101,28 +105,34 @@ namespace MyPlayMarket.Web.Controllers
             _logger.LogInformation("Edit GET action called with id: {Id}", id);
 
             Game game = await _gameService.GetGameAsync(id);
-            return View(game);
+            CreateUpdateGameDTO createGameDTO = new CreateUpdateGameDTO();          
+            createGameDTO.Game = game;
+            createGameDTO.GenresDTO=game.GameGenres.Select(x=>x.Genre.Name).ToList();
+            createGameDTO.PlatformsDTO = game.GamePlatforms.Select(x => x.Platform.Name).ToList();
+            createGameDTO.TagsDTO = game.GameTags.Select(x => x.Tag.Name).ToList();
+            createGameDTO.ScreenshotsDTO = game.Screenshots.Select(x => x.Url).ToList();
+            return View(createGameDTO);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Game updatedGame)
+        public async Task<ActionResult> Edit(int id, CreateUpdateGameDTO updatedGame)
         {
             _logger.LogInformation("Edit POST action called with id: {Id} and updated game: {@UpdatedGame}", id, updatedGame);
 
             if (ModelState.IsValid)
             {
-                var gameFromDb = await _gameService.GetGameAsync(id);
-                gameFromDb = updatedGame;
-                await _gameService.UpdateGameAsync(gameFromDb);
+                await _gameService.UpdateGameAsync(updatedGame);
                 _logger.LogInformation("Edit action succeeded. Game updated: {@UpdatedGame}", updatedGame);
-                ViewBag.Message = "Data update Successfully";
+                TempData["Message"] = "Game updated succesfully!";
+                TempData["MessageType"] = "success";
                 return RedirectToAction(nameof(Index));
             }
             else
             {
+                TempData["Message"] = $"Game is already exist with this name or invalid data!";
+                TempData["MessageType"] = "error";
                 _logger.LogWarning("Edit action failed due to invalid model state.");
-                ViewBag.Message = "Data update Failed";
                 return View();
             }
         }
@@ -140,18 +150,20 @@ namespace MyPlayMarket.Web.Controllers
         {
             _logger.LogInformation("Delete POST action called with id: {Id} and game: {@Game}", id, game);
 
-            if (ModelState.IsValid)
+            try
             {
                 await _gameService.DeleteGameAsync(id);
                 _logger.LogInformation("Delete action succeeded for id: {Id}", id);
-                ViewBag.Message = "Data delete Successfully";
+                TempData["Message"] = "Game deleted succesfully!";
+                TempData["MessageType"] = "success";
                 return RedirectToAction(nameof(Index));
             }
-            else
+            catch
             {
                 _logger.LogWarning("Delete action failed due to invalid model state.");
-                ViewBag.Message = "Data delete Failed";
-                return View();
+                TempData["Message"] = $"Game wasn't delete";
+                TempData["MessageType"] = "error";
+                return RedirectToAction(nameof(Index));
             }
         }
     }

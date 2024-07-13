@@ -17,7 +17,7 @@ namespace MyPlayMarket.Infrastructure.Data
     {
         private readonly ApplicationDbContext _db;
         private readonly ILogger<GameRepository> _logger;
-        public GameRepository(ApplicationDbContext db,ILogger<GameRepository> logger)
+        public GameRepository(ApplicationDbContext db, ILogger<GameRepository> logger)
         {
             _db = db;
             _logger = logger;
@@ -32,9 +32,11 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                return new List<Game>();
             }
         }
+
         public async Task<int> GetGamesCountAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression)
         {
             try
@@ -43,10 +45,11 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                return 0;
             }
-
         }
+
         public async Task<IEnumerable<Game>> GetAllGamesAsync()
         {
             try
@@ -55,38 +58,39 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                return Enumerable.Empty<Game>();
             }
-
         }
+
         public async Task<Game> GetGameAsync(int id)
         {
             try
             {
-                return await _db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+                return await _db.Games.IncludeDependencies().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve entity with id {id}: {ex.Message}");
+                return null;
             }
-
         }
+
         public async Task<bool> CreateGameAsync(Game entity)
         {
             try
             {
-                if (await _db.Games.FirstOrDefaultAsync(x => x.Name == entity.Name) == null)
-                {
-                    await _db.Games.AddAsync(entity);
-                    await _db.SaveChangesAsync();
-                    return true;
-                }
-                else return false;
-                throw new Exception();
+                var game=_db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Name == entity.Name)??throw new Exception("Game with this name is already exist");
+                await _db.Games.AddAsync(entity);
+                await _db.SaveChangesAsync();
+                _logger.LogWarning($"Game with name {entity.Name} created.");
+                return true;
+
             }
             catch (Exception ex)
             {
-                throw new Exception($"{nameof(entity)} could not be saved: {ex.Message}");
+                _logger.LogError($"{nameof(entity)} could not be saved: {ex.Message}");
+                return false;
             }
         }
 
@@ -94,15 +98,18 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
+                var game = _db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Name == entity.Name) ?? throw new Exception("Game with this name is already exist");
                 _db.Games.Update(entity);
                 await _db.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
+                _logger.LogError($"{nameof(entity)} could not be updated: {ex.Message}");
+                return false;
             }
         }
+
         public async Task<bool> DeleteGameAsync(int id)
         {
             try
@@ -110,7 +117,8 @@ namespace MyPlayMarket.Infrastructure.Data
                 var game = await _db.Games.FirstOrDefaultAsync(x => x.Id == id);
                 if (game == null)
                 {
-                    throw new Exception($"{id} is not exist");
+                    _logger.LogWarning($"Game with id {id} does not exist.");
+                    return false;
                 }
                 _db.Games.Remove(game);
                 await _db.SaveChangesAsync();
@@ -118,21 +126,23 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                throw new Exception($"{id} could not be saved: {ex.Message}");
+                _logger.LogError($"Game with id {id} could not be deleted: {ex.Message}");
+                return false;
             }
         }
     }
+
     public static class GameQueryExtensions
     {
         public static IQueryable<Game> IncludeDependencies(this IQueryable<Game> query)
         {
             return query.Include(q => q.GameGenres)
-                .ThenInclude(qq=>qq.Genre)
+                .ThenInclude(qq => qq.Genre)
                 .Include(r => r.Screenshots)
-                .Include(t=>t.GamePlatforms)
-                .ThenInclude(tt=>tt.Platform)
-                .Include(f=>f.GameTags)
-                .ThenInclude(ff=>ff.Tag);
+                .Include(t => t.GamePlatforms)
+                .ThenInclude(tt => tt.Platform)
+                .Include(f => f.GameTags)
+                .ThenInclude(ff => ff.Tag);
         }
     }
 }

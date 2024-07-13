@@ -23,6 +23,7 @@
     sortForm.submit();
 }
 
+
 function updateHiddenInputs(form, name, values) {
 
     var existingInputs = form.querySelectorAll(`input[name="${name}"]`);
