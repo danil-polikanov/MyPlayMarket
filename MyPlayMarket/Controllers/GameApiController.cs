@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyPlayMarket.Core.IServices;
-using MyPlayMarket.Core.IRepository;
-using System.Net.NetworkInformation;
-using MyPlayMarket.Core;
-using MyPlayMarket.Core.DTO;
+using MyPlayMarket.Core.Entities;
 
 namespace MyPlayMarket.Web.Controllers
 {
@@ -31,6 +28,7 @@ namespace MyPlayMarket.Web.Controllers
 
         public async Task<IActionResult> Import()
         {
+            _logger.LogInformation("Import games started");
             await _apiService.ImportGamesFromApiAsync();
             return Ok();
         }

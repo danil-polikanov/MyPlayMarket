@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.IRepository;
-using MyPlayMarket.Core;
+using MyPlayMarket.Core.Entities;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using System;

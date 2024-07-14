@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core.Entities;
 using MyPlayMarket.Infrastructure;
 using static System.Reflection.Metadata.BlobBuilder;
 using System.Collections;

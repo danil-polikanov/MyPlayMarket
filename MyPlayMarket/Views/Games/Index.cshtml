@@ -1,5 +1,5 @@
-﻿@using MyPlayMarket.Core;
-@using MyPlayMarket.Core.DTO
+﻿@using MyPlayMarket.Core.Entities;
+@using MyPlayMarket.Core.Entities.DTO;
 
 @model IndexPaggingDTO;
 @{
@@ -83,6 +83,10 @@
                                 </p>
                                 <p>
                                     @item.Release.ToShortDateString();
+                                </p>
+                                <p>
+                                    @item.Cost.ToString("C",
+                                new System.Globalization.CultureInfo("en-US"))
                                 </p>
                             </div>
                         </a>

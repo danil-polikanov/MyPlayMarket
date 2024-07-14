@@ -88,7 +88,6 @@ namespace MyPlayMarket
             catch (Exception ex)
             {
                 logger.Error(ex, "End programm with exception.");
-                throw;
             }
             finally
             {

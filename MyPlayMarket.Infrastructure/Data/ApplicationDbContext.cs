@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyPlayMarket.Infrastructure;
+using MyPlayMarket.Core.Entities;
 using MyPlayMarket.Core;
-using MyPlayMarket.Core.IRepository;
 
 namespace MyPlayMarket.Core
 {

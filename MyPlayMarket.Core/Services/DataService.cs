@@ -2,8 +2,8 @@
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core;
 using MyPlayMarket.Core.IRepository;
-using MyPlayMarket.Core;
-using MyPlayMarket.Core.DTO;
+using MyPlayMarket.Core.Entities;
+using MyPlayMarket.Core.Entities.DTO;
 using NLog.Filters;
 using NuGet.Protocol.Core.Types;
 using System;

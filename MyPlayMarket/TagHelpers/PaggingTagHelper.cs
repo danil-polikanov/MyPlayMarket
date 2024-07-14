@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using Azure;
-using MyPlayMarket.Core.DTO;
-using MyPlayMarket.Core;
+using MyPlayMarket.Core.Entities.DTO;
 
 namespace MyPlayMarket.Web.TagHelpers
 {

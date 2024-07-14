@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MyPlayMarket.Core;
 using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core;
+using MyPlayMarket.Core.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve games: {ex.Message}");
                 return new List<Game>();
             }
         }
@@ -44,7 +45,7 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve count of games: {ex.Message}");
                 return 0;
             }
         }
@@ -57,7 +58,7 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve games: {ex.Message}");
                 return Enumerable.Empty<Game>();
             }
         }
@@ -70,7 +71,7 @@ namespace MyPlayMarket.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't retrieve entity with id {id}: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve game with id {id}: {ex.Message}");
                 return null;
             }
         }

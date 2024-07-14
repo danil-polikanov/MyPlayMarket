@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using MyPlayMarket.Core;
 using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyPlayMarket.Core.Entities;
 
 namespace MyPlayMarket.Infrastructure.Data.Repository
 {
@@ -36,7 +37,7 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
 
             }
             catch (Exception ex)
-            {             
+            {
                 _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
                 return null;
             }
@@ -51,60 +52,66 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't retrieve entities: {ex.Message}");
+                _logger.LogError($"Couldn't retrieve entity: {ex.Message}");
                 return null;
             }
         }
         public async Task<T> GetByIdAsync(int id)
-        {
+        {      
             try
-            {           
+            {
                 return await _dbSet.FindAsync(id);
             }
-            catch(Exception ex) {
-                _logger.LogError($"Couldn't retrieve entity: {ex.Message}");
+            catch (Exception ex)
+            {
+                _logger.LogError($"Couldn't retrieve entity with id {id}: {ex.Message}");
                 return null;
             }
         }
 
         public async Task<bool> AddAsync(T entity)
-        {       
+        {
+            
             try
             {
                 await _dbSet.AddAsync(entity);
                 await _db.SaveChangesAsync();
+                _logger.LogWarning($"entity was  created.");
                 return true;
+
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't add entity: {ex.Message}");
+                _logger.LogError($"{nameof(entity)} could not be saved: {ex.Message}");
                 return false;
             }
         }
 
         public async Task<bool> UpdateAsync(T entity)
-        {        
+        {          
             try
             {
                 _dbSet.Update(entity);
                 await _db.SaveChangesAsync();
+                _logger.LogWarning($"entity was updaited.");
                 return true;
+
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Couldn't update entity: {ex.Message}");
+                _logger.LogError($"{nameof(entity)} could not be updated: {ex.Message}");
                 return false;
             }
         }
 
         public async Task<bool> DeleteAsync(int id)
-        {     
+        {
             try
             {
                 var entity = await GetByIdAsync(id);
                 if (entity == null)
                 {
-                    _logger.LogWarning($"{nameof(entity)} with id {id} does not exist.");
+                    _logger.LogWarning($"Entity with id {id} does not exist.");
                     return false;
                 }
                 _dbSet.Remove(entity);
@@ -113,9 +120,10 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
             }
             catch (Exception ex)
             {
-                _logger.LogError($"entity with id {id} could not be deleted: {ex.Message}");
+                _logger.LogError($"Entity with id {id} could not be deleted: {ex.Message}");
                 return false;
             }
+            
         }
     }
 }

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Services;
-using MyPlayMarket.Core.DTO;
-using MyPlayMarket.Core;
+using MyPlayMarket.Core.Entities;
+using MyPlayMarket.Core.Entities.DTO;
 using System.Collections;
 using System.Globalization;
 using System.Xml.Linq;

@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MyPlayMarket.Core.Entities;
+using MyPlayMarket.Core.Entities.DTO;
+
 
 #nullable disable
 

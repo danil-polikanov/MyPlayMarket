@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using MyPlayMarket.Core.Entities;
+using MyPlayMarket.Core;
+using System.Collections;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.IRepository;
-using MyPlayMarket.Core.DTO;
+using MyPlayMarket.Core.Entities.DTO;
 using Microsoft.Extensions.Logging;
 
 namespace MyPlayMarket.Core.Services

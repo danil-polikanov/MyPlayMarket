@@ -1,16 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
-using MyPlayMarket.Core.IServices;
-using MyPlayMarket.Core.IRepository;
-using MyPlayMarket.Core;
-using MyPlayMarket.Core.DTO;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyPlayMarket.Core.IServices;
+using MyPlayMarket.Core.Entities;
+using MyPlayMarket.Core.Entities.DTO;
 
 namespace MyPlayMarket.Core.Services
 {

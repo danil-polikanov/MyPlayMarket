@@ -1,5 +1,4 @@
-﻿@using MyPlayMarket.Core;
-@using MyPlayMarket.Core.DTO
+﻿@using MyPlayMarket.Core.Entities;
 @model List<Game>
 @{
     Layout = "_Layout";
@@ -19,11 +18,13 @@
             {
                 <div class="carousel-item @(i == 0 ? "active" : "")">
                     <a asp-controller="Games" asp-action="Details" asp-route-id="@Model[i].Id">
-                        <img class="d-block w-100" style="height:500px;" src="@Model[i].UrlImage" onerror="https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png" alt="Слайд @(i + 1)">
+                        <img class="d-block w-100" style="height:700px;" src="@Model[i].UrlImage" onerror="this.onerror=null; this.src='https://s3.envato.com/files/10065422/Extra%20Previews/02_Preview2.png';" alt="Slide @(i + 1)">
                         <div class="carousel-caption d-none d-md-block">
                             <h3>@Model[i].Name</h3>
-                            <p>@Model[i].Cost</p>
-                            <p>@Model[i].Description</p>
+                            <p>
+                                @Model[i].Cost.ToString("C",
+                                         new System.Globalization.CultureInfo("en-US"))
+                            </p>
                         </div>
                     </a>
                 </div>
@@ -57,6 +58,10 @@
                                 </p>
                                 <p>
                                     @Model[i].Release.ToShortDateString();
+                                </p>
+                                <p>
+                                    @Model[i].Cost.ToString("C",
+                                             new System.Globalization.CultureInfo("en-US"))
                                 </p>
                             </div>
                         </div>

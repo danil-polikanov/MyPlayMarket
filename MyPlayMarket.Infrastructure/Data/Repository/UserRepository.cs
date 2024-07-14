@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using MyPlayMarket.Core;
 using MyPlayMarket.Core.IRepository;
+using MyPlayMarket.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
