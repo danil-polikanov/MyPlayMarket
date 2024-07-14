@@ -80,7 +80,10 @@ namespace MyPlayMarket.Infrastructure.Data
         {
             try
             {
-                var game=_db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Name == entity.Name)??throw new Exception("Game with this name is already exist");
+                if (await _db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Name == entity.Name) != null)
+                {
+                    throw new Exception("Game with this name already exists");
+                }
                 await _db.Games.AddAsync(entity);
                 await _db.SaveChangesAsync();
                 _logger.LogWarning($"Game with name {entity.Name} created.");
@@ -97,8 +100,11 @@ namespace MyPlayMarket.Infrastructure.Data
         public async Task<bool> UpdateGameAsync(Game entity)
         {
             try
-            {
-                var game = _db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Name == entity.Name) ?? throw new Exception("Game with this name is already exist");
+            {           
+                if (await _db.Games.AsNoTracking().FirstOrDefaultAsync(x => x.Name == entity.Name) != null)
+                {
+                    throw new Exception("Game with this name already exists");
+                }
                 _db.Games.Update(entity);
                 await _db.SaveChangesAsync();
                 return true;

@@ -18,7 +18,7 @@ namespace MyPlayMarket.Controllers
         private readonly ILogger<HomeController> _logger;
         public IEnumerable<Game> Games { get; set; }
         public HomeController(IGameService gameService, ILogger<HomeController> logger)
-        {
+        { 
             _gameService = gameService;
             _logger = logger;
         }
@@ -27,8 +27,21 @@ namespace MyPlayMarket.Controllers
         public async Task<ActionResult> Index()
         {
             _logger.LogInformation("Main view called");
-            var games = await _gameService.GetGamesByQueryAsync();
-            return View(games);
+            try
+            {
+                var games = await _gameService.GetGamesByQueryAsync();
+                _logger.LogInformation("Main view opened");
+                return View(games);
+            }
+            catch (Exception ex)
+            {
+                {
+                    _logger.LogError($"Main view {ex.Message}");
+                    return BadRequest();
+                }
+
+            }
         }
     }
 }
+
