@@ -1,4 +1,4 @@
-﻿.html {
+﻿﻿.html {
     font-size: 14px;
 }
 
@@ -17,3 +17,6 @@ div label {
     font-size: 20px;
 }
 
+.form-control {
+    margin-bottom: 10px;
+}

@@ -38,7 +38,7 @@ namespace MyPlayMarket.Core.Services
             IGenericService<Tag> tagService,
             IGenericService<Platform> platformService,
             IGenericService<Genre> genreService,
-            IGenericService<GameScreenshot> _screenshotService, 
+            IGenericService<GameScreenshot> screenshotService, 
             ILogger<ApiService> logger)
         {
             _gameRepository = gameRepository;
@@ -46,7 +46,7 @@ namespace MyPlayMarket.Core.Services
             _tagService = tagService;
             _platformService = platformService;
             _genreService = genreService;
-            _screenshotService = _screenshotService;
+            _screenshotService = screenshotService;
             _logger = logger;
         }
         public async Task ImportGamesFromApiAsync()

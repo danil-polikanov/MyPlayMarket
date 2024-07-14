@@ -1,6 +1,8 @@
 ﻿using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Entities;
 using MyPlayMarket.Core.Entities.DTO;
+using NLog;
+using MyPlayMarket.Core.IRepository;
 
 namespace MyPlayMarket.Core.Services
 {
@@ -29,5 +31,10 @@ namespace MyPlayMarket.Core.Services
         }
         public bool Verify(string password, string hashedPassword) => BCrypt.Net.BCrypt.EnhancedVerify(password, hashedPassword);
         public string Generate(string password) => BCrypt.Net.BCrypt.EnhancedHashPassword(password);
+
+        public Task Register(User user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

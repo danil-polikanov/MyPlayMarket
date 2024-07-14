@@ -1,4 +1,4 @@
-﻿.html {
+﻿﻿.html {
     font-size: 14px;
 }
 
@@ -8,10 +8,15 @@
     }
 
     .main-game {
-      flex-basis:40%;
+        flex-basis: 40%;
     }
 }
+
 div label {
-    font-weight:700;
-    font-size:20px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.form-control {
+    margin-bottom: 10px;
 }

@@ -46,11 +46,9 @@ namespace MyPlayMarket.Web.Controllers
         [HttpGet]
         public async Task<ActionResult> Register(UserRegisterDTO user)
         {
-
-            await 
-            if (ModelState.IsValidl)
+            if (ModelState.IsValid)
             {
-                return View(SortedGames);
+                return View(user);
             }
             else { return BadRequest(); }
         }

@@ -17,12 +17,6 @@ namespace MyPlayMarket.Core.Services
 {
     public class FilteringService:IFilteringService
     {
-        private readonly IGameRepository _repository;
-
-        public FilteringService(IGameRepository repository)
-        {
-            _repository = repository;
-        }
         public async Task<Func<IQueryable<T>, IQueryable<T>>> GetFilterExpression<T>(FilterDTO filterModel)
         {
             if (typeof(T) == typeof(Game))
@@ -41,12 +35,15 @@ namespace MyPlayMarket.Core.Services
             {
                 if (!string.IsNullOrEmpty(filterModel.Name))
                     query = query.Where(g => g.Name.Contains(filterModel.Name));
-
                 if (!string.IsNullOrEmpty(filterModel.Company))
                     query = query.Where(g => g.Company.Contains(filterModel.Company));
-
-                if (filterModel.Release>0)
-                    query = query.Where(g => g.Release.Year >= filterModel.Release);
+                if (filterModel.SelectedGenres != null && filterModel.SelectedGenres.Count > 0)
+                    query = query.Where(g => g.GameGenres.Any(gt => filterModel.SelectedGenres.Contains(gt.GenreId)));
+                if (filterModel.SelectedTags != null && filterModel.SelectedTags.Count > 0)
+                    query = query.Where(g => g.GameTags.Any(gt => filterModel.SelectedTags.Contains(gt.TagId)));
+                if (filterModel.SelectedPlatforms != null && filterModel.SelectedPlatforms.Count > 0)
+                    query = query.Where(g => g.GamePlatforms.Any(gt => filterModel.SelectedPlatforms.Contains(gt.PlatformId)));
+                return query;
 
                 return query;
             };

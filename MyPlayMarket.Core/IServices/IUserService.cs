@@ -5,7 +5,7 @@ namespace MyPlayMarket.Core.IServices
 {
     public interface IUserService
     {
-        string Generate(string password);
-        Task Register(User user);
+        public string Generate(string password);
+        public Task Register(User user);
     }
 }

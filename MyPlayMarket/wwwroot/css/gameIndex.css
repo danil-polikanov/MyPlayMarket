@@ -1,4 +1,4 @@
-﻿.html {
+﻿﻿.html {
     font-size: 14px;
 }
 
@@ -8,20 +8,23 @@
     }
 
     .main-game {
-      flex-basis:40%;
+        flex-basis: 40%;
     }
 }
-.main.main-game {
 
+.main.main-game {
 }
+
 .filter {
     position: -webkit-sticky; /* For Safari */
     position: sticky;
     top: 0;
 }
-.control-label{
-    color:whitesmoke    ;
+
+.control-label {
+    color: whitesmoke;
 }
+
 .main-game-cards {
     width: 200px;
     height: 300px;
@@ -29,19 +32,19 @@
     color: white;
     margin: 2em auto;
 }
-.main-game-cards:hover {
-    opacity: 0.8;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
-}
 
-.main-game-cards p {
-    margin: 3% auto;
-        
-}
+    .main-game-cards:hover {
+        opacity: 0.8;
+        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
+        text-decoration: none;
+    }
+
+    .main-game-cards p {
+        margin: 3% auto;
+    }
 
 .main-game-cards-item {
     padding: 1em 1em;
-    font-size: 14px;
 }
 
 .main-games-cards-img {
@@ -49,3 +52,28 @@
     height: 150px;
 }
 
+.form-select {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .form-select label {
+        margin-right: 0px;
+        margin-bottom: 10px;
+    }
+
+    .form-select .hidden {
+        display: none;
+    }
+
+.tag-input-form {
+    overflow: hidden !important;
+}
+
+.show-more {
+    cursor: pointer;
+    color: blue;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 10px;
+}

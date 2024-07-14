@@ -22,6 +22,7 @@ namespace MyPlayMarket.Web.Controllers
         private readonly ILogger<GamesController> _logger;
         public IEnumerable<Game> Games { get; set; }
         public PageViewDTO ViewModel { get; set; }
+
         public GamesController(IGameService gameService, ISortingService sortingService, IFilteringService filteringService, IPaginationService paginationService, IDataService dataService, ILogger<GamesController> logger)
         {
             _gameService = gameService;
@@ -31,76 +32,115 @@ namespace MyPlayMarket.Web.Controllers
             _dataService = dataService;
             _logger = logger;
         }
+
         [HttpGet]
         public async Task<ActionResult> Index(IndexPaggingDTO indexPagging)
         {
-
-            var SortedGames = await _dataService.GetGamesAsync<Game>(indexPagging);
-            if (ModelState.IsValid||indexPagging.Games == null)
+            _logger.LogInformation("Index action called with parameters: {@IndexPagging}", indexPagging);
+            var sortedGames = await _dataService.GetGamesAsync<Game>(indexPagging);
+            if (ModelState.IsValid || indexPagging.Games == null)
             {
-                return View(SortedGames);
+                _logger.LogInformation("Index action succeeded.");
+                return View(sortedGames);
             }
-            else { return BadRequest(); }
+            else
+            {
+                _logger.LogWarning("Index action failed due to invalid model state.");
+                return BadRequest();
+            }
         }
 
         [HttpGet]
         public async Task<ActionResult> Details(int id)
         {
+            _logger.LogInformation("Details action called with id: {Id}", id);
+
             Game game = await _gameService.GetGameAsync(id);
-            if (game!=null)
+            if (game != null)
             {
+                _logger.LogInformation("Details action succeeded for id: {Id}", id);
                 return View(game);
             }
-            else return NotFound();
+            else
+            {
+                _logger.LogWarning("Details action failed. Game not found for id: {Id}", id);
+                return NotFound();
+            }
         }
+
         [HttpGet]
         public ActionResult Create()
         {
+            _logger.LogInformation("Create GET action called.");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Game game)
+        public async Task<ActionResult> Create(CreateUpdateGameDTO createdGame)
         {
-            if (game != null && ModelState.IsValid)
+            _logger.LogInformation("Create POST action called with game: {@Game}", createdGame);
+
+            if (createdGame != null && ModelState.IsValid)
             {
-                await _gameService.CreateGameAsync(game);
-                ViewBag.Message = "Data Insert Successfully";
+                await _gameService.CreateGameAsync(createdGame);
+                _logger.LogInformation("Create action succeeded. Game created: {@Game}", createdGame);
+                TempData["Message"] = "Game created succesfully!";
+                TempData["MessageType"] = "success";
+                return RedirectToAction(nameof(Index));
             }
             else
             {
-                ViewBag.Message = "Data Insert Error";
+                _logger.LogWarning("Create action failed. Model state invalid or game is null.");
+                TempData["Message"] = $"Game is already exist with this name or invalid data!";
+                TempData["MessageType"] = "error";
+                return View(createdGame);
             }
-            return RedirectToAction(nameof(Index));
 
         }
 
         [HttpGet]
         public async Task<ActionResult> Edit(int id)
         {
+            _logger.LogInformation("Edit GET action called with id: {Id}", id);
+
             Game game = await _gameService.GetGameAsync(id);
-            return View(game);
+            CreateUpdateGameDTO createGameDTO = new CreateUpdateGameDTO();
+            createGameDTO.Game = game;
+            createGameDTO.GenresDTO = game.GameGenres.Select(x => x.Genre.Name).ToList();
+            createGameDTO.PlatformsDTO = game.GamePlatforms.Select(x => x.Platform.Name).ToList();
+            createGameDTO.TagsDTO = game.GameTags.Select(x => x.Tag.Name).ToList();
+            createGameDTO.ScreenshotsDTO = game.Screenshots.Select(x => x.Url).ToList();
+            return View(createGameDTO);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, Game updatedGame)
+        public async Task<ActionResult> Edit(int id, CreateUpdateGameDTO updatedGame)
         {
+            _logger.LogInformation("Edit POST action called with id: {Id} and updated game: {@UpdatedGame}", id, updatedGame);
+
             if (ModelState.IsValid)
             {
-                var GameFromDb = await _gameService.GetGameAsync(id);
-                GameFromDb = updatedGame;
-                await _gameService.UpdateGameAsync(GameFromDb);
-                ViewBag.Message = "Data update Successfully";
+                await _gameService.UpdateGameAsync(updatedGame);
+                _logger.LogInformation("Edit action succeeded. Game updated: {@UpdatedGame}", updatedGame);
+                TempData["Message"] = "Game updated succesfully!";
+                TempData["MessageType"] = "success";
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Message = "Data update Failed";
-            return View();
+            else
+            {
+                TempData["Message"] = $"Game is already exist with this name or invalid data!";
+                TempData["MessageType"] = "error";
+                _logger.LogWarning("Edit action failed due to invalid model state.");
+                return View();
+            }
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
+            _logger.LogInformation("Delete GET action called with id: {Id}", id);
             return View();
         }
 
@@ -108,15 +148,23 @@ namespace MyPlayMarket.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, Game game)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation("Delete POST action called with id: {Id} and game: {@Game}", id, game);
+
+            try
             {
                 await _gameService.DeleteGameAsync(id);
-                ViewBag.Message = "Data delete Successfully";
+                _logger.LogInformation("Delete action succeeded for id: {Id}", id);
+                TempData["Message"] = "Game deleted succesfully!";
+                TempData["MessageType"] = "success";
                 return RedirectToAction(nameof(Index));
             }
-            else ViewBag.Message = "Data delete Successfully";
-            return View();
-
+            catch
+            {
+                _logger.LogWarning("Delete action failed due to invalid model state.");
+                TempData["Message"] = $"Game wasn't delete";
+                TempData["MessageType"] = "error";
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }

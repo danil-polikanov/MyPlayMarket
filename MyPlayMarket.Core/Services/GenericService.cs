@@ -34,19 +34,23 @@ namespace MyPlayMarket.Core.Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
             await _repository.AddAsync(entity);
+            return true;
+           
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
             await _repository.UpdateAsync(entity);
+            return true;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             await _repository.DeleteAsync(id);
+            return true;
         }
     }
 }

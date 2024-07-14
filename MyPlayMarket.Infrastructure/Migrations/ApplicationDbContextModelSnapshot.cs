@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using MyPlayMarket.Core;
 using MyPlayMarket.Core.Entities;
-using MyPlayMarket.Core.Entities.DTO;
-using MyPlayMarket.Infrastructure.Migrations;
 using MyPlayMarket.Infrastructure.Data;
 
 #nullable disable
@@ -20,289 +19,292 @@ namespace MyPlayMarket.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.Game", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Company")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cost")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<double>("Cost")
+                    .HasColumnType("float");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Release")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("Release")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("UrlImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("UrlImage")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Games");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.GameGenre", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "GenreId");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("GameGenre");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.GamePlatform", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlatformId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "PlatformId");
-
-                    b.HasIndex("PlatformId");
-
-                    b.ToTable("GamePlatforms");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Infrastructure.Entities.GameScreenshot", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("GameScreenshots");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.GameTag", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GameId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("GameTags");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.Genre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Genres");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.Platform", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Platforms");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LocalUsers");
-                });
+                b.ToTable("Games");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.GameGenre", b =>
-                {
-                    b.HasOne("MyPlayMarket.Infrastructure.Entities.Game", "Game")
-                        .WithMany("GameGenres")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.Property<int>("GameId")
+                    .HasColumnType("int");
 
-                    b.HasOne("MyPlayMarket.Infrastructure.Entities.Genre", "Genre")
-                        .WithMany("GameGenres")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.Property<int>("GenreId")
+                    .HasColumnType("int");
 
-                    b.Navigation("Game");
+                b.HasKey("GameId", "GenreId");
 
-                    b.Navigation("Genre");
-                });
+                b.HasIndex("GenreId");
+
+                b.ToTable("GameGenre");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.GamePlatform", b =>
-                {
-                    b.HasOne("MyPlayMarket.Infrastructure.Entities.Game", "Game")
-                        .WithMany("GamePlatforms")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.Property<int>("GameId")
+                    .HasColumnType("int");
 
-                    b.HasOne("MyPlayMarket.Core.Entities.Platform", "Platform")
-                        .WithMany("GamePlatforms")
-                        .HasForeignKey("PlatformId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.Property<int>("PlatformId")
+                    .HasColumnType("int");
 
-                    b.Navigation("Game");
+                b.HasKey("GameId", "PlatformId");
 
-                    b.Navigation("Platform");
-                });
+                b.HasIndex("PlatformId");
+
+                b.ToTable("GamePlatforms");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.GameScreenshot", b =>
-                {
-                    b.HasOne("MyPlayMarket.Core.Entities.Game", "Game")
-                        .WithMany("Screenshots")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    b.Navigation("Game");
-                });
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                b.Property<int>("GameId")
+                    .HasColumnType("int");
+
+                b.Property<string>("Url")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.HasIndex("GameId");
+
+                b.ToTable("GameScreenshots");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.GameTag", b =>
-                {
-                    b.HasOne("MyPlayMarket.Core.Entities.Game", "Game")
-                        .WithMany("GameTags")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.Property<int>("GameId")
+                    .HasColumnType("int");
 
-                    b.HasOne("MyPlayMarket.Core.Entities.Tag", "Tag")
-                        .WithMany("GameTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.Property<int>("TagId")
+                    .HasColumnType("int");
 
-                    b.Navigation("Game");
+                b.HasKey("GameId", "TagId");
 
-                    b.Navigation("Tag");
-                });
+                b.HasIndex("TagId");
 
-            modelBuilder.Entity("MyPlayMarket.Core.Entities.Game", b =>
-                {
-                    b.Navigation("GameGenres");
-
-                    b.Navigation("GamePlatforms");
-
-                    b.Navigation("GameTags");
-
-                    b.Navigation("Screenshots");
-                });
+                b.ToTable("GameTags");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.Genre", b =>
-                {
-                    b.Navigation("GameGenres");
-                });
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Genres");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.Platform", b =>
-                {
-                    b.Navigation("GamePlatforms");
-                });
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Platforms");
+            });
 
             modelBuilder.Entity("MyPlayMarket.Core.Entities.Tag", b =>
-                {
-                    b.Navigation("GameTags");
-                });
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
+
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Tags");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.User", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("PasswordHash")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Role")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Surname")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("UserName")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("LocalUsers");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.GameGenre", b =>
+            {
+                b.HasOne("MyPlayMarket.Core.Entities.Game", "Game")
+                    .WithMany("GameGenres")
+                    .HasForeignKey("GameId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("MyPlayMarket.Core.Entities.Genre", "Genre")
+                    .WithMany("GameGenres")
+                    .HasForeignKey("GenreId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Game");
+
+                b.Navigation("Genre");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.GamePlatform", b =>
+            {
+                b.HasOne("MyPlayMarket.Core.Entities.Game", "Game")
+                    .WithMany("GamePlatforms")
+                    .HasForeignKey("GameId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("MyPlayMarket.Core.Entities.Platform", "Platform")
+                    .WithMany("GamePlatforms")
+                    .HasForeignKey("PlatformId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Game");
+
+                b.Navigation("Platform");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.GameScreenshot", b =>
+            {
+                b.HasOne("MyPlayMarket.Infrastructure.Entities.Game", "Game")
+                    .WithMany("Screenshots")
+                    .HasForeignKey("GameId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Game");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.GameTag", b =>
+            {
+                b.HasOne("MyPlayMarket.Core.Entities.Game", "Game")
+                    .WithMany("GameTags")
+                    .HasForeignKey("GameId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("MyPlayMarket.Core.Entities.Tag", "Tag")
+                    .WithMany("GameTags")
+                    .HasForeignKey("TagId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.Navigation("Game");
+
+                b.Navigation("Tag");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.Game", b =>
+            {
+                b.Navigation("GameGenres");
+
+                b.Navigation("GamePlatforms");
+
+                b.Navigation("GameTags");
+
+                b.Navigation("Screenshots");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.Genre", b =>
+            {
+                b.Navigation("GameGenres");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.Platform", b =>
+            {
+                b.Navigation("GamePlatforms");
+            });
+
+            modelBuilder.Entity("MyPlayMarket.Core.Entities.Tag", b =>
+            {
+                b.Navigation("GameTags");
+            });
 #pragma warning restore 612, 618
         }
     }

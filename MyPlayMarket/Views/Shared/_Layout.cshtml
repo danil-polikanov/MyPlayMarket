@@ -16,7 +16,7 @@
 <body>
 
     <header class="_layout-header">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
+        <nav class="navbar navbar-expand navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
             <div class="container">
                 <a class="navbar-brand text-break text-white" asp-area="" asp-action="Index" asp-controller="Home">JaKuZo</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,13 +31,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-controller="Games" asp-action="Index">Games</a>
                         </li>
-                        <li class="nav-item" style="margin: auto 50px;">
+                        <li class="nav-item search-item">
                             <form method="get" asp-action="Index" asp-controller="Games" class="d-flex" role="search">
                                 <input class="form-control mr-1" name="filterDTO.Name" type="search" placeholder="Search" aria-label="Поиск">
                                 <button class="btn btn-info" type="submit">Search</button>
                             </form>
-                        </li>                    
-                    </ul> 
+                        </li>
+                    </ul>
                     <div class="nav-item float-end">
                         <a class="btn text-white" href="#" role="button">Sign up</a>
                     </div>
@@ -52,12 +52,12 @@
         <nav class="navbar bg-body-tertiary">
             <div class="container">
                 <button class="btn navbar-toggler navbar-light pl-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-                    <span class="navbar-toggler-icon ">                    
+                    <span class="navbar-toggler-icon ">
                     </span>
                     Others
                 </button>
                 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptions">
-                    <div class="offcanvas-header">                     
+                    <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasWithBothOptions">Offcanvas</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
                     </div>
@@ -73,15 +73,12 @@
                     </div>
                 </div>
             </div>
-        </nav>       
+        </nav>
     </div>
-
-
-
-    <div class="main-context" style="background-color:#8164e8;" >
-            <main role="main">
+    <div class="main-context" style="background-color:#8164e8;">
+        <main role="main">
             @RenderBody()
-            </main>
+        </main>
         <div style="height:300px;">
         </div>
     </div>
@@ -98,9 +95,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        var message = "@Html.Raw(TempData["Message"])";
+        var messageType = "@Html.Raw(TempData["MessageType"])";
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
