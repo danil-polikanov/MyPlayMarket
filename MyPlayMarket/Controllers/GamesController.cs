@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Globalization;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyPlayMarket.Web.Controllers
 {
@@ -32,7 +33,7 @@ namespace MyPlayMarket.Web.Controllers
             _dataService = dataService;
             _logger = logger;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index(IndexPaggingDTO indexPagging)
         {

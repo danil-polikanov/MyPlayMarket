@@ -5,7 +5,7 @@ namespace MyPlayMarket.Core.Entities
     public class User
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -13,7 +13,8 @@ namespace MyPlayMarket.Core.Entities
         public string PasswordHash { get; set; }
         public string Email { get;  set; }
         public string Role { get;  set; }
-        public User(Guid id,string name,string surname,string userName,string passwordHash,string email,string role)
+        public User() { }
+        public User(string name,string surname,string userName,string passwordHash,string email,string role)
         {
             Name = name;
             Surname = surname;
