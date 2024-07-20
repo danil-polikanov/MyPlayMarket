@@ -9,6 +9,8 @@ using System.Globalization;
 using System.Xml.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using NuGet.Common;
+using Microsoft.AspNetCore.Authorization;
+using MyPlayMarket.Controllers;
 
 namespace MyPlayMarket.Web.Controllers
 {
@@ -42,35 +44,55 @@ namespace MyPlayMarket.Web.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            var user = new LoginUserDTO("admin", "admin");
-            var token=await _userService.Login(user);
-            _logger.LogInformation($"User with {user.Email} tried login called");
-            if (ModelState.IsValid)
+            _logger.LogInformation("Create Login action called.");
+            return View();
+        }
+        [HttpPost] 
+        public async Task<IActionResult> Login(LoginUserDTO loginUser)
+        {;
+            var token=await _userService.Login(loginUser);
+            _logger.LogInformation($"User with {loginUser.Email} tried login called");
+            if (ModelState.IsValid&&token!=null)
             {
-                _logger.LogInformation($"User with {user.Email} successfully loginned");
-                //return token;
+                _logger.LogInformation($"User with {loginUser.Email} successfully loginned");
                 var context = this.HttpContext;
                 context.Response.Cookies.Append("tasty-cookies", token);
-                return Ok(token);
+                SetTempDataMessage("You loginned successfully!", "success");
+                return RedirectToAction(nameof(Index), nameof(HomeController));
             }
             else
             {
-                _logger.LogError($"User with {user.Email} was failing to log in");
-                return Ok(token);
+                _logger.LogError($"User with {loginUser.Email} was failing to log in");
+                SetTempDataMessage(token, "error");
+                return Redirect(nameof(Login));
             }
         }
         [HttpGet]
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
-            var user = new UserRegisterDTO("admin", "admin", "admin", "admin", "admin");
-            await _userService.Register(user);
-            if (ModelState.IsValid)
+            _logger.LogInformation("Create Login action called.");
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(UserRegisterDTO registerDTO)
+        {
+            var message = await _userService.Register(registerDTO);
+            if (ModelState.IsValid&& message != null)
             {
-                return Ok(user);
+                SetTempDataMessage("You registered successfully!", "success");
+                return RedirectToAction(nameof(Index), nameof(HomeController));
             }
-            else { return BadRequest(); }
+            else {
+                SetTempDataMessage(message, "error");
+                return Redirect(nameof(Register));
+            }
+        }
+        private void SetTempDataMessage(string message, string messageType)
+        {
+            TempData["Message"] = message;
+            TempData["MessageType"] = messageType;
         }
     }
 }

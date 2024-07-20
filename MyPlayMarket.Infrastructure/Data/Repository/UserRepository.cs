@@ -73,31 +73,32 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Couldn't retrieve user.");
+                _logger.LogError(ex, "User doesnt't exist");
                 return null;
             }
         }
 
-        public async Task<bool> UserAddAsync(User entity)
+        public async Task<string> UserAddAsync(User entity)
         {
             try
             {
-                if (await _db.LocalUsers.FirstOrDefaultAsync(x => x.UserName == entity.UserName) == null)
+                var dbUser = await _db.LocalUsers.FirstOrDefaultAsync(x => x.UserName == entity.UserName && x.Email == entity.Email);
+                if (dbUser == null)
                 {
                     await _db.LocalUsers.AddAsync(entity);
                     await _db.SaveChangesAsync();
-                    return true;
+                    return null;
                 }
                 else
                 {
-                    _logger.LogError("User already exists.");
-                    return false;
+                    _logger.LogError("User with this Username or Email already exists.");
+                    return "User with this Username or Email already exists.";
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"{nameof(entity)} could not be saved.");
-                return false;
+                return "Unexpected error";
             }
         }
 

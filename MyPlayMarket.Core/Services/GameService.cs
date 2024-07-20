@@ -36,7 +36,7 @@ namespace MyPlayMarket.Core.Services
         }
         public async Task<List<Game>> GetGamesByQueryAsync()
         {
-            var games = await _repository.GetFiltredGamesAsync(q => q.Take(25));
+            var games = await _repository.GetFiltredGamesAsync(q => q.Take(24));
             return games;
         }
         public async Task<Game> GetGameAsync(int id)

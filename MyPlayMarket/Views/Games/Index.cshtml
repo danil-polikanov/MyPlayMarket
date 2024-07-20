@@ -9,7 +9,7 @@
 }
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <div class="container">
     <h1>All Games</h1>
@@ -36,7 +36,6 @@
                         <div class="form-group">
                             <label class="control-label">Genres</label>
                             <select class="form-select" asp-for="filterDTO.SelectedGenres" multiple asp-items="@(new SelectList(Model.AllGenres, "Id", "Name"))">
-                                <option disabled>Choice genre</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -107,6 +106,7 @@
         </div>
     </div>
 </div>
+
 <script src="~/js/syncFormsAndSubmit.js"></script>
 <script src="~/js/infoMessage.js"></script>
 <script>

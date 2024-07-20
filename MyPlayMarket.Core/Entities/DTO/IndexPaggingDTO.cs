@@ -19,7 +19,7 @@ namespace MyPlayMarket.Core.Entities.DTO
 
         public IndexPaggingDTO()
         {
-            pageViewDTO = new PageViewDTO(1, 0, 25);
+            pageViewDTO = new PageViewDTO(1, 0, 24);
             sortDTO = new SortDTO { SortBy = "SortBy" };
             filterDTO = new FilterDTO { Name = "", Company="" };
         }

@@ -22,7 +22,13 @@
 
     sortForm.submit();
 }
-
+$(document).ready(function () {
+    $('.form-select').select2({
+        placeholder: "Select an option",
+        allowClear: true,
+        innerHeight:"100px"
+    });
+});
 function updateHiddenInputs(form, name, values) {
 
     var existingInputs = form.querySelectorAll(`input[name="${name}"]`);

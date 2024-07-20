@@ -11,8 +11,16 @@
       flex-basis:40%;
     }
 }
-.main.main-game {
+.carousel-caption h3, .carousel-caption p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    padding: 10px;
+    border-radius: 5px;
+}
 
+.main.main-game {
 }
 .main-game-cards {
     width: 200px;

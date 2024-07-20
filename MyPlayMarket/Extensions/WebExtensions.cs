@@ -14,7 +14,7 @@ namespace MyPlayMarket.Web.Extensions
             )
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options=>
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.TokenValidationParameters = new()
                     {
@@ -35,7 +35,17 @@ namespace MyPlayMarket.Web.Extensions
                     };
 
                 });
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy =>
+                {
+                    policy.RequireClaim("Admin", "true");
+                });
+                options.AddPolicy("UserPolicy", policy =>
+                {
+                    policy.RequireClaim("User", "true");
+                });
+            });
         }
     }
 }

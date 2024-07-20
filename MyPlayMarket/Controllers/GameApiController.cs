@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyPlayMarket.Core.IServices;
 using MyPlayMarket.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyPlayMarket.Web.Controllers
 {
@@ -18,14 +19,14 @@ namespace MyPlayMarket.Web.Controllers
             _apiService = apiService;
             _logger = logger;
         }
-
+        [Authorize("AdminPolicy")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetGames()
         {
             List<string> games = null;
             return Ok(games);
         }
-
+        [Authorize("AdminPolicy")]
         public async Task<IActionResult> Import()
         {
             _logger.LogInformation("Import games started");
