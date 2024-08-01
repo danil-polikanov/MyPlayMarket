@@ -9,18 +9,20 @@
 }
 <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/gameIndex.css" asp-append-version="true" />
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
 <div class="container">
     <h1>All Games</h1>
-    <p>
-        <a class="btn btn-info" asp-action="Create" role="button">Create</a>
-    </p>
+    @if (User.IsInRole("Admin"))
+    {
+        <p>
+            <a class="btn btn-info" asp-action="Create" role="button">Create</a>
+        </p>
+    }
 </div>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-12 col-sm-3">
+        <div class="col-12 col-sm-2">
             <div class="filter">
                 <form method="get" asp-action="Index" id="filterForm">
                     <div class="form form-group">
@@ -50,8 +52,8 @@
                         </div>
 
                         <br />
-                        <input name="Submit" type="submit" class="btn btn-primary" value="Accept" />
-                        <input name="Reser" type="reset" class="btn btn-danger" value="Reset" />
+                        <input name="Submit" type="submit" class="btn btn-primary btn-color" value="Accept" />
+                        <input name="Reser" type="reset" class="btn btn-danger btn-color" value="Reset" />
                     </div>
                 </form>
             </div>
@@ -106,10 +108,3 @@
         </div>
     </div>
 </div>
-
-<script src="~/js/syncFormsAndSubmit.js"></script>
-<script src="~/js/infoMessage.js"></script>
-<script>
-    var message = "@Html.Raw(TempData["Message"])";
-    var messageType = "@Html.Raw(TempData["MessageType"])";
-</script>

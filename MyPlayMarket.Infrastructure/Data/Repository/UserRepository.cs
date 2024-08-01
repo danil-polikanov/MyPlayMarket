@@ -25,19 +25,19 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
             _logger = logger;
         }
 
-        //    public async Task<List<User>> GetUsersQueryable(Func<IQueryable<User>, IQueryable<User>> expression)
-        //    {
-        //        try
-        //        {
-        //            var query = expression(_db.LocalUsers);
-        //            return await query.ToListAsync();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            _logger.LogError(ex, "Couldn't retrieve users.");
-        //            return new List<User>();
-        //        }
-        //    }
+            public async Task<List<User>> GetUsersQueryable(Func<IQueryable<User>, IQueryable<User>> expression)
+            {
+                try
+                {
+                    var query = expression(_db.LocalUsers);
+                    return await query.ToListAsync();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Couldn't retrieve users.");
+                    return new List<User>();
+                }
+            }
 
         //    public async Task<int> GetGamesCountAsync(Func<IQueryable<Game>, IQueryable<Game>> sortPageExpression)
         //    {
@@ -64,7 +64,18 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
         //            return Enumerable.Empty<User>();
         //        }
         //    }
-
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                return await _db.LocalUsers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "User doesnt't exist");
+                return null;
+            }
+        }
         public async Task<User> GetUserByEmailAsync(string email)
         {
             try

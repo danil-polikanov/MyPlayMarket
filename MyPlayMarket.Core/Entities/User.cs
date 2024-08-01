@@ -2,8 +2,9 @@
 
 namespace MyPlayMarket.Core.Entities
 {
-    public class User
+    public class User   
     {
+        public ICollection<UserGame> UserGames { get; set; }
         [Key]
         public int Id { get; set; }
         [Required]
@@ -13,6 +14,7 @@ namespace MyPlayMarket.Core.Entities
         public string PasswordHash { get; set; }
         public string Email { get;  set; }
         public string Role { get;  set; }
+        
 
         public User() { }
         public User(string name,string surname,string userName,string passwordHash,string email,string role)

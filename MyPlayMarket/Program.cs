@@ -17,6 +17,7 @@ using System.Configuration;
 using MyPlayMarket.Web.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.CookiePolicy;
+using Stripe;
 
 namespace MyPlayMarket
 {
@@ -55,13 +56,21 @@ namespace MyPlayMarket
                 builder.Services.AddScoped<IFilteringService, FilteringService>();
                 builder.Services.AddScoped<IPaginationService, PaginationService>();
                 builder.Services.AddScoped<IDataService, DataService>();
-                builder.Services.AddScoped<IApiService, ApiService>();             
+                builder.Services.AddScoped<ICartService,CartService>();
+                builder.Services.AddScoped<IApiService, ApiService>();                      
                 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
                 builder.Services.AddScoped<IUserRepository, UserRepository>();
-                builder.Services.AddScoped<IGameRepository, GameRepository>();                      
+                builder.Services.AddScoped<IGameRepository, GameRepository>();                                   
                 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
                 builder.Services.AddHttpClient();
+                builder.Services.AddHttpContextAccessor();
+                builder.Services.AddSession();
+                //Stripe
+                builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
+                // Configure Stripe settings
+                var stripeSettings = builder.Configuration.GetSection("Stripe").Get<StripeSettings>();
+                Stripe.StripeConfiguration.ApiKey = stripeSettings.SecretKey;
                 // Строка подключения SQL
 
                 string computerName = Environment.MachineName;
@@ -102,6 +111,7 @@ namespace MyPlayMarket
                 app.UseAuthorization();
                 app.MapControllers();
                 app.MapRazorPages();
+                app.UseSession();
                 app.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

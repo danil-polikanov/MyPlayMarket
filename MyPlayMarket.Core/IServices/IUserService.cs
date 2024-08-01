@@ -7,5 +7,6 @@ namespace MyPlayMarket.Core.IServices
     {
         public Task<string> Register(UserRegisterDTO user);
         public Task<string> Login(LoginUserDTO loginUserDTO);
+        public Task<User> GetUserByIdAsync(int id);
     }
 }

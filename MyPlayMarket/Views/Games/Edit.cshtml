@@ -15,32 +15,32 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Game.Name" class="control-label"></label>
-                    <input asp-for="Game.Name" type="text" class="form-control" />
+                    <input asp-for="Game.Name" type="text" class="form-control edit-form" />
                     <span asp-validation-for="Game.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Cost" class="control-label"></label>
-                    <input asp-for="Game.Cost" type="number" class="form-control" />
+                    <input asp-for="Game.Cost" type="number" class="form-control edit-form" />
                     <span asp-validation-for="Game.Cost" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Company" class="control-label"></label>
-                    <input asp-for="Game.Company" type="text" class="form-control" />
+                    <input asp-for="Game.Company" type="text" class="form-control edit-form" />
                     <span asp-validation-for="Game.Company" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.UrlImage" class="control-label"></label>
-                    <input asp-for="Game.UrlImage" type="text" class="form-control" />
+                    <input asp-for="Game.UrlImage" type="text" class="form-control edit-form" />
                     <span asp-validation-for="Game.UrlImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Description" class="control-label"></label>
-                    <textarea asp-for="Game.Description" class="form-control"></textarea>
+                    <textarea asp-for="Game.Description" class="form-control edit-form"></textarea>
                     <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Release" class="control-label"></label>
-                    <input asp-for="Game.Release" type="date" min="1900-01-01" class="form-control" />
+                    <input asp-for="Game.Release" type="date" min="1900-01-01" class="form-control edit-form" />
                     <span asp-validation-for="Game.Release" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                     <div id="platformsContainer">
                         @foreach (var platform in Model.PlatformsDTO)
                         {
-                            <input asp-for="PlatformsDTO" value="@platform" type="text" class="form-control" />
+                            <input asp-for="PlatformsDTO" value="@platform" type="text" class="form-control edit-form" />
                         }
                     </div>
                     <button type="button" id="addPlatformButton" class="btn btn-primary">add platform</button>
@@ -59,7 +59,7 @@
                     <div id="tagsContainer">
                         @foreach (var tag in Model.TagsDTO)
                         {
-                            <input asp-for="TagsDTO" value="@tag" type="text" class="form-control" />
+                            <input asp-for="TagsDTO" value="@tag" type="text" class="form-control edit-form" />
                         }
                     </div>
                     <button type="button" id="addTagButton" class="btn btn-primary">add tag</button>
@@ -70,7 +70,7 @@
                     <div id="genresContainer">
                         @foreach (var genre in Model.GenresDTO)
                         {
-                            <input asp-for="GenresDTO" value="@genre" type="text" class="form-control" />
+                            <input asp-for="GenresDTO" value="@genre" type="text" class="form-control edit-form" />
                         }
                     </div>
                     <button type="button" id="addGenreButton" class="btn btn-primary">add genre</button>
@@ -81,7 +81,7 @@
                     <div id="screenshotContainer">
                         @foreach (var screenshot in Model.ScreenshotsDTO)
                         {
-                            <input asp-for="ScreenshotsDTO" value="@screenshot" type="text" class="form-control" />
+                            <input asp-for="ScreenshotsDTO" value="@screenshot" type="text" class="form-control edit-form" />
                         }
                     </div>
                     <button type="button" id="addScreenshotButton" class="btn btn-primary">add screenshot</button>
@@ -99,8 +99,6 @@
     </div>
 </div>
 <script src="~/js/createUpdateForm.js"></script>
-<script src="~/js/infoMessage.js"></script>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

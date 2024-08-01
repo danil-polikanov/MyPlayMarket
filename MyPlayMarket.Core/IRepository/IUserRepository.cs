@@ -17,5 +17,6 @@ namespace MyPlayMarket.Core.IRepository
         //public Task<IEnumerable<User>> GetAllUsersAsync();
         public Task<string> UserAddAsync(User user);
         public Task<User> GetUserByEmailAsync(string email);
+        public Task<User> GetUserByIdAsync(int id);
     }
 }

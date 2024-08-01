@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +7,18 @@ using System.Threading.Tasks;
 
 namespace MyPlayMarket.Core.Entities.DTO
 {
-    public record LoginUserDTO([Required] string Email,
-        [Required] string Password);
+    public class LoginUserDTO
+    {
+        [Required]
+        public string Password { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
+        public LoginUserDTO() { }
+
+        public LoginUserDTO(string password, string email)
+        {
+            Password = password;
+            Email = email;
+        }
+    }
 }

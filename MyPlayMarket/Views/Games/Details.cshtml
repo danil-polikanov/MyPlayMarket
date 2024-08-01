@@ -4,19 +4,23 @@
     Layout = "_Layout";
     ViewData["Title"] = "Details";
 }
-<link rel="stylesheet" href="~/css/gameDetails.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/gameDetails.css" asp-append-version="true"/>
 <div class="container ">
     <h1 class="form-header">Details</h1>
-    <div class="form-row">
-        <form method="get" class="form-group details-button" asp-action="Delete">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete" class="btn btn-danger" />
-        </form>
-        <form method="get" class="form-group details-button" asp-action="Edit">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Edit" class="btn btn-success" />
-        </form>
-    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="form-row">
+            <form method="get" class="form-group details-button" asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </form>
+            <form method="get" class="form-group details-button" asp-action="Edit">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Edit" class="btn btn-success" />
+            </form>
+        </div>
+    }
+
     <div class="container row details-info">
         <div class="col-12 col-sm-7">
             <div>
@@ -26,13 +30,10 @@
         <div class="col-12 col-sm-5">
             <div>
                 <div>
-                    <p>
-                        Name: @Model.Name
-                    </p>
 
-                    <p>
-                        Developers: @Model.Company
-                    </p>
+                    <p> Name:@Model.Name </p>
+              
+                    <p>Developers: @Model.Company</p>
                     <p>
                         Price: @Model.Cost.ToString("C",
                         new System.Globalization.CultureInfo("en-US"))
@@ -58,13 +59,22 @@
                             </a>
                         }
                     </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                            <input type="hidden" name="gameId" value="@Model.Id" />
+                            <input type="hidden" name="gameName" value="@Model.Name" />
+                            <input type="hidden" name="price" value="@Model.Cost" />
+                            <button class="btn cart-button" type="submit">Add to Cart</button>
+                        </form>
+                    }
                 </div>
             </div>
         </div>
         <div>
             <br />
             <p>
-                Tags:
+                <span class="header-details">Tags:</span>
                 @foreach (var tag in Model.GameTags)
                 {
                     <a asp-action="Index" asp-all-route-data='new Dictionary<string,string> { { "filterDTO.SelectedTags", tag.TagId.ToString() } }'>
@@ -72,11 +82,13 @@
                     </a>
                 }
             </p>
+            <span class="header-details">Description: </span><hr />
             <div class="detail-description">
-                Description:<hr />   @Html.Raw(Model.Description)
+                   @Html.Raw(Model.Description)
             </div>
             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <div class="mb-3">Game Screenshots: </div>
+                <span class="header-details mb-5">Game Screenshots:  </span>
+                <hr />
                 <ol class="carousel-indicators">
                     @for (int i = 0; i < Model.Screenshots.Count(); i++)
                     {
@@ -106,7 +118,6 @@
         </div>
     </div>
 </div>
-<script src="~/js/infoMessage.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const galleryImg = document.querySelector('.gallery-img');

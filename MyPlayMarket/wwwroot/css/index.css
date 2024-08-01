@@ -19,6 +19,9 @@
     padding: 10px;
     border-radius: 5px;
 }
+.btn-color {
+    background-color: #412996 !important;
+}
 
 .main.main-game {
 }

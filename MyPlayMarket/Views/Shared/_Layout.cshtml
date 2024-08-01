@@ -6,16 +6,15 @@
     <title>@ViewData["Title"] - PlayMarket</title>
     <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico" />
     <!-- CSS  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-
     <header class="_layout-header">
         <nav class="navbar navbar-expand navbar-expand-sm navbar-toggleable-sm box-shadow py-4" style="background-color:#8164e8;">
             <div class="container">
@@ -35,16 +34,28 @@
                         <li class="nav-item search-item">
                             <form method="get" asp-action="Index" asp-controller="Games" class="d-flex" role="search">
                                 <input class="form-control mr-1" name="filterDTO.Name" type="search" placeholder="Search" aria-label="Поиск">
-                                <button class="btn btn-info" type="submit">Search</button>
+                                <button class="btn btn-info btn-color" type="submit">Search</button>
                             </form>
                         </li>
                     </ul>
-                    <div class="nav-item float-end">
-                        <a class="btn text-white" href="#" role="button">Sign up</a>
-                    </div>
-                    <div class="nav-item">
-                        <a class="btn text-white" href="#" role="button">Register</a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="nav-item float-end">
+                            <a class="btn text-white" id="logoutButton" asp-controller="User" asp-action="SignOut">Sign out</a>
+                        </div>
+                        <div class="nav-item float-end">
+                            <a class="btn text-white cart-game" id="cart" asp-controller="Cart" asp-action="Index">  <img src="~/img/cart-heart-svgrepo-com.svg" alt="Cart" width="35" height="35" /></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="nav-item float-end">
+                            <a class="btn text-white" asp-controller="User" asp-action="Login">Sign up</a>
+                        </div>
+                        <div class="nav-item">
+                            <a class="btn text-white" asp-controller="User" asp-action="Register">Registration</a>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>
@@ -76,10 +87,29 @@
             </div>
         </nav>
     </div>
-    <div class="main-context" style="background-color:#8164e8;">
+    <div class="main-context">
         <main role="main">
             @RenderBody()
         </main>
+        <div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to log out?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stay</button>
+                        <button type="button" class="btn btn-primary" id="confirmLogoutButton">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div style="height:300px;">
         </div>
     </div>
@@ -89,21 +119,37 @@
             &copy; 2024 - PlayMarket - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="~/js/syncFormsAndSubmit.js"></script>
     <script>
         var message = "@Html.Raw(TempData["Message"])";
         var messageType = "@Html.Raw(TempData["MessageType"])";
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#logoutButton").click(function (e) {
+                e.preventDefault();
+                $("#logoutModal").modal('show');
+            });
 
+            $("#confirmLogoutButton").click(function () {
+                $.get('@Url.Action("SignOut", "User")', function () {
+                    window.location.href = '@Url.Action("Index", "Home")';
+                });
+            });
+        });
+    </script>
+    <script src="~/js/infoMessage.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

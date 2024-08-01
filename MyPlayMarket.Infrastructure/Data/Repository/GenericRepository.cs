@@ -86,6 +86,22 @@ namespace MyPlayMarket.Infrastructure.Data.Repository
                 return false;
             }
         }
+        public async Task<bool> AddRangeAsync(List<T> entity)
+        {
+            try
+            {
+                await _dbSet.AddRangeAsync(entity);
+                await _db.SaveChangesAsync();
+                _logger.LogWarning($"entities was  created.");
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{nameof(entity)} could not be saved: {ex.Message}");
+                return false;
+            }
+        }
 
         public async Task<bool> UpdateAsync(T entity)
         {          

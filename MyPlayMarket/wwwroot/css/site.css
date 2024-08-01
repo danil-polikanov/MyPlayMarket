@@ -2,7 +2,7 @@
 html {
     font-size: 16px;
 }
-
+}
 @media (max-width: 424px) {
     html {
         font-size: 14px;
@@ -36,6 +36,7 @@ html {
 
 body {
     margin-bottom: 60px;
+    color: white;
 }
 
 ._layout-header {
@@ -51,16 +52,22 @@ body {
     text-align: center;
     word-break: break-all;
 }
-
+.cart-game{
+    padding:0px;
+}
 
 a {
     color: #0077cc;
+    text-decoration:none;
 }
 
 .search-item {
     margin: auto 50px;
 }
-
+.btn-color{
+    background-color: #412996 !important;
+}
+}
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -72,7 +79,13 @@ a {
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
+.main-context {
 
+    background-image: url(/img/futuristic-moon-background.jpg) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
 /* Offset settings
 
 */

@@ -18,38 +18,38 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Game.Name" class="control-label"></label>
-                    <input asp-for="Game.Name" type="text" class="form-control" />
+                    <input asp-for="Game.Name" type="text" class="form-control create-form" />
                     <span asp-validation-for="Game.Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Cost" class="control-label"></label>
-                    <input asp-for="Game.Cost" type="number" class="form-control" />
+                    <input asp-for="Game.Cost" type="number" class="form-control create-form" />
                     <span asp-validation-for="Game.Cost" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Company" class="control-label"></label>
-                    <input asp-for="Game.Company" type="text" class="form-control" />
+                    <input asp-for="Game.Company" type="text" class="form-control create-form" />
                     <span asp-validation-for="Game.Company" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.UrlImage" class="control-label"></label>
-                    <input asp-for="Game.UrlImage" type="text" class="form-control" />
+                    <input asp-for="Game.UrlImage" type="text" class="form-control create-form" />
                     <span asp-validation-for="Game.UrlImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Description" class="control-label"></label>
-                    <textarea asp-for="Game.Description" type="time" class="form-control"></textarea>
+                    <textarea asp-for="Game.Description" type="time" class="form-control create-form"></textarea>
                     <span asp-validation-for="Game.Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Game.Release" class="control-label"></label>
-                    <input asp-for="Game.Release" type="date" min="1900-01-01" class="form-control" />
+                    <input asp-for="Game.Release" type="date" min="1900-01-01" class="form-control create-form" />
                     <span asp-validation-for="Game.Release" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="PlatformsDTO" class="control-label">platforms</label>
                     <div id="platformsContainer">
-                        <input asp-for="PlatformsDTO" type="text" class="form-control" />
+                        <input asp-for="PlatformsDTO" type="text" class="form-control create-form" />
                     </div>
                     <button type="button" id="addPlatformButton" class="btn btn-primary">add platform</button>
                     <button type="button" id="removePlatformButton" class="btn btn-danger">remove last platform</button>
@@ -57,7 +57,7 @@
                 <div class="form-group">
                     <label asp-for="TagsDTO" class="control-label">tags</label>
                     <div id="tagsContainer">
-                        <input asp-for="TagsDTO" type="text" class="form-control" />
+                        <input asp-for="TagsDTO" type="text" class="form-control create-form" />
                     </div>
                     <button type="button" id="addTagButton" class="btn btn-primary">add tag</button>
                     <button type="button" id="removeTagButton" class="btn btn-danger">remove last tag</button>
@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <label asp-for="GenresDTO" class="control-label">genres</label>
                     <div id="genresContainer">
-                        <input asp-for="GenresDTO" type="text" class="form-control" />
+                        <input asp-for="GenresDTO" type="text" class="form-control create-form" />
                     </div>
                     <button type="button" id="addGenreButton" class="btn btn-primary">add genre</button>
                     <button type="button" id="removeGenreButton" class="btn btn-danger">remove last genre</button>
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label asp-for="ScreenshotsDTO" class="control-label">screenshots</label>
                     <div id="screenshotContainer">
-                        <input asp-for="ScreenshotsDTO" type="text" class="form-control" />
+                        <input asp-for="ScreenshotsDTO" type="text" class="form-control create-form" />
                     </div>
                     <button type="button" id="addScreenshotButton" class="btn btn-primary">add screenshot</button>
                     <button type="button" id="removeScreenshotButton" class="btn btn-danger">remove last screenshot</button>
@@ -90,7 +90,6 @@
     </div>
 </div>
 <script src="~/js/createUpdateForm.js"></script>
-<script src="~/js/infoMessage.js"></script>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -10,8 +10,8 @@ namespace MyPlayMarket.Core
         {
 
         }
-        public DbSet<Game> Games { get; set; }
         public DbSet<User> LocalUsers { get; set; }
+        public DbSet<Game> Games { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<GameGenre> GameGenre { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -19,6 +19,7 @@ namespace MyPlayMarket.Core
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<GamePlatform> GamePlatforms { get; set; }
         public DbSet<GameScreenshot> GameScreenshots { get; set; }
+        public DbSet<UserGame> UserGames { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -29,6 +30,8 @@ namespace MyPlayMarket.Core
              .HasKey(gg => new { gg.GameId, gg.PlatformId });
             modelBuilder.Entity<GameTag>()
              .HasKey(gg => new { gg.GameId, gg.TagId });
+            modelBuilder.Entity<UserGame>()
+          .HasKey(gg => new { gg.UserId, gg.GameId });
 
         }
     }

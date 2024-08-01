@@ -16,5 +16,6 @@ namespace MyPlayMarket.Core.IRepository
         public Task<bool> AddAsync(T entity);
         public Task<bool> UpdateAsync(T entity);
         public Task<bool> DeleteAsync(int id);
+        public Task<bool> AddRangeAsync(List<T> entity);
     }
 }

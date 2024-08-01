@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace MyPlayMarket.Core.Entities
 {
     public class GamePlatform
-    {
-        
+    {  
         public int GameId { get; set; }
         public Game Game { get; set; }
         

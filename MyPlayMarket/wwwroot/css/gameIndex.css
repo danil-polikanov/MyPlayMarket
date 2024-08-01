@@ -11,8 +11,8 @@
         flex-basis: 40%;
     }
 }
-
-.main.main-game {
+.container {
+    color: white;
 }
 
 .filter {
@@ -33,15 +33,15 @@
     margin: 2em auto;
 }
 
-    .main-game-cards:hover {
-        opacity: 0.8;
-        box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
-        text-decoration: none;
-    }
+.main-game-cards:hover {
+    opacity: 0.8;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.2);
+    text-decoration: none;
+}
 
-    .main-game-cards p {
-        margin: 3% auto;
-    }
+.main-game-cards p {
+    margin: 3% auto;
+}
 
 .main-game-cards-item {
     padding: 1em 1em;

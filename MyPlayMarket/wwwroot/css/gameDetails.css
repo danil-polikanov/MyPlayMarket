@@ -1,5 +1,6 @@
 ﻿﻿.html {
     font-size: 14px;
+
 }
 
 @media (maxn-width: 768px) {
@@ -14,6 +15,8 @@
 
 .form-header {
     margin-left: 10px;
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .details-button {
@@ -31,11 +34,27 @@
     color: white;
     font-size: 18px;
 }
-
+.header-details {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding:5px;
+}
 .detail-description {
     margin-bottom: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
 }
-
+.cart-button {
+    background-color: #412996;
+    color: white;
+    border: 1px solid #007bff;
+    border-color: crimson;
+    border-radius: 4px;
+    margin: 20px 0px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.cart-button:hover{
+    color:white;
+}
 .tag-container {
     margin-top: 10px;
 }
@@ -46,7 +65,7 @@
     color: white; /* Цвет текста */
     border: 1px solid #007bff; /* Обводка кнопки */
     border-radius: 4px; /* Скругление углов */
-    padding: 5px 10px; /* Внутренние отступы */
+    padding: 2px 2px; /* Внутренние отступы */
     margin: 2px; /* Отступ между тегами */
     font-size: 16px; /* Размер шрифта */
     cursor: pointer; /* Изменение курсора при наведении */

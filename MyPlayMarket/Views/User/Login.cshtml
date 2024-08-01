@@ -1,0 +1,138 @@
+﻿@using MyPlayMarket.Core.Entities;
+@using MyPlayMarket.Core.Entities.DTO
+@model LoginRegisterDTO;
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Sign in";
+}
+<link rel="stylesheet" href="/css/login.css">
+<!-- Fontawesome CDN Link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="main-login">
+    <div class="container login-container">
+        <input type="checkbox" id="flip">
+        <div class="cover">
+            <div class="front">
+                <img src="~/img/frontImg.jpg" alt="">
+                <div class="text">
+                    <span class="text-1">Every new friend is a <br> new adventure</span>
+                    <span class="text-2">Let's get connected</span>
+                </div>
+            </div>
+            <div class="back">
+                <img class="backImg" src="~/img/backImg.jpg" alt="">
+                <div class="text">
+                    <span class="text-1">Complete miles of journey <br> with one step</span>
+                    <span class="text-2">Let's get started</span>
+                </div>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-content">
+                <div class="login-form">
+                    <div class="title">Login</div>
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="input-boxes">
+                            <span asp-validation-for="loginUserDTO.Email" class="text-danger"></span>
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input asp-for="loginUserDTO.Email" type="email" placeholder="Enter your email" required>
+                            </div>
+                            <span asp-validation-for="loginUserDTO.Password" class="text-danger"></span>
+                            <div class="input-box">      
+                                <i class="fas fa-lock"></i>
+                                <input asp-for="loginUserDTO.Password" type="password" placeholder="Enter your password" required>
+                            </div>
+                            <div class="text"><a href="#">Forgot password?</a></div>
+                            <div class="button input-box">
+                                <input type="submit" value="Submit">
+                            </div>
+                            <div class="text sign-up-text">Don't have an account? <label for="flip">Sign up</label></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="signup-form">
+                    <div class="title">Sign up</div>
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="input-boxes">
+                            <span asp-validation-for="registerDTO.Name" class="text-danger" ></span>
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input asp-for="registerDTO.Name" type="text" placeholder="Enter your name" required>
+                            </div>
+                            <span asp-validation-for="registerDTO.Surname" class="text-danger"></span>
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input asp-for="registerDTO.Surname" type="text" placeholder="Enter your surname" required>
+                            </div>
+                            <span asp-validation-for="registerDTO.UserName" class="text-danger"></span>
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input asp-for="registerDTO.UserName" type="text" placeholder="Enter your nickname" required>
+                            </div>
+                            <span asp-validation-for="registerDTO.Email" class="text-danger"></span>
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input asp-for="registerDTO.Email" type="email" placeholder="Enter your email" required>
+                            </div>
+                            <span asp-validation-for="registerDTO.Password" class="text-danger"></span>
+                            <div class="input-box">
+                                <i class="fas fa-lock"></i>
+                                <input asp-for="registerDTO.Password" type="password" placeholder="Enter your password" required>
+                            </div>
+                            <span asp-validation-for="registerDTO.ConfirmPassword" class="text-danger"></span>
+                            <div class="input-box">
+                                <i class="fas fa-lock"></i>
+                                <input asp-for="registerDTO.ConfirmPassword" type="password" placeholder="Confirm password" required>
+                            </div>
+
+                            <div class="button input-box">
+                                <input type="submit" value="Submit">
+                            </div>
+                            <div class="text sign-up-text">Already have an account? <label for="flip">Sign in</label></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* <div class="container">
+
+    <h1>Sign in</h1>
+
+    <h4>User</h4>
+    <hr />
+    <div class="form-row">
+        <div class="col-md-4">
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" type="text" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div cla
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary" />
+                    <input type="reset" value="Reset" class="btn btn-danger" />
+                </div>
+                <div>
+                    <a class="btn btn-light" asp-action="Index" asp-controller="Home" role="button">Back to list</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> *@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

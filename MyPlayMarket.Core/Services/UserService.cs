@@ -29,27 +29,39 @@ namespace MyPlayMarket.Core.Services
             try
             {
                 var hashedPassord = _passwordHasher.Generate(userDTO.Password);
-                var user = new User(userDTO.Name, userDTO.Surname, userDTO.UserName, hashedPassord, userDTO.Email,"Admin");
+                var user = new User(userDTO.Name, userDTO.Surname, userDTO.UserName, hashedPassord, userDTO.Email,"User");
                 return await _userRepository.UserAddAsync(user);
             }
             catch(Exception ex) 
             {
                 _logger.LogError($"{ex.Message}");
-                return null;
+                return "Unexpected error";
             }
         }
         public async Task<string> Login(LoginUserDTO loginUserDTO)
         {
-            var user = await _userRepository.GetUserByEmailAsync(loginUserDTO.Email);
-            var result = _passwordHasher.Verify(loginUserDTO.Password, user.PasswordHash);
-            if (user==null &&result == false)
+            try
+            {
+                var user = await _userRepository.GetUserByEmailAsync(loginUserDTO.Email);
+                var result = _passwordHasher.Verify(loginUserDTO.Password, user.PasswordHash);
+                if (user == null && result == false)
+                {
+                    throw new Exception();
+                }
+
+                var token = _jwtProvider.GenerateToken(user);
+                return token;
+            }
+            catch(Exception ex)
             {
                 _logger.LogError($"Failed to login, user doesn't exist or invalid password");
-                return "Failed to login, user doesn't exist or invalid password";             
+                return null;
             }
-
-            var token = _jwtProvider.GenerateToken(user);
-            return token;
+           
         }  
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _userRepository.GetUserByIdAsync(id);
+        }
     }
 }

@@ -1,9 +1,9 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    if (message) {
-        toastr.option.showDuration = 5000;
+    if (typeof message !== 'undefined' && message) {
+        toastr.options.timeOut = 7000;
         if (messageType === 'success') {
             toastr.success(message);
-        } else if (messageType === 'error') {
+        } else {
             toastr.error(message);
         }
     }

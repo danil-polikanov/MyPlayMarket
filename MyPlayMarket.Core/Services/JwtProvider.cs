@@ -24,8 +24,7 @@ namespace MyPlayMarket.Core.Services
         {
             Claim[] claims = [
                 new("userId", user.Id.ToString()),
-                new("Admin","true"),
-                new("User","true")
+                new(ClaimTypes.Role,user.Role),
                 ];
             //USER ROLE
             var signingCredentials = new SigningCredentials(

@@ -39,11 +39,11 @@ namespace MyPlayMarket.Web.Extensions
             {
                 options.AddPolicy("AdminPolicy", policy =>
                 {
-                    policy.RequireClaim("Admin", "true");
+                    policy.RequireRole("Admin");
                 });
                 options.AddPolicy("UserPolicy", policy =>
                 {
-                    policy.RequireClaim("User", "true");
+                    policy.RequireRole("User");
                 });
             });
         }

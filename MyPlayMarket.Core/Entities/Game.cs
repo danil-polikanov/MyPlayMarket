@@ -9,13 +9,7 @@ namespace MyPlayMarket.Core.Entities
 {
     public class Game
     {
-        public Game()
-        {
-            GameGenres = new List<GameGenre>();
-            Screenshots = new List<GameScreenshot>();
-            GameTags = new List<GameTag>();
-            GamePlatforms = new List<GamePlatform>();
-        }
+        public ICollection<UserGame> UserGames { get; set; }
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage ="Incorrect name")]
@@ -35,6 +29,13 @@ namespace MyPlayMarket.Core.Entities
         public ICollection<GameScreenshot> Screenshots { get; set; }
         public ICollection<GameTag> GameTags { get; set; }
         public ICollection<GamePlatform> GamePlatforms { get; set; }
+        public Game()
+        {
+            GameGenres = new List<GameGenre>();
+            Screenshots = new List<GameScreenshot>();
+            GameTags = new List<GameTag>();
+            GamePlatforms = new List<GamePlatform>();
+        }
 
 
         //[Range(typeof(DateTime), "1-Jan-1910", "1-Jan-2017")]
